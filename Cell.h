@@ -19,6 +19,8 @@ public:
     int getRow();
     int getCol();
     bool hasPiece();
+    void addPiece(Piece * newPiece);
+    void remPiece();
     void notifyObservers();
     void attach(Observer * o);
     void detach(Observer * o);

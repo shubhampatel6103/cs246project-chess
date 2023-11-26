@@ -13,6 +13,9 @@ int Cell::getRow() { return row; }
 int Cell::getCol() { return col; }
 bool Cell::hasPiece() { return (piece ? true : false); }
 
+void Cell::addPiece(Piece * newPiece) { piece = newPiece; }
+void Cell::remPiece() { piece = nullptr; }
+
 void Cell::notifyObservers() {
     for (auto observer : observers) {
         observer->notify(*this);
