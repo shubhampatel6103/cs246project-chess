@@ -1,5 +1,6 @@
 #include "Observer.h"
 #include "Cell.h"
+#include "Board.h"
 
 class Piece : public Observer {
     enum class Colour {Black=0, White};
@@ -16,6 +17,6 @@ class Piece : public Observer {
         void setRow(int r); // Sets the row to r
         void setCol(int c); // Sets the col to c
 
-        void notify(Cell& c); // 
-
+        void notify(Cell& c); // Calls attachToCells on the piece ... we dont even need this
+        virtual void attachToCells(Board& b) = 0; // attaches 
 }
