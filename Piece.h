@@ -21,4 +21,4 @@ class Piece : public Observer {
 
         virtual void attachToCells(Board& b) = 0; // attaches the piece to the cells required
         void notify(Cell& c); // Calls attachToCells on the piece ... we dont even need this
-}
+};
