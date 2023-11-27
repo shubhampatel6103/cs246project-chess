@@ -24,6 +24,6 @@ public:
     void notifyObservers();
     void attach(Observer * o);
     void detach(Observer * o);
-}
+};
 
 #endif
