@@ -1,6 +1,10 @@
 #include "Rook.h"
 
-Rook::Rook(): Piece('r', 5), moved{false} {}
+Rook::Rook(char type, Colour colour): Piece{type, colour} {}
+
+int Rook::getPoints() { return points; }
+
+void Rook::notify(Cell &c) { /*Implement this*/ }
 
 void Rook::attachToCells(Board& b) {
 

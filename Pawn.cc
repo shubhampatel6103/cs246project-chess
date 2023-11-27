@@ -1,6 +1,10 @@
 #include "Pawn.h"
 
-Pawn::Pawn(): Piece('p', 1), firstMove{true} {};
+Pawn::Pawn(char type, Colour colour): Piece{type, colour} {}
+
+int Pawn::getPoints() { return points; }
+
+void notify(Cell &c) { /*Implement this*/ }
 
 void Pawn::attachToCells(Board& b) {
 
