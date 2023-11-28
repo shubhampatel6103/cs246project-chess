@@ -12,6 +12,7 @@ class Queen : public Piece {
         int getPoints();
         void notify(Cell &c) override;
         void attachToCells(Board& b) override; // Attaches self to the cells in the vertical, horizontal and diagonal directions
+        void detachFromCells(Board& b) override; // Detaches self from the cells in the vertical, horizontal and diagonal directions
 };
 
 #endif

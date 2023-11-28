@@ -49,3 +49,44 @@ void Pawn::attachToCells(Board& b) {
 
 }
 
+void Pawn::detachFromCells(Board& b) {
+
+    if (firstMove) {
+        if (this->getColour() == Colour::Black) { // For black pieces we go down the grid so increase the row number
+            if (b.board[row + 1][col].getPiece()) { // If there is a piece in front of us when moving for the first time
+                b.board[row + 1][col].detach(this); // We are being blocked so we only detach from the cell in front of us
+            } else { // Not being blocked otherwise
+                b.board[row + 1][col].detach(this); 
+                b.board[row + 2][col].detach(this); 
+            }
+        } else { // For white pieces we go down the grid so decrease the row number
+            if (b.board[row - 1][col].getPiece()) { // If there is a piece in front of us when moving for the first time
+                b.board[row - 1][col].detach(this); // We are being blocked so we only detach from the cell in front of us
+            } else { // Not being blocked otherwise
+                b.board[row - 1][col].detach(this); 
+                b.board[row - 2][col].detach(this); 
+            }
+        }
+    } else { // Not the first move so we only detach from one cell ahead of us
+        if (this->getColour() == Colour::Black) {
+            if (0 <= row + 1 < 8) {
+                b.board[row + 1][col].detach(this);
+            }
+        } else {
+            if (0 <= row - 1 < 8) {
+                b.board[row - 1][col].detach(this);
+            }
+        }
+    }
+
+    // Now for diagonal ;-;
+    if (this->getColour() == Colour::Black) {
+        if (0 <= row + 1 < 8 && 0 <= col + 1 < 8 && b.board[row + 1][col + 1].getPiece()) { b.board[row + 1][col + 1].detach(this); }
+        if (0 <= row + 1 < 8 && 0 <= col - 1 < 8 && b.board[row + 1][col - 1].getPiece()) { b.board[row + 1][col - 1].detach(this); }
+    } else {
+        if (0 <= row - 1 < 8 && 0 <= col + 1 < 8 && b.board[row - 1][col + 1].getPiece()) { b.board[row - 1][col + 1].detach(this); }
+        if (0 <= row - 1 < 8 && 0 <= col - 1 < 8 && b.board[row - 1][col - 1].getPiece()) { b.board[row - 1][col - 1].detach(this); }
+    }
+
+}
+

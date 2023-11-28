@@ -22,6 +22,7 @@ class Piece : public Observer {
         void setCol(int c); // Sets the col to c
 
         virtual void attachToCells(Board& b) = 0; // Attaches the piece to the cells required
+        virtual void detachFromCells(Board& b) = 0; // Detaches the piece from the cells required
         virtual void notify(Cell& c) = 0; // Abstract method
 }
 

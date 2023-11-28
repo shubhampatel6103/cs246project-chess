@@ -11,7 +11,8 @@ class King : public Piece {
         ~King() = default;
         int getPoints();
         void attachToCells(Board& b) override; // Attaches self to the cells in the vertical and horizontal directions
-        void notify(Cell &c) override;
+        void detachFromCells(Board& b) override; // Detaches self from the cells in the vertical and horizontal directions
+        void notify(Board &b) override;
 };
 
 #endif
