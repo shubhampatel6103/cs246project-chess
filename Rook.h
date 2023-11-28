@@ -1,9 +1,17 @@
+#ifndef __ROOK_H__
+#define __ROOK_H__
 #include "Piece.h"
 
 class Rook : public Piece {
     bool moved;
+    int points = 5;
 
     public:
-        Rook(); // Constructs the rook piece with type = 'r' and points = 5
-        void attachToCells(Board& b); // Attaches self to the cells in the vertical and horizontal directions
+        Rook(char type, Colour colour); // Constructs the rook piece with type = 'r' and points = 5
+        ~Rook() = default;
+        int getPoints();
+        void notify(Cell &c) override;
+        void attachToCells(Board& b) override; // Attaches self to the cells in the vertical and horizontal directions
 };
+
+#endif

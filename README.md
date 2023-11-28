@@ -2,5 +2,6 @@
 
 #Authors
 Shubham Patel (@shubhampatel6103)
-Rushil Deep (@Rushil-04)
+Rushil Deep (@RD-04)
 Sharang Goel (@shaziwnl)
+

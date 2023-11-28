@@ -1,6 +1,10 @@
 #include "Queen.h"
 
-Queen::Queen(): Piece('q', 9) {}
+Queen::Queen(char type, Colour colour): Piece{type, colour} {} // Constructs the queen piece with type = 'q' or 'Q', colour, and points to 9
+        
+int Queen::getPoints() { return points; }
+
+void Queen::notify(Cell &c) { /*Implement this*/ }
 
 void Queen::attachToCells(Board& b) {
     
