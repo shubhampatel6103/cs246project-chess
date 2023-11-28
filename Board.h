@@ -27,4 +27,6 @@ public:
     void makeMove(Cell source, Cell Dest);
 
     friend std::ostream &operator<<(std::ostream &out, const Board &b);
-}
+};
+
+#endif
