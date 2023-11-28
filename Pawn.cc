@@ -4,7 +4,9 @@ Pawn::Pawn(char type, Colour colour): Piece{type, colour} {}
 
 int Pawn::getPoints() { return points; }
 
-void notify(Cell &c) { /*Implement this*/ }
+void Pawn::notify(Board &b) {
+    this->attachToCells(b);    
+}
 
 void Pawn::attachToCells(Board& b) {
 

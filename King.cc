@@ -4,7 +4,9 @@ King::King(char type, Colour colour): Piece(type, colour) {}
 
 int King::getPoints() { return points; }
 
-void King::notify(Cell &c) { /*Implement this */ }
+void King::notify(Board &b) {
+     this->attachToCells(b);
+}
 
 void King::attachToCells(Board& b) {
     
