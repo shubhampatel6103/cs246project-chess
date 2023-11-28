@@ -1,6 +1,10 @@
 #include "King.h"
 
-King::King(): Piece('k', 10), moved{false} {};
+King::King(char type, Colour colour): Piece(type, colour) {}
+
+int King::getPoints() { return points; }
+
+void King::notify(Cell &c) { /*Implement this */ }
 
 void King::attachToCells(Board& b) {
     

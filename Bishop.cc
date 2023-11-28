@@ -1,6 +1,10 @@
 #include "Bishop.h"
 
-Bishop::Bishop(): Piece('b', 3) {}
+Bishop::Bishop(char type, Colour colour): Piece{type, colour} {}
+
+int Bishop::getPoints() { return points; }
+
+void Bishop::notify(Cell &c) { /*Implement this*/ }
 
 void Bishop::attachToCells(Board& b) {
 
