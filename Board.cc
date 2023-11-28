@@ -14,6 +14,7 @@ Board::Board(int size): size{size} {
             Cell c(i, j, colour, nullptr);
             colour = ( colour == Piece::Colour::White ? Piece::Colour::Black : Piece::Colour::White);
             c.attach(td);
+            c.notifyObservers();
             c.attach(gd);
             board[i].emplace_back(c);
         }
@@ -31,7 +32,7 @@ Cell Board::getCellAt(int row, int col) { return board[row][col]; }
 bool Board::getCurrentTurn() { return firstPlayerTurn; }
 
 void Board::setupAdd(int row, int col, char piece) {
-    // Make Piece
+    if (piece == "K") {Piece * p = make_unique<King>(piece, 10)}
     Piece * p = make_unique<Piece> (/*Args*/);
     getCellAt(row, col).addPiece(p);
 }
