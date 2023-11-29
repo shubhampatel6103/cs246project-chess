@@ -9,13 +9,13 @@ void Game::printBoard() {
 }
 
 void Game::makeMove(int arr[4], Piece* p) {
-        b.board[arr[0]][arr[1]].remPiece(); // This is where we were (Source)
+        b.getCellAt(arr[0],arr[1]).remPiece(); // This is where we were (Source)
 
-    if (b.board[arr[2]][arr[3]].hasPiece()) { // This is where we went (Desitnation)
-        b.board[arr[2]][arr[3]].remPiece(); // Remove the piece that already exists
-        b.board[arr[2]][arr[3]].addPiece(p); // Add the piece that we moved
+    if (b.getCellAt(arr[2],arr[3]).hasPiece()) { // This is where we went (Desitnation)
+        b.getCellAt(arr[2],arr[3]).remPiece(); // Remove the piece that already exists
+        b.getCellAt(arr[2],arr[3]).addPiece(p); // Add the piece that we moved
     } else {
-        b.board[arr[2]][arr[3]].addPiece(p);
+        b.getCellAt(arr[2],arr[3]).addPiece(p);
     }
 }
 
