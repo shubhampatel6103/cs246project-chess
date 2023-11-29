@@ -1,6 +1,6 @@
 #include <iostream>
-#include "textdisplay.h"
-#include "cell.h"
+#include "TextDisplay.h"
+#include "Cell.h"
 using namespace std;
 
 TextDisplay::TextDisplay(): {}

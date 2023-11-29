@@ -12,6 +12,7 @@ class Rook : public Piece {
         int getPoints();
         void notify(Cell &c) override;
         void attachToCells(Board& b) override; // Attaches self to the cells in the vertical and horizontal directions
+        void detachFromCells(Board& b) override; // Detach self from the cells in the vertical and horizontal directions
 };
 
 #endif
