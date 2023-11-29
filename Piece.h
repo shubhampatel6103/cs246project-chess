@@ -4,9 +4,10 @@
 #include "Cell.h"
 #include "Board.h"
 
-enum class Colour {Black=0, White};
+
 
 class Piece : public Observer {
+    enum class Colour {Black=0, White};
     char type;
     Colour colour;
     int row, col;
