@@ -4,48 +4,48 @@ Rook::Rook(char type, Colour colour): Piece{type, colour} {}
 
 int Rook::getPoints() { return points; }
 
-void Rook::notify(Board &b) {
+void Rook::notify(Cell &c, Board &b) {
     this->attachToCells(b);
 }
 
 void Rook::attachToCells(Board& b) {
 
     // The following for loop takes care of vertical cells forward
-    for (int r = row + 1; r < 8; r++) { // start from where we are + 1 to the end of the board in terms of rows (row + 1 so we dont check for our own cell)
-        if (!b.board[r][col].getPiece()) { // If there is no piece on that cell, then attach myself to that cell
-            b.board[r][col].attach(this);
+    for (int r = getRow() + 1; r < 8; r++) { // start from where we are + 1 to the end of the board in terms of getRow()s (getRow() + 1 so we dont check for our own cell)
+        if (!b.getCellAt(r,getCol()).getPiece()) { // If there is no piece on that cell, then attach myself to that cell
+            b.getCellAt(r,getCol()).attach(this);
         } else { 
-            b.board[r][col].attach(this);
+            b.getCellAt(r,getCol()).attach(this);
             break;
         } // Otherwise, we are being blocked so we break AFTER ATTACHING
     }
 
     // The following for loop takes care of vertical cells backward
-    for (int r = row - 1; r >= 0; r--) { // start from where we are + 1 to the beginning of the board in terms of rows (row - 1 1 so we dont check for our own cell)
-        if (!b.board[r][col].getPiece()) { // If there is no piece on that cell, then attach myself to that cell
-            b.board[r][col].attach(this);
+    for (int r = getRow() - 1; r >= 0; r--) { // start from where we are + 1 to the beginning of the board in terms of getRow()s (getRow() - 1 1 so we dont check for our own cell)
+        if (!b.getCellAt(r,getCol()).getPiece()) { // If there is no piece on that cell, then attach myself to that cell
+            b.getCellAt(r,getCol()).attach(this);
         } else { 
-            b.board[r][col].attach(this);
+            b.getCellAt(r,getCol()).attach(this);
             break;
         } // Otherwise, we are being blocked so we break AFTER ATTACHING
     }
 
     // The following for loop takes care of all horitonzal cells forward
-    for (int c = col + 1; col < 8; c++) { // start from where we are + 1 to the end of the board in terms of cols (col + 1 so we dont check for our own cell)
-        if (!b.board[row][c].getPiece()) { // If there is no piece on that cell, then attach myself to that cell
-            b.board[row][c].attach(this);
+    for (int c = getCol() + 1; getCol() < 8; c++) { // start from where we are + 1 to the end of the board in terms of cols (getCol() + 1 so we dont check for our own cell)
+        if (!b.getCellAt(getRow(),c).getPiece()) { // If there is no piece on that cell, then attach myself to that cell
+            b.getCellAt(getRow(),c).attach(this);
         } else { 
-            b.board[row][c].attach(this);
+            b.getCellAt(getRow(),c).attach(this);
             break;
         } // Otherwise, we are being blocked so we break AFTER ATTACHING
     }
 
     // The following for loop takes care of all horitonzal cells backward
-    for (int c = col - 1; col >= 0; c--) { // start from where we are - 1 to the beginning of the board in terms of cols (col - 1 so we dont check for our own cell)
-        if (!b.board[row][c].getPiece()) { // If there is no piece on that cell, then attach myself to that cell
-            b.board[row][c].attach(this);
+    for (int c = getCol() - 1; getCol() >= 0; c--) { // start from where we are - 1 to the beginning of the board in terms of cols (getCol() - 1 so we dont check for our own cell)
+        if (!b.getCellAt(getRow(),c).getPiece()) { // If there is no piece on that cell, then attach myself to that cell
+            b.getCellAt(getRow(),c).attach(this);
         } else { 
-            b.board[row][c].attach(this);
+            b.getCellAt(getRow(),c).attach(this);
             break;
         } // Otherwise, we are being blocked so we break AFTER ATTACHING
     }
@@ -55,41 +55,41 @@ void Rook::attachToCells(Board& b) {
 void Rook::detachFromCells(Board& b) {
 
     // The following for loop takes care of vertical cells forward
-    for (int r = row + 1; r < 8; r++) { // start from where we are + 1 to the end of the board in terms of rows (row + 1 so we dont check for our own cell)
-        if (!b.board[r][col].getPiece()) { // If there is no piece on that cell, then attach myself to that cell
-            b.board[r][col].detach(this);
+    for (int r = getRow() + 1; r < 8; r++) { // start from where we are + 1 to the end of the board in terms of getRow()s (getRow() + 1 so we dont check for our own cell)
+        if (!b.getCellAt(r,getCol()).getPiece()) { // If there is no piece on that cell, then attach myself to that cell
+            b.getCellAt(r,getCol()).detach(this);
         } else { 
-            b.board[r][col].detach(this);
+            b.getCellAt(r,getCol()).detach(this);
             break;
         } // Otherwise, we are being blocked so we break AFTER DETACHING
     }
 
     // The following for loop takes care of vertical cells backward
-    for (int r = row - 1; r >= 0; r--) { // start from where we are + 1 to the beginning of the board in terms of rows (row - 1 1 so we dont check for our own cell)
-        if (!b.board[r][col].getPiece()) { // If there is no piece on that cell, then attach myself to that cell
-            b.board[r][col].detach(this);
+    for (int r = getRow() - 1; r >= 0; r--) { // start from where we are + 1 to the beginning of the board in terms of getRow()s (getRow() - 1 1 so we dont check for our own cell)
+        if (!b.getCellAt(r,getCol()).getPiece()) { // If there is no piece on that cell, then attach myself to that cell
+            b.getCellAt(r,getCol()).detach(this);
         } else { 
-            b.board[r][col].detach(this);
+            b.getCellAt(r,getCol()).detach(this);
             break;
         } // Otherwise, we are being blocked so we break AFTER DETACHING
     }
 
     // The following for loop takes care of all horitonzal cells forward
-    for (int c = col + 1; col < 8; c++) { // start from where we are + 1 to the end of the board in terms of cols (col + 1 so we dont check for our own cell)
-        if (!b.board[row][c].getPiece()) { // If there is no piece on that cell, then attach myself to that cell
-            b.board[row][c].detach(this);
+    for (int c = getCol() + 1; getCol() < 8; c++) { // start from where we are + 1 to the end of the board in terms of cols (getCol() + 1 so we dont check for our own cell)
+        if (!b.getCellAt(getRow(),c).getPiece()) { // If there is no piece on that cell, then attach myself to that cell
+            b.getCellAt(getRow(),c).detach(this);
         } else { 
-            b.board[row][c].detach(this);
+            b.getCellAt(getRow(),c).detach(this);
             break;
         } // Otherwise, we are being blocked so we break AFTER DETACHING
     }
 
     // The following for loop takes care of all horitonzal cells backward
-    for (int c = col - 1; col >= 0; c--) { // start from where we are - 1 to the beginning of the board in terms of cols (col - 1 so we dont check for our own cell)
-        if (!b.board[row][c].getPiece()) { // If there is no piece on that cell, then attach myself to that cell
-            b.board[row][c].detach(this);
+    for (int c = getCol() - 1; getCol() >= 0; c--) { // start from where we are - 1 to the beginning of the board in terms of cols (getCol() - 1 so we dont check for our own cell)
+        if (!b.getCellAt(getRow(),c).getPiece()) { // If there is no piece on that cell, then attach myself to that cell
+            b.getCellAt(getRow(),c).detach(this);
         } else { 
-            b.board[row][c].detach(this);
+            b.getCellAt(getRow(),c).detach(this);
             break;
         } // Otherwise, we are being blocked so we break AFTER DETACHING
     }
