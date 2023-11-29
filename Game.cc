@@ -25,7 +25,7 @@ void Game::playMove(int p) {
     } 
     else { // else, play the move on behalf of p2
         makeMove(p2->playMove(), p2);
-    } // Might need to add try excepts
+    } // Might need to add try excepts, ideally should be handled by player class
 }
 
 
