@@ -94,6 +94,7 @@ void Board::makeMove(Cell source, Cell Dest) {
     // Make move
 }
 
-ostream& operator<<(ostream &out, const Board &b) {
-    return out << b.td;
+ostream& operator<<(ostream &out, const Board& b) {
+    out << b.td;
+    return out;
 }

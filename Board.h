@@ -3,6 +3,13 @@
 #include "Cell.h"
 #include "Observer.h"
 #include "TextDisplay.h"
+#include "Piece.h"
+#include "King.h"
+#include "Queen.h"
+#include "Bishop.h"
+#include "Rook.h"
+#include "Knight.h"
+#include "Pawn.h"
 #include <vector>
 
 class Board {
@@ -26,7 +33,7 @@ public:
     void changeTurn();
     void makeMove(Cell source, Cell Dest);
 
-    friend std::ostream &operator<<(std::ostream &out, const Board &b);
+    friend std::ostream &operator<<(std::ostream &out, const Board& b);
 };
 
 #endif
