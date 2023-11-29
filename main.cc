@@ -27,15 +27,15 @@ int main() {
         }
 
         if (blackPlayer == "human") {
-            Player * p1 = make_unique<Human>();
+            Player * p2 = make_unique<Human>();
         } else if (blackPlayer == "computer1") {
-            Player * p1 = make_unique<Noob>();
+            Player * p2 = make_unique<Noob>();
         } else if (blackPlayer == "computer2") {
-            Player * p1 = make_unique<Pro>();
+            Player * p2 = make_unique<Pro>();
         } else if (blackPlayer == "computer3") {
-            Player * p1 = make_unique<Magnus>();
+            Player * p2 = make_unique<Magnus>();
         } else if (blackPlayer == "computer4") {
-            Player * p1 = make_unique<Stockfish>();
+            Player * p2 = make_unique<Stockfish>();
         }
 
         Game g{p1, p2, b};
