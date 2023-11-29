@@ -1,5 +1,7 @@
 #include "Game.h"
 
+using namespace std;
+
 Game::Game(Player* p1, Player* p2, Board& b): p1{p1}, p2{p2}, b{b} {}
 
 Game::~Game() {}
