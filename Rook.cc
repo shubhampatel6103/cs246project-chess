@@ -76,20 +76,20 @@ void Rook::detachFromCells(Board& b) {
 
     // The following for loop takes care of all horitonzal cells forward
     for (int c = getCol() + 1; getCol() < 8; c++) { // start from where we are + 1 to the end of the board in terms of cols (getCol() + 1 so we dont check for our own cell)
-        if (!b.board[getRow()][c].getPiece()) { // If there is no piece on that cell, then attach myself to that cell
-            b.board[getRow()][c].detach(this);
+        if (!b.getCellAt(getRow(),c).getPiece()) { // If there is no piece on that cell, then attach myself to that cell
+            b.getCellAt(getRow(),c).detach(this);
         } else { 
-            b.board[getRow()][c].detach(this);
+            b.getCellAt(getRow(),c).detach(this);
             break;
         } // Otherwise, we are being blocked so we break AFTER DETACHING
     }
 
     // The following for loop takes care of all horitonzal cells backward
     for (int c = getCol() - 1; getCol() >= 0; c--) { // start from where we are - 1 to the beginning of the board in terms of cols (getCol() - 1 so we dont check for our own cell)
-        if (!b.board[getRow()][c].getPiece()) { // If there is no piece on that cell, then attach myself to that cell
-            b.board[getRow()][c].detach(this);
+        if (!b.getCellAt(getRow(),c).getPiece()) { // If there is no piece on that cell, then attach myself to that cell
+            b.getCellAt(getRow(),c).detach(this);
         } else { 
-            b.board[getRow()][c].detach(this);
+            b.getCellAt(getRow(),c).detach(this);
             break;
         } // Otherwise, we are being blocked so we break AFTER DETACHING
     }
