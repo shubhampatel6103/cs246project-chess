@@ -4,7 +4,7 @@ Piece::Piece(char type, Colour colour): type{type}, colour{colour} {} // Initial
 
 char Piece::getType() { return type; }
 
-Piece::Colour Piece::getColour() { return colour; }
+Colour Piece::getColour() { return colour; }
 
 int Piece::getRow() { return row; }
 
