@@ -1,7 +1,7 @@
 #include "Cell.h"
 #include <vector>
 
-Cell::Cell(int row, int col, Piece::Colour colour, Piece * piece): row{row}, col{col}, colour{cellColour}, piece{piece} {}
+Cell::Cell(int row, int col, Piece::Colour colour, Piece * piece): row{row}, col{col}, cellColour{colour}, piece{piece} {}
 
 Cell::~Cell() {
     observers.clear();

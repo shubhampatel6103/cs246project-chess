@@ -1,6 +1,7 @@
 #ifndef __CELL_H__
 #define __CELL_H__
 #include "Observer.h"
+#include "Piece.h"
 #include <vector>
 class Piece;
 
