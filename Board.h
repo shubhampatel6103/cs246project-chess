@@ -10,13 +10,14 @@
 #include "Rook.h"
 #include "Knight.h"
 #include "Pawn.h"
+#include <memory>
 #include <vector>
 
 class Board {
     int size;
     bool firstPlayerTurn;
     std::vector<std::vector<Cell>> board;
-    TextDisplay * td;
+    std::unique_ptr<Observer> td;
     //GraphicsDisplay * gd;
 
 public:

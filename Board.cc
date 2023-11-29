@@ -1,6 +1,5 @@
 #include "Board.h"
 #include <vector>
-#include <memory>
 using namespace std;
 
 Board::Board(int size): size{size} {
@@ -32,20 +31,20 @@ Cell Board::getCellAt(int row, int col) { return board[row][col]; }
 bool Board::getCurrentTurn() { return firstPlayerTurn; }
 
 void Board::setupAdd(int row, int col, char piece) {
-    Piece* p = nullptr; // Should work but please double check @Shubham
-    if (piece == 'K') Piece * p = make_unique<King>(piece, Colour::White);
-    if (piece == 'Q') Piece * p = make_unique<Queen>(piece, Colour::White);
-    if (piece == 'R') Piece * p = make_unique<Rook>(piece, Colour::White);
-    if (piece == 'B') Piece * p = make_unique<Bishop>(piece, Colour::White);
-    if (piece == 'N') Piece * p = make_unique<Knight>(piece, Colour::White);
-    if (piece == 'P') Piece * p = make_unique<Pawn>(piece, Colour::White);
+    Piece* p = nullptr; 
+    if (piece == 'K') unique_ptr<Piece> p = make_unique<King>(piece, Colour::White);
+    if (piece == 'Q') unique_ptr<Piece> p = make_unique<Queen>(piece, Colour::White);
+    if (piece == 'R') unique_ptr<Piece> p = make_unique<Rook>(piece, Colour::White);
+    if (piece == 'B') unique_ptr<Piece> p = make_unique<Bishop>(piece, Colour::White);
+    if (piece == 'N') unique_ptr<Piece> p = make_unique<Knight>(piece, Colour::White);
+    if (piece == 'P') unique_ptr<Piece> p = make_unique<Pawn>(piece, Colour::White);
 
-    if (piece == 'k') Piece * p = make_unique<King>(piece, Colour::Black);
-    if (piece == 'q') Piece * p = make_unique<Queen>(piece, Colour::Black);
-    if (piece == 'r') Piece * p = make_unique<Rook>(piece, Colour::Black);
-    if (piece == 'b') Piece * p = make_unique<Bishop>(piece, Colour::Black);
-    if (piece == 'n') Piece * p = make_unique<Knight>(piece, Colour::Black);
-    if (piece == 'p') Piece * p = make_unique<Pawn>(piece, Colour::Black);
+    if (piece == 'k') unique_ptr<Piece> p = make_unique<King>(piece, Colour::Black);
+    if (piece == 'q') unique_ptr<Piece> p = make_unique<Queen>(piece, Colour::Black);
+    if (piece == 'r') unique_ptr<Piece> p = make_unique<Rook>(piece, Colour::Black);
+    if (piece == 'b') unique_ptr<Piece> p = make_unique<Bishop>(piece, Colour::Black);
+    if (piece == 'n') unique_ptr<Piece> p = make_unique<Knight>(piece, Colour::Black);
+    if (piece == 'p') unique_ptr<Piece> p = make_unique<Pawn>(piece, Colour::Black);
     
     getCellAt(row, col).addPiece(p);
 }
