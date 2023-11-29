@@ -8,7 +8,6 @@ using namespace std;
 
 int main() {
   string cmd;
-  Game g;
   Board b;
 
   while (cin >> cmd) {
@@ -39,7 +38,7 @@ int main() {
             Player * p1 = make_unique<Stockfish>();
         }
 
-        g = Game{p1, p2, b};
+        Game g{p1, p2, b};
 
     } else if (cmd == "setup") {
         string subCommand;
