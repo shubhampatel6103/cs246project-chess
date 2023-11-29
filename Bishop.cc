@@ -4,7 +4,7 @@ Bishop::Bishop(char type, Colour colour): Piece{type, colour} {}
 
 int Bishop::getPoints() { return points; }
 
-void Bishop::notify(Board &b) {
+void Bishop::notify(Cell &c, Board &b) {
     this->attachToCells(b);
 }
 

@@ -1,7 +1,7 @@
 #ifndef __BOARD_H__
 #define __BOARD_H__
 #include "Cell.h"
-#include "GraphicsDisplay.h"
+#include "Observer.h"
 #include "TextDisplay.h"
 #include <vector>
 
@@ -10,7 +10,7 @@ class Board {
     bool firstPlayerTurn;
     std::vector<std::vector<Cell>> board;
     TextDisplay * td;
-    GraphicsDisplay * gd;
+    //GraphicsDisplay * gd;
 
 public:
     Board(int size = 8);

@@ -4,19 +4,20 @@
 #include "Piece.h"
 #include <vector>
 class Piece;
+enum class Colour;
 
 class Cell {
     int row, col;
-    Piece::Colour cellColour;
+    Colour cellColour;
     Piece * piece;
     std::vector<Observer *> observers{};
 
 public:
-    Cell(int row, int col, Piece::Colour colour, Piece * piece);
+    Cell(int row, int col, Colour colour, Piece * piece);
     ~Cell();
 
     Piece * getPiece();
-    Piece::Colour getColour();
+    Colour getColour();
     int getRow();
     int getCol();
     bool hasPiece();

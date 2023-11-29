@@ -10,7 +10,7 @@ class Queen : public Piece {
         ~Queen() = default;
         
         int getPoints();
-        void notify(Cell &c) override;
+        void notify(Cell &c, Board &b) override;
         void attachToCells(Board& b) override; // Attaches self to the cells in the vertical, horizontal and diagonal directions
         void detachFromCells(Board& b) override; // Detaches self from the cells in the vertical, horizontal and diagonal directions
 };
