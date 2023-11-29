@@ -32,6 +32,7 @@ Cell Board::getCellAt(int row, int col) { return board[row][col]; }
 bool Board::getCurrentTurn() { return firstPlayerTurn; }
 
 void Board::setupAdd(int row, int col, char piece) {
+    Piece* p = nullptr; // Should work but please double check @Shubham
     if (piece == 'K') Piece * p = make_unique<King>(piece, Colour::White);
     if (piece == 'Q') Piece * p = make_unique<Queen>(piece, Colour::White);
     if (piece == 'R') Piece * p = make_unique<Rook>(piece, Colour::White);
