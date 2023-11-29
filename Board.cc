@@ -15,7 +15,7 @@ Board::Board(int size): size{size} {
             colour = ( colour == Colour::White ? Colour::Black : Colour::White);
             c.attach(td);
             c.notifyObservers();
-            c.attach(gd);
+            // c.attach(gd);
             board[i].emplace_back(c);
         }
     }
