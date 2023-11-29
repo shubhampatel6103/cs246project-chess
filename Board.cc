@@ -32,19 +32,19 @@ Cell Board::getCellAt(int row, int col) { return board[row][col]; }
 bool Board::getCurrentTurn() { return firstPlayerTurn; }
 
 void Board::setupAdd(int row, int col, char piece) {
-    if (piece == "K") Piece * p = make_unique<King>(piece, Colour::White);
-    if (piece == "Q") Piece * p = make_unique<Queen>(piece, Colour::White);
-    if (piece == "R") Piece * p = make_unique<Rook>(piece, Colour::White);
-    if (piece == "B") Piece * p = make_unique<Bishop>(piece, Colour::White);
-    if (piece == "N") Piece * p = make_unique<Knight>(piece, Colour::White);
-    if (piece == "P") Piece * p = make_unique<Pawn>(piece, Colour::White);
+    if (piece == 'K') Piece * p = make_unique<King>(piece, Colour::White);
+    if (piece == 'Q') Piece * p = make_unique<Queen>(piece, Colour::White);
+    if (piece == 'R') Piece * p = make_unique<Rook>(piece, Colour::White);
+    if (piece == 'B') Piece * p = make_unique<Bishop>(piece, Colour::White);
+    if (piece == 'N') Piece * p = make_unique<Knight>(piece, Colour::White);
+    if (piece == 'P') Piece * p = make_unique<Pawn>(piece, Colour::White);
 
-    if (piece == "k") Piece * p = make_unique<King>(piece, Colour::Black);
-    if (piece == "q") Piece * p = make_unique<Queen>(piece, Colour::Black);
-    if (piece == "r") Piece * p = make_unique<Rook>(piece, Colour::Black);
-    if (piece == "b") Piece * p = make_unique<Bishop>(piece, Colour::Black);
-    if (piece == "n") Piece * p = make_unique<Knight>(piece, Colour::Black);
-    if (piece == "p") Piece * p = make_unique<Pawn>(piece, Colour::Black);
+    if (piece == 'k') Piece * p = make_unique<King>(piece, Colour::Black);
+    if (piece == 'q') Piece * p = make_unique<Queen>(piece, Colour::Black);
+    if (piece == 'r') Piece * p = make_unique<Rook>(piece, Colour::Black);
+    if (piece == 'b') Piece * p = make_unique<Bishop>(piece, Colour::Black);
+    if (piece == 'n') Piece * p = make_unique<Knight>(piece, Colour::Black);
+    if (piece == 'p') Piece * p = make_unique<Pawn>(piece, Colour::Black);
     
     getCellAt(row, col).addPiece(p);
 }
@@ -69,12 +69,12 @@ bool Board::validBoard() {
             Piece * p = cell.getPiece();
             if (p) {
                 if (row == 0 || row == 7) {
-                    if (p->getType() == 'p' || p->getType() == "P") {
+                    if (p->getType() == 'p' || p->getType() == 'P') {
                         return false;
                     }
                 }
-                if (p->getType() == "K") ++king_white;
-                if (p->getType() == "k") ++king_black;
+                if (p->getType() == 'K') ++king_white;
+                if (p->getType() == 'k') ++king_black;
             }
         }
         ++row;
@@ -93,6 +93,6 @@ void Board::makeMove(Cell source, Cell Dest) {
     // Make move
 }
 
-ostream& Board::operator<<(ostream &out, const Board &b) {
+ostream& operator<<(ostream &out, const Board &b) {
     return out << td;
 }
