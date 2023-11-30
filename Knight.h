@@ -10,8 +10,8 @@ class Knight : public Piece {
         Knight(char type, Colour colour); // Constructs the knight piece with type = 'n' or 'N" and points = 3
         ~Knight() = default;
         int getPoints();
-        void attachToCells(Board& b) override; // Attaches self to the cells in the diagonal directions
-        //void detachFromCells(Board& b) override;
+        void attachToCells(Board& b) override; // Attaches self to the cells in all directions requried
+        void detachFromCells(Board& b) override; // Detaches self from the cells in all directions required
         void notify(Cell &c, Board &b) override;
 };
 
