@@ -7,13 +7,11 @@ Board::Board(int size): size{size} {
     //gd = make_unique<GraphicsDisplay> (size);
     for (int i = 0; i < size; ++i) {
         Colour colour = (i % 2 == 0 ? Colour::White : Colour::Black);
-        vector<Cell> row{};
-        board[i].emplace_back(row);
         for (int j = 0; j < size; ++j) {
             Cell c(i, j, colour, nullptr);
-            colour = ( colour == Colour::White ? Colour::Black : Colour::White);
+            colour = (colour == Colour::White ? Colour::Black : Colour::White);
             //c.attach(td);
-            c.notifyObservers(board);
+            c.notifyObservers(*this);
             // c.attach(gd);
             board[i].emplace_back(c);
         }
