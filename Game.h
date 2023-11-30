@@ -4,12 +4,12 @@
 #include "Board.h"
 
 class Game {
-    Player* p1;
-    Player* p2;
+    //Player* p1;
+    //Player* p2;
     Board& b;
 
     public:
-        Game(Player* p1, Player* p2, Board& b);
+        //Game(Player* p1, Player* p2, Board& b);
         ~Game();
 
         void printBoard(); // prints the board to stdout

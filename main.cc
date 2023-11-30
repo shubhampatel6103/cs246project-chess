@@ -2,7 +2,7 @@
 #include <string>
 #include "Game.h"
 #include "Board.h"
-#include "Player.h"
+//#include "Player.h"
 #include <memory>
 using namespace std;
 
@@ -12,6 +12,7 @@ int main() {
 
   while (cin >> cmd) {
     if (cmd == "game") {
+        /*
         string whitePlayer, blackPlayer;
         cin >> whitePlayer >> blackPlayer;
         if (whitePlayer == "human") {
@@ -39,6 +40,7 @@ int main() {
         }
 
         Game g{p1, p2, b};
+        */
 
     } else if (cmd == "setup") {
         string subCommand;
@@ -53,7 +55,7 @@ int main() {
             char inp_col;
             int row;
             cin >> inp_col >> row;
-            int col = imp_col - 'a';
+            int col = inp_col - 'a';
             b.setupRem(row, col);
         } else if (subCommand == "=") {
             string colour;

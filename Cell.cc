@@ -22,5 +22,5 @@ void Cell::notifyObservers() {
     }
 }
 
-void Cell::attach(Observer * o) { observers.emplace_back(o); }
-void Cell::detach(Observer * o) { observers.erase(o); }
+void Cell::attach(std::unique_ptr<Observer> o) { observers.emplace_back(o); }
+void Cell::detach(std::unique_ptr<Observer> o) { observers.erase(o); }

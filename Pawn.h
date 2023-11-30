@@ -1,6 +1,8 @@
 #ifndef __PAWN_H__
 #define __PAWN_H__
 #include "Piece.h"
+class Board;
+class Cell;
 
 class Pawn : public Piece {
     bool firstMove;
