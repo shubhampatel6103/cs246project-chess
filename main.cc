@@ -51,6 +51,7 @@ int main() {
             cin >> piece >> inp_col >> row;
             int col = inp_col - 'a';
             b.setupAdd(row, col, piece);
+            cout << b;
         } else if (subCommand == "-") {
             char inp_col;
             int row;
