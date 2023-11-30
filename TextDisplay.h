@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 #include "Observer.h"
-
+class Board;
 class Cell;
 
 class TextDisplay: public Observer {

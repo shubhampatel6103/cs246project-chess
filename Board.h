@@ -3,6 +3,7 @@
 #include "Cell.h"
 #include "Observer.h"
 #include "TextDisplay.h"
+//#include "GraphicsDisplay.h"
 #include "Piece.h"
 #include "King.h"
 #include "Queen.h"

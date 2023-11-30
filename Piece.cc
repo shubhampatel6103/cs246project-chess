@@ -13,4 +13,3 @@ int Piece::getCol() { return col; }
 void Piece::setRow(int r) { row = r; }
 
 void Piece::setCol(int c) { col = c; }
-

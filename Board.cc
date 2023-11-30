@@ -12,7 +12,7 @@ Board::Board(int size): size{size} {
         for (int j = 0; j < size; ++j) {
             Cell c(i, j, colour, nullptr);
             colour = ( colour == Colour::White ? Colour::Black : Colour::White);
-            c.attach(td);
+            //c.attach(td);
             c.notifyObservers();
             // c.attach(gd);
             board[i].emplace_back(c);
@@ -63,12 +63,12 @@ void Board::changeTurn() {
 }
 
 bool Board::validBoard() {
-    int row = 0, king_black = 0, king_white = 0;
+    int row_count = 0, king_black = 0, king_white = 0;
     for (auto row : board) {
         for (auto cell : row) {
             Piece * p = cell.getPiece();
             if (p) {
-                if (row == 0 || row == 7) {
+                if (row_count == 0 || row_count == 7) {
                     if (p->getType() == 'p' || p->getType() == 'P') {
                         return false;
                     }
@@ -77,13 +77,13 @@ bool Board::validBoard() {
                 if (p->getType() == 'k') ++king_black;
             }
         }
-        ++row;
+        ++row_count;
         if (king_black > 1 || king_white > 1) return false;
     }
     for (auto row : board) {
         for (auto cell : row) {
             Piece * p = cell.getPiece();
-            if (p) p->notify(*cell, *this);
+            if (p) p->notify(cell, *this);
         }
     }
     return true;
