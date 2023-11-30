@@ -13,7 +13,7 @@ Board::Board(int size): size{size} {
             Cell c(i, j, colour, nullptr);
             colour = ( colour == Colour::White ? Colour::Black : Colour::White);
             //c.attach(td);
-            c.notifyObservers();
+            c.notifyObservers(board);
             // c.attach(gd);
             board[i].emplace_back(c);
         }

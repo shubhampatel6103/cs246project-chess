@@ -55,4 +55,4 @@ void Knight::attachToCells(Board& b) {
 
 }
 
-//void Knight::detachFromCells(Board& b) {return;}
+void Knight::detachFromCells(Board& b) {return;}

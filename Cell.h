@@ -14,7 +14,7 @@ class Cell {
     int row, col;
     Colour cellColour;
     Piece * piece;
-    std::vector<std::unique_ptr<Observer>> observers{};
+    std::vector<Observer *> observers{};
 
 public:
     Cell(int row, int col, Colour colour, Piece * piece);
@@ -27,9 +27,9 @@ public:
     bool hasPiece();
     void addPiece(Piece * newPiece);
     void remPiece();
-    void notifyObservers();
-    void attach(std::unique_ptr<Observer> o);
-    void detach(std::unique_ptr<Observer> o);
+    void notifyObservers(Board& b);
+    void attach(Observer * o);
+    void detach(Observer * o);
 };
 
 #endif

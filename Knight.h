@@ -11,7 +11,7 @@ class Knight : public Piece {
         ~Knight() = default;
         int getPoints();
         void attachToCells(Board& b) override; // Attaches self to the cells in the diagonal directions
-        //void detachFromCells(Board& b) override;
+        void detachFromCells(Board& b) override;
         void notify(Cell &c, Board &b) override;
 };
 
