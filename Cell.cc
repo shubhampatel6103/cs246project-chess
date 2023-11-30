@@ -13,6 +13,13 @@ int Cell::getRow() { return row; }
 int Cell::getCol() { return col; }
 bool Cell::hasPiece() { return (piece ? true : false); }
 
+bool Cell::isPieceObserver(Piece * p) {
+    for (auto observer: observers) {
+        if (observer == p) return true;
+    }
+    return false;
+}
+
 void Cell::addPiece(Piece * newPiece) { piece = newPiece; }
 void Cell::remPiece() { piece = nullptr; }
 

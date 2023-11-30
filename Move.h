@@ -1,6 +1,5 @@
 #ifndef __Move_H__
 #define __Move_H__
-#include "Player.h"
 #include <iostream>
 
 class Move {
@@ -10,6 +9,7 @@ class Move {
     Move(bool r, int sX, int sY, int dX, int dY);
     ~Move() = default;
     int* getCoords();
+    bool getResigned();
     void setMove(bool r, int sX, int sY, int dX, int dY);
 };
 

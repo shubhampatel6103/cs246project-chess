@@ -2,7 +2,7 @@
 #include <string>
 #include "Game.h"
 #include "Board.h"
-//#include "Player.h"
+#include "Player.h"
 #include <memory>
 using namespace std;
 

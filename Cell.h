@@ -25,6 +25,7 @@ public:
     int getRow();
     int getCol();
     bool hasPiece();
+    bool isPieceObserver(Piece * p);
     void addPiece(Piece * newPiece);
     void remPiece();
     void notifyObservers(Board& b);
