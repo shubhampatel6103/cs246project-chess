@@ -14,8 +14,8 @@ class Game {
         ~Game();
 
         void printBoard(); // prints the board to stdout
-        void makeMove(Move& m, Piece* p); // modifies the board state
-        void playMove(int p); // plays the move on behalf of the player
+        void makeMove(Move& m); // modifies the board state
+        bool playMove(int p); // plays the move on behalf of the player
 };
 
 #endif

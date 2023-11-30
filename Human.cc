@@ -10,10 +10,10 @@ using namespace std;
 Human::Human(Colour c): Player{c} {} 
 
 void Human::move(Board &b) {
-  String s;
+  string s;
   while (true) {
     if ((cin >> s)) {
-      if (s == "move" || s == 'resign') {
+      if (s == "move" || s == "resign") {
         break;
       } else {
         cout << "Invalid command: Try Again" << endl;
@@ -25,7 +25,7 @@ void Human::move(Board &b) {
 
   if (s == "resign") {
     m.setMove(true, -1, -1, -1, -1);
-    return m;
+    return;
   }
 
   char sourceChar;
@@ -40,13 +40,13 @@ void Human::move(Board &b) {
       int sY = sourceInt - 1;
       int dX = sourceChar - 97;
       int dY = destInt - 1;
-      if (sX > 7 || sX < 0 || sY > 7 || sY < 0 || dX > 7 || dX < 0 || dY > 7 || dY < 0 ||) {
+      if (sX > 7 || sX < 0 || sY > 7 || sY < 0 || dX > 7 || dX < 0 || dY > 7 || dY < 0) {
         continue;
       }
-      if (b.getCellAt(sX, sY).hasPiece() && b.getCellAt(sX, sY).getPiece()->getColour() == id // need to fix ->getColour by changing playerId to a enumaration color
+      if (b.getCellAt(sX, sY).hasPiece() && b.getCellAt(sX, sY).getPiece()->getColour() == id 
           && b.getCellAt(dX, dY).isPieceObserver(b.getCellAt(sX, sY).getPiece())) {
         m.setMove(false, sX, sY, dX, dY);
-        return m;
+        return;
       } 
     }
   }

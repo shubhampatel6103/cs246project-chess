@@ -7,6 +7,8 @@ int* Move::getCoords() {
   return coords;
 }
 
+bool Move::getResigned() { return resign; }
+
 void Move::setMove(bool r, int sX, int sY, int dX, int dY) {
   resign = r;
   coords[0] = sX;
