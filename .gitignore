@@ -1,4 +1,5 @@
 .vscode
 *.gch
 *.o
-
+chess
+*.d
