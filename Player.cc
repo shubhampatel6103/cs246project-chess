@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Piece.h"
 
-Player::Player(int p): playerId{p} {}
+Player::Player(Colour c): id{c} {}
 

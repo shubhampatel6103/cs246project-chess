@@ -7,7 +7,7 @@
 
 using namespace std;
 
-Human::Human(int p): Player{p} {} 
+Human::Human(Colour c): Player{c} {} 
 
 void Human::move(Board &b) {
   String s;
@@ -43,11 +43,11 @@ void Human::move(Board &b) {
       if (sX > 7 || sX < 0 || sY > 7 || sY < 0 || dX > 7 || dX < 0 || dY > 7 || dY < 0 ||) {
         continue;
       }
-      if (b.getCellAt(sX, sY).hasPiece() && b.getCellAt(sX, sY).getPiece()->getColour() == playerId // need to fix ->getColour by changing playerId to a enumaration color
+      if (b.getCellAt(sX, sY).hasPiece() && b.getCellAt(sX, sY).getPiece()->getColour() == id // need to fix ->getColour by changing playerId to a enumaration color
           && b.getCellAt(dX, dY).isPieceObserver(b.getCellAt(sX, sY).getPiece())) {
         m.setMove(false, sX, sY, dX, dY);
         return m;
-      }
+      } 
     }
   }
 }

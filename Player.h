@@ -1,14 +1,16 @@
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
 
+enum Colour;
 class Move;
 class Board;
 
+
 class Player {
-  int playerId;
+  Colour id;
   Move m = Move{false, -1, -1, -1. -1};
   public:
-    Player(int p);
+    Player(Colour c);
     virtual void move(Board &b) = 0;
     ~Player() = default;
 };

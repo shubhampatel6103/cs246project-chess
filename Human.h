@@ -7,7 +7,7 @@ class Board;
 
 class Human: public Player{
   public:
-    Human(int p);
+    Human(Colour c);
     void move(Board &b) override;
     ~Human() = default;
 };
