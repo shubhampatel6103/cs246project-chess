@@ -36,18 +36,18 @@ void Board::setupAdd(int row, int col, char piece) {
     // Piece* p = nullptr; 
     unique_ptr<Piece> p = nullptr;
     if (piece == 'K') p = make_unique<King>(piece, Colour::White);
-    if (piece == 'Q') p = make_unique <Queen>(piece, Colour::White);
-    if (piece == 'R') p = make_unique <Rook>(piece, Colour::White);
-    if (piece == 'B') p = make_unique <Bishop>(piece, Colour::White);
-    if (piece == 'N') p = make_unique <Knight>(piece, Colour::White);
-    if (piece == 'P') p = make_unique <Pawn>(piece, Colour::White);
+    if (piece == 'Q') p = make_unique<Queen>(piece, Colour::White);
+    if (piece == 'R') p = make_unique<Rook>(piece, Colour::White);
+    if (piece == 'B') p = make_unique<Bishop>(piece, Colour::White);
+    if (piece == 'N') p = make_unique<Knight>(piece, Colour::White);
+    if (piece == 'P') p = make_unique<Pawn>(piece, Colour::White);
 
-    if (piece == 'k') p = make_unique <King>(piece, Colour::Black);
-    if (piece == 'q') p = make_unique <Queen>(piece, Colour::Black);
-    if (piece == 'r') p = make_unique <Rook>(piece, Colour::Black);
-    if (piece == 'b') p = make_unique <Bishop>(piece, Colour::Black);
-    if (piece == 'n') p = make_unique <Knight>(piece, Colour::Black);
-    if (piece == 'p') p = make_unique <Pawn>(piece, Colour::Black);
+    if (piece == 'k') p = make_unique<King>(piece, Colour::Black);
+    if (piece == 'q') p = make_unique<Queen>(piece, Colour::Black);
+    if (piece == 'r') p = make_unique<Rook>(piece, Colour::Black);
+    if (piece == 'b') p = make_unique<Bishop>(piece, Colour::Black);
+    if (piece == 'n') p = make_unique<Knight>(piece, Colour::Black);
+    if (piece == 'p') p = make_unique<Pawn>(piece, Colour::Black);
     
     p->setRow(row);
     p->setCol(col); 
@@ -55,7 +55,7 @@ void Board::setupAdd(int row, int col, char piece) {
 
     // board[row][col].addPiece(p.get());
     getCellAt(row, col).addPiece(p.get());
-    p->attachToCells(*this); // We need this dont we?
+    // p->attachToCells(*this); // We need this dont we?
     cout << getCellAt(row, col).getPiece() << endl;
     td->notify(getCellAt(row, col), *this);
 }
@@ -63,8 +63,7 @@ void Board::setupAdd(int row, int col, char piece) {
 void Board::setupRem(int row, int col) {
     getCellAt(row, col).remPiece();
     // board[row][col].remPiece();
-    Cell c = getCellAt(row, col);
-    td->notify(c, *this);
+    td->notify(getCellAt(row, col), *this);
     
 }
 

@@ -51,6 +51,7 @@ int main() {
                 int row;
                 cin >> piece >> inp_col >> row;
                 int col = inp_col - 'a';
+                row = 7 - (row - 1);
                 b.setupAdd(row, col, piece);
                 cout << b;
             } else if (subCommand == "-") {
@@ -58,6 +59,7 @@ int main() {
                 int row;
                 cin >> inp_col >> row;
                 int col = inp_col - 'a';
+                row = 7 - (row - 1);
                 b.setupRem(row, col);
                 cout << b;
             } else if (subCommand == "=") {
