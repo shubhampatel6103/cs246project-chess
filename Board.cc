@@ -97,7 +97,8 @@ void Board::makeMove(Cell source, Cell dest) {
     dest.addPiece(source.getPiece()); // Add the piece to the new cell
     source.getPiece()->setRow(dest.getRow()); // Change the position of the piece 
     source.getPiece()->setCol(dest.getCol());
-    source.getPiece()->attachToCells(*this);
+    source.getPiece()->attachToCells(*this); // Reattach after changing the position of the piece
+    // NOTE - We dont need to remove from the source cell 
 
     // Implement checks, checkmate
 }
