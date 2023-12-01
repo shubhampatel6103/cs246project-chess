@@ -44,30 +44,34 @@ int main() {
 
     } else if (cmd == "setup") {
         string subCommand;
-        cin >> subCommand;
-        if (subCommand == "+") {
-            char piece, inp_col;
-            int row;
-            cin >> piece >> inp_col >> row;
-            int col = inp_col - 'a';
-            b.setupAdd(row, col, piece);
-            cout << b;
-        } else if (subCommand == "-") {
-            char inp_col;
-            int row;
-            cin >> inp_col >> row;
-            int col = inp_col - 'a';
-            b.setupRem(row, col);
-        } else if (subCommand == "=") {
-            string colour;
-            cin >> colour;
-            if (colour == "White") b.setupTurn(true);
-            else if (colour == "Black") b.setupTurn(false);
-        } else if (subCommand == "done") {
-            if (b.validBoard()) break;
-            else cout << "Board setup is invalid" << endl;
-            cout << b;
+        while (1) {
+            cin >> subCommand;
+            if (subCommand == "+") {
+                char piece, inp_col;
+                int row;
+                cin >> piece >> inp_col >> row;
+                int col = inp_col - 'a';
+                b.setupAdd(row, col, piece);
+                cout << b;
+            } else if (subCommand == "-") {
+                char inp_col;
+                int row;
+                cin >> inp_col >> row;
+                int col = inp_col - 'a';
+                b.setupRem(row, col);
+                cout << b;
+            } else if (subCommand == "=") {
+                string colour;
+                cin >> colour;
+                if (colour == "White") b.setupTurn(true);
+                else if (colour == "Black") b.setupTurn(false);
+            } else if (subCommand == "done") {
+                if (b.validBoard()) break;
+                else cout << "Board setup is invalid" << endl;
+                cout << b;
+            }
         }
+        
     }
   }
 }
