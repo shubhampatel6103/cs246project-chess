@@ -33,28 +33,28 @@ Cell Board::getCellAt(int row, int col) { return board[row][col]; }
 bool Board::getCurrentTurn() { return firstPlayerTurn; }
 
 void Board::setupAdd(int row, int col, char piece) {
-    Piece* p = nullptr; 
-    // if (piece == 'K') p = make_shared<King>(piece, Colour::White);
-    if (piece == 'K') p = new King(piece, Colour::White);
-    if (piece == 'Q') p = new Queen(piece, Colour::White);
-    if (piece == 'R') p = new Rook(piece, Colour::White);
-    if (piece == 'B') p = new Bishop(piece, Colour::White);
-    if (piece == 'N') p = new Knight(piece, Colour::White);
-    if (piece == 'P') p = new Pawn(piece, Colour::White);
+    // Piece* p = nullptr; 
+    unique_ptr<Piece> p = nullptr;
+    if (piece == 'K') p = make_unique<King>(piece, Colour::White);
+    // if (piece == 'K') p = new King(piece, Colour::White);
+    // if (piece == 'Q') p = new Queen(piece, Colour::White);
+    // if (piece == 'R') p = new Rook(piece, Colour::White);
+    // if (piece == 'B') p = new Bishop(piece, Colour::White);
+    // if (piece == 'N') p = new Knight(piece, Colour::White);
+    // if (piece == 'P') p = new Pawn(piece, Colour::White);
 
-    if (piece == 'k') p = new King(piece, Colour::Black);
-    if (piece == 'q') p = new Queen(piece, Colour::Black);
-    if (piece == 'r') p = new Rook(piece, Colour::Black);
-    if (piece == 'b') p = new Bishop(piece, Colour::Black);
-    if (piece == 'n') p = new Knight(piece, Colour::Black);
-    if (piece == 'p') p = new Pawn(piece, Colour::Black);
+    // if (piece == 'k') p = new King(piece, Colour::Black);
+    // if (piece == 'q') p = new Queen(piece, Colour::Black);
+    // if (piece == 'r') p = new Rook(piece, Colour::Black);
+    // if (piece == 'b') p = new Bishop(piece, Colour::Black);
+    // if (piece == 'n') p = new Knight(piece, Colour::Black);
+    // if (piece == 'p') p = new Pawn(piece, Colour::Black);
     
     p->setRow(row);
     p->setCol(col); 
     cout << "Row: " << getCellAt(row,col).getRow() << " Col: " << getCellAt(row,col).getCol() << endl; // THIS IS WORKING
 
-    // this->getCellAt(row,col).addPiece(p);
-    board[row][col].addPiece(p);
+    board[row][col].addPiece(p.get());
     cout << getCellAt(row, col).getPiece() << endl;
     Cell c = getCellAt(row, col);
     td->notify(c, *this);
