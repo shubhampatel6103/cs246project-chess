@@ -89,8 +89,17 @@ bool Board::validBoard() {
     return true;
 }
 
-void Board::makeMove(Cell source, Cell Dest) {
+void Board::makeMove(Cell source, Cell dest) {
     // Make move
+    if (dest.getPiece()) { dest.getPiece()->detachFromCells(*this); } // Detach the piece at the destination from cells  
+    dest.remPiece(); // Remove the piece from the destination cell
+    source.getPiece()->detachFromCells(*this); // Detach from the cells the source piece is currently attached to 
+    dest.addPiece(source.getPiece()); // Add the piece to the new cell
+    source.getPiece()->setRow(dest.getRow()); // Change the position of the piece 
+    source.getPiece()->setCol(dest.getCol());
+    source.getPiece()->attachToCells(*this);
+
+    // Implement checks, checkmate
 }
 
 ostream& operator<<(ostream &out, const Board& b) {
