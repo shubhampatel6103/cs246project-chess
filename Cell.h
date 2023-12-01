@@ -14,6 +14,7 @@ class Cell {
     int row, col;
     Colour cellColour;
     Piece * piece;
+    // shared_ptr<Piece> piece;
     std::vector<Observer *> observers{};
 
 public:
@@ -21,16 +22,21 @@ public:
     ~Cell();
 
     Piece * getPiece();
+    // shared_ptr<Piece> getPiece();
     Colour getColour();
     int getRow();
     int getCol();
     bool hasPiece();
     bool isPieceObserver(Piece * p);
+    // void addPiece(shared_ptr<Piece> newPiece);
     void addPiece(Piece * newPiece);
     void remPiece();
     void notifyObservers(Board& b);
     void attach(Observer * o);
     void detach(Observer * o);
+    void setRow(int row);
+    void setCol(int col);
+    void setColour(Colour colour);
 };
 
 #endif
