@@ -55,6 +55,7 @@ void Board::setupAdd(int row, int col, char piece) {
 
     // board[row][col].addPiece(p.get());
     getCellAt(row, col).addPiece(p.get());
+    p->attachToCells(*this); // We need this dont we?
     cout << getCellAt(row, col).getPiece() << endl;
     Cell c = getCellAt(row, col);
     td->notify(c, *this);
