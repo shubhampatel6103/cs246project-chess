@@ -44,8 +44,8 @@ void Board::setupAdd(int row, int col, char piece) {
     if (piece == 'n') unique_ptr<Piece> p = make_unique<Knight>(piece, Colour::Black);
     if (piece == 'p') unique_ptr<Piece> p = make_unique<Pawn>(piece, Colour::Black);
     
+    getCellAt(row, col).addPiece(p);
     Cell c = getCellAt(row, col);
-    c.addPiece(p);
     td->notify(c, *this);
 }
 
