@@ -20,7 +20,7 @@ class TextDisplay: public Observer {
  public:
   TextDisplay();
 
-  void notify(Cell &c, Board &b) override;
+  void notify(Cell &c, Board &b);
   ~TextDisplay();
 
   friend std::ostream &operator<<(std::ostream &out, const TextDisplay &td);
