@@ -20,7 +20,8 @@ bool Cell::isPieceObserver(Piece * p) {
     return false;
 }
 
-void Cell::addPiece(Piece * newPiece) { piece = newPiece; }
+void Cell::addPiece(Piece * newPiece) { piece = std::move(newPiece); }
+
 void Cell::remPiece() { piece = nullptr; }
 
 void Cell::notifyObservers(Board& b) {
@@ -30,4 +31,12 @@ void Cell::notifyObservers(Board& b) {
 }
 
 void Cell::attach(Observer * o) { observers.emplace_back(o); }
-void Cell::detach(Observer * o) { observers.erase(std::remove(observers.begin(), observers.end(), o), observers.end()); }
+void Cell::detach(Observer * o) { 
+    // observers.erase(std::remove(observers.begin(), observers.end(), o), observers.end());
+    for (auto it = observers.begin(); it!= observers.end(); it++) {
+        if (*it == o) { 
+            observers.erase(it);
+            break;
+        }
+    }
+}
