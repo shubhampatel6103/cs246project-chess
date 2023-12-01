@@ -5,7 +5,7 @@ class Board;
 class Cell;
 
 class Pawn : public Piece {
-    bool firstMove;
+    bool firstMove = true;
     int points = 1;
 
     public:
