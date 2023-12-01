@@ -25,7 +25,7 @@ public:
     Board(int size = 8);
     ~Board();
     
-    Cell getCellAt(int row, int col);
+    Cell& getCellAt(int row, int col);
     bool getCurrentTurn();
 
     void setupAdd(int row, int col, char piece);

@@ -29,7 +29,7 @@ Board::~Board() {
     board.clear();
 }
 
-Cell Board::getCellAt(int row, int col) { return board[row][col]; }
+Cell& Board::getCellAt(int row, int col) { return board[row][col]; }
 bool Board::getCurrentTurn() { return firstPlayerTurn; }
 
 void Board::setupAdd(int row, int col, char piece) {
@@ -53,15 +53,16 @@ void Board::setupAdd(int row, int col, char piece) {
     p->setCol(col); 
     cout << "Row: " << getCellAt(row,col).getRow() << " Col: " << getCellAt(row,col).getCol() << endl; // THIS IS WORKING
 
-    board[row][col].addPiece(p.get());
+    // board[row][col].addPiece(p.get());
+    getCellAt(row, col).addPiece(p.get());
     cout << getCellAt(row, col).getPiece() << endl;
     Cell c = getCellAt(row, col);
     td->notify(c, *this);
 }
 
 void Board::setupRem(int row, int col) {
-    // getCellAt(row, col).remPiece();
-    board[row][col].remPiece();
+    getCellAt(row, col).remPiece();
+    // board[row][col].remPiece();
     Cell c = getCellAt(row, col);
     td->notify(c, *this);
     
