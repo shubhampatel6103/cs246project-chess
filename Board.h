@@ -18,7 +18,7 @@ class Board {
     int size;
     bool firstPlayerTurn;
     std::vector<std::vector<Cell>> board;
-    std::unique_ptr<Observer> td;
+    TextDisplay * td;
     //GraphicsDisplay * gd;
 
 public:

@@ -5,12 +5,12 @@ using namespace std;
 Board::Board(int size): size{size} {
     td = make_unique<TextDisplay> ();
     //gd = make_unique<GraphicsDisplay> (size);
+    board = vector<vector<Cell>>(size, vector<Cell>(size, Cell(0, 0, Colour::Black, nullptr)));
     for (int i = 0; i < size; ++i) {
-        Colour colour = (i % 2 == 0 ? Colour::White : Colour::Black);
         for (int j = 0; j < size; ++j) {
+            Colour colour = (i + j % 2 == 0 ? Colour::White : Colour::Black);
             Cell c(i, j, colour, nullptr);
-            colour = (colour == Colour::White ? Colour::Black : Colour::White);
-            //c.attach(td);
+            c.attach(td.get());
             c.notifyObservers(*this);
             // c.attach(gd);
             board[i].emplace_back(c);
@@ -92,6 +92,7 @@ void Board::makeMove(Cell source, Cell Dest) {
 }
 
 ostream& operator<<(ostream &out, const Board& b) {
-    out << b.td;
+    out << *(dynamic_cast<TextDisplay *> (b.td.get()));
+    // out << *(b.td.get());
     return out;
 }
