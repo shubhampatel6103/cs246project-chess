@@ -13,7 +13,6 @@ void Queen::notify(Cell &c, Board &b) {
 }
 
 void Queen::attachToCells(Board& b) {
-    cout << "Attach to cells begin"  << endl;
     // The following for loop takes care of vertical cells forward
     for (int r = getRow() + 1; r < 8; r++) { // start from where we are + 1 to the end of the getCellAt( in terms of rows (getRow() + 1 so we dont check for our own cell)
         if (!b.getCellAt(r, getCol()).getPiece()) { // If there is no piece on that cell, then attach myself to that cell

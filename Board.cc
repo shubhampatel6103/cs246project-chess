@@ -49,7 +49,9 @@ void Board::setupAdd(int row, int col, char piece) {
     p->setCol(col); 
 
     getCellAt(row, col).addPiece(move(p));
-    getCellAt(row, col).notifyObservers(*this); // We dont wanna call notify yet
+    getCellAt(row,col).getPiece()->attachToCells(*this);
+    getCellAt(row,col).notifyObservers(*this);
+    // getCellAt(row, col).getPiece()->attachToCells(*this); // We dont wanna call notify yet
 }
 
 void Board::setupRem(int row, int col) {

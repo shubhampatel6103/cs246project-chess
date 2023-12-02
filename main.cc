@@ -44,11 +44,13 @@ void defaultSetup(Board * b) {
     b->setupAdd(1, 6, 'p');
     b->setupAdd(1, 7, 'p');
 
-    for (int row = 0; row < 8; row++) {
-        for (int col = 0; col < 8; col++) {
-            b->getCellAt(row,col).notifyObservers(*b); // Notify after setup
-        }
-    }
+    // for (int row = 0; row < 8; row++) {
+    //     for (int col = 0; col < 8; col++) {
+    //         if (b->getCellAt(row,col).hasPiece()) {
+    //             b->getCellAt(row,col).getPiece()->attachToCells(*b);
+    //         } // Notify after setup)
+    //     }
+    // }
 
     b->setupTurn(true);
     b->validBoard();

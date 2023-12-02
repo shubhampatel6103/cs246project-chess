@@ -33,14 +33,15 @@ void Cell::setColour(Colour colour) { cellColour = colour; }
 bool Cell::hasPiece() { return (piece ? true : false); }
 
 bool Cell::isPieceObserver(Piece * p) {
-    for (auto observer: observers) {
-        cout << "P is " << p << endl;
-        if (observer == p) {
-            cout << "isPieceObserver is returning True" << endl;
+    int n = observers.size();
+    cout << n << " Observers of the cell" << endl;
+    for (int i = 0; i < n; ++i) {
+        if (observers[i] == p) {
+            cout << "returning true" << endl;
             return true;
         }
     }
-    cout << "isPieceObserver is returning False" << endl;
+    cout << "returning false " << endl;
     return false;
 }
 
