@@ -9,43 +9,43 @@ using namespace std;
 
 int BOARD_SIZE = 8;
 
-void defaultSetup(Board& b) {
-    b.setupAdd(7, 0, 'R');
-    b.setupAdd(7, 1, 'N');
-    b.setupAdd(7, 2, 'B');
-    b.setupAdd(7, 3, 'Q');
-    b.setupAdd(7, 4, 'K');
-    b.setupAdd(7, 5, 'B');
-    b.setupAdd(7, 6, 'N');
-    b.setupAdd(7, 7, 'R');
-    b.setupAdd(6, 0, 'P');
-    b.setupAdd(6, 1, 'P');
-    b.setupAdd(6, 2, 'P');
-    b.setupAdd(6, 3, 'P');
-    b.setupAdd(6, 4, 'P');
-    b.setupAdd(6, 5, 'P');
-    b.setupAdd(6, 6, 'P');
-    b.setupAdd(6, 7, 'P');
+void defaultSetup(Board * b) {
+    b->setupAdd(7, 0, 'R');
+    b->setupAdd(7, 1, 'N');
+    b->setupAdd(7, 2, 'B');
+    b->setupAdd(7, 3, 'Q');
+    b->setupAdd(7, 4, 'K');
+    b->setupAdd(7, 5, 'B');
+    b->setupAdd(7, 6, 'N');
+    b->setupAdd(7, 7, 'R');
+    b->setupAdd(6, 0, 'P');
+    b->setupAdd(6, 1, 'P');
+    b->setupAdd(6, 2, 'P');
+    b->setupAdd(6, 3, 'P');
+    b->setupAdd(6, 4, 'P');
+    b->setupAdd(6, 5, 'P');
+    b->setupAdd(6, 6, 'P');
+    b->setupAdd(6, 7, 'P');
 
-    b.setupAdd(0, 0, 'r');
-    b.setupAdd(0, 1, 'n');
-    b.setupAdd(0, 2, 'b');
-    b.setupAdd(0, 3, 'q');
-    b.setupAdd(0, 4, 'k');
-    b.setupAdd(0, 5, 'b');
-    b.setupAdd(0, 6, 'n');
-    b.setupAdd(0, 7, 'r');
-    b.setupAdd(1, 0, 'p');
-    b.setupAdd(1, 1, 'p');
-    b.setupAdd(1, 2, 'p');
-    b.setupAdd(1, 3, 'p');
-    b.setupAdd(1, 4, 'p');
-    b.setupAdd(1, 5, 'p');
-    b.setupAdd(1, 6, 'p');
-    b.setupAdd(1, 7, 'p');
+    b->setupAdd(0, 0, 'r');
+    b->setupAdd(0, 1, 'n');
+    b->setupAdd(0, 2, 'b');
+    b->setupAdd(0, 3, 'q');
+    b->setupAdd(0, 4, 'k');
+    b->setupAdd(0, 5, 'b');
+    b->setupAdd(0, 6, 'n');
+    b->setupAdd(0, 7, 'r');
+    b->setupAdd(1, 0, 'p');
+    b->setupAdd(1, 1, 'p');
+    b->setupAdd(1, 2, 'p');
+    b->setupAdd(1, 3, 'p');
+    b->setupAdd(1, 4, 'p');
+    b->setupAdd(1, 5, 'p');
+    b->setupAdd(1, 6, 'p');
+    b->setupAdd(1, 7, 'p');
 
-    b.setupTurn(true);
-    b.validBoard();
+    b->setupTurn(true);
+    b->validBoard();
 }
 
 bool validateSetupInput(int row, char col, char piece, string colour) {
@@ -115,7 +115,7 @@ int main() {
   while (cin >> cmd) {
     if (cmd == "game") {
         if (!custom_game) {
-            defaultSetup(b);
+            defaultSetup(&b);
         }
 
         string whitePlayer, blackPlayer;
@@ -146,19 +146,20 @@ int main() {
             //Player * p2 = make_unique<Stockfish>();
         }
 
-        Game g{b};
+        Game g{};
         g.setPlayers(move(p1), move(p2));
         cout << "First player:\t" << whitePlayer << endl;
         cout << "Second player:\t" << blackPlayer << endl;
-        g.printBoard();
+        cout << b;clear
+        
         while (true) {
-            if (g.playMove(1)) {
-                g.printBoard();
+            if (g.playMove(1, b)) {
+                cout << b;
             } else {
                 break;
             }
-            if (g.playMove(0)) {
-                g.printBoard();
+            if (g.playMove(0, b)) {
+                cout << b;
             } else {
                 break;
             }
