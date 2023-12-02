@@ -21,12 +21,12 @@ void Game::makeMove(Move& m) {
 
 bool Game::playMove(int p) {
     if (p == 1) { // play the move on behalf of p1 if p = 1
-        p1->move(b);
+        p1.get()->move(b);
         if (p1->getMove().getResigned()) { return false; }
         makeMove(p1->getMove());
     } 
     else { // else, play the move on behalf of p2
-        p2->move(b);
+        p2.get()->move(b);
         if (p2->getMove().getResigned()) { return false; }
         makeMove(p2->getMove());
     } // Might need to add try excepts, ideally should be handled by player class

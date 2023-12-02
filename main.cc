@@ -148,7 +148,21 @@ int main() {
 
         Game g{b};
         g.setPlayers(move(p1), move(p2));
+        cout << "First player:\t" << whitePlayer << endl;
+        cout << "Second player:\t" << blackPlayer << endl;
         g.printBoard();
+        while (true) {
+            if (g.playMove(1)) {
+                g.printBoard();
+            } else {
+                break;
+            }
+            if (g.playMove(0)) {
+                g.printBoard();
+            } else {
+                break;
+            }
+        }
 
     } else if (cmd == "setup") {
         cout << endl << "Entering SETUP mode" << endl;

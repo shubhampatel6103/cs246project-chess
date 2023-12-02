@@ -115,6 +115,6 @@ void Board::makeMove(Cell& source, Cell& dest) {
 }
 
 ostream& operator<<(ostream &out, const Board& b) {
-    out << *(dynamic_cast<TextDisplay *> (b.td.get()));
+    out << *b.td;
     return out;
 }
