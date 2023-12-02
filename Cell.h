@@ -14,7 +14,7 @@ class Cell {
     int row, col;
     Colour cellColour;
     Piece * piece;
-    // shared_ptr<Piece> piece;
+    // unique_ptr<Piece> piece;
     std::vector<Observer *> observers;
 
 public:
@@ -22,7 +22,7 @@ public:
     ~Cell();
 
     Piece * getPiece();
-    // shared_ptr<Piece> getPiece();
+    // unique_ptr<Piece> getPiece();
     Colour getColour();
     int getRow();
     int getCol();

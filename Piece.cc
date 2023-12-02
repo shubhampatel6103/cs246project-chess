@@ -1,6 +1,8 @@
 #include "Piece.h"
 
-Piece::Piece(char type, Colour colour): type{type}, colour{colour} {} // Initialize the type and colour of the piece
+Piece::Piece(char type, Colour colour): type{type}, colour{colour} {
+    row = col = -1;
+} // Initialize the type and colour of the piece
 
 char Piece::getType() { return type; }
 
