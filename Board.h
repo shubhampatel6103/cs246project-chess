@@ -33,7 +33,7 @@ public:
     void setupTurn(bool first);
     bool validBoard();
     void changeTurn();
-    void makeMove(Cell source, Cell Dest);
+    void makeMove(Cell& source, Cell& Dest);
 
     friend std::ostream &operator<<(std::ostream &out, const Board& b);
 };

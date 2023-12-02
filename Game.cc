@@ -2,12 +2,17 @@
 
 using namespace std;
 
-Game::Game(Player* p1, Player* p2, Board& b): p1{p1}, p2{p2}, b{b} {}
+Game::Game(Board& b): b{b} {}
 
 Game::~Game() {}
 
+void Game::setPlayers(unique_ptr<Player> player1, unique_ptr<Player> player2) {
+    p1 = move(player1);
+    p2 = move(player2);
+}
+
 void Game::printBoard() {
-    cout << b << endl;
+    cout << b;
 }
 
 void Game::makeMove(Move& m) {

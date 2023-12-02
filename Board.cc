@@ -5,8 +5,7 @@ using namespace std;
 Board::Board(int size): size{size} {
     td = make_unique<TextDisplay> ();
     //gd = make_unique<GraphicsDisplay> (size);
-    board = vector<vector<Cell>>(size, vector<Cell>(size, Cell(0, 0, Colour::Black, nullptr)));
-    
+    board = vector<vector<Cell>>(size, vector<Cell>(size, Cell(0, 0, Colour::Black)));
     for (int i = 0; i < size; ++i) {
         for (int j = 0; j < size; ++j) {
             Colour colour = ((i + j) % 2 == 0 ? Colour::White : Colour::Black);
@@ -49,14 +48,13 @@ void Board::setupAdd(int row, int col, char piece) {
     p->setRow(row);
     p->setCol(col); 
 
-    getCellAt(row, col).addPiece(p.get());
-    td->notify(getCellAt(row, col), *this);
+    getCellAt(row, col).addPiece(move(p));
+    getCellAt(row, col).notifyObservers(*this);
 }
 
 void Board::setupRem(int row, int col) {
     getCellAt(row, col).remPiece();
-    td->notify(getCellAt(row, col), *this);
-    
+    getCellAt(row, col).notifyObservers(*this);
 }
 
 void Board::setupTurn(bool first) {
@@ -70,22 +68,27 @@ void Board::changeTurn() {
 
 bool Board::validBoard() {
     int row_count = 0, king_black = 0, king_white = 0;
-    for (auto row : board) {
-        for (auto cell : row) {
-            Piece * p = cell.getPiece();
-            if (p) {
+    for (int i = 0; i < size; ++i) {
+        for (int j = 0; j < size; ++j) {
+            unique_ptr<Piece> p = getCellAt(i, j).getActualPiece();
+            if (p.get()) {
                 if (row_count == 0 || row_count == 7) {
                     if (p->getType() == 'p' || p->getType() == 'P') {
                         return false;
                     }
                 }
-                if (p->getType() == 'K') ++king_white;
-                if (p->getType() == 'k') ++king_black;
+                if (p->getType() == 'K') {
+                    ++king_white;
+                }
+                if (p->getType() == 'k') {
+                    ++king_black;
+                }
+                if (king_black > 1 || king_white > 1) return false;
             }
         }
         ++row_count;
-        if (king_black > 1 || king_white > 1) return false;
     }
+
     for (auto row : board) {
         for (auto cell : row) {
             Piece * p = cell.getPiece();
@@ -95,15 +98,15 @@ bool Board::validBoard() {
     return true;
 }
 
-void Board::makeMove(Cell source, Cell dest) {
+void Board::makeMove(Cell& source, Cell& dest) {
     // Make move
     if (dest.getPiece()) { dest.getPiece()->detachFromCells(*this); } // Detach the piece at the destination from cells  
     dest.remPiece(); // Remove the piece from the destination cell
     source.getPiece()->detachFromCells(*this); // Detach from the cells the source piece is currently attached to 
-    dest.addPiece(source.getPiece()); // Add the piece to the new cell
-    source.getPiece()->setRow(dest.getRow()); // Change the position of the piece 
-    source.getPiece()->setCol(dest.getCol());
-    source.getPiece()->attachToCells(*this); // Reattach after changing the position of the piece
+    dest.addPiece(source.getActualPiece()); // Add the piece to the new cell
+    dest.getPiece()->setRow(dest.getRow()); // Change the position of the piece 
+    dest.getPiece()->setCol(dest.getCol());
+    dest.getPiece()->attachToCells(*this); // Reattach after changing the position of the piece
 
     // NOTE - We dont need to remove from the source cell since adding the piece to the destination will give ownership to the destination cell
     
@@ -113,6 +116,5 @@ void Board::makeMove(Cell source, Cell dest) {
 
 ostream& operator<<(ostream &out, const Board& b) {
     out << *(dynamic_cast<TextDisplay *> (b.td.get()));
-    // out << *(b.td.get());
     return out;
 }
