@@ -44,7 +44,7 @@ void Human::move(Board &b) {
         continue;
       }
 
-      if (b.getCellAt(sX, sY).hasPiece() && b.getCellAt(sX, sY).getPiece()->getColour() == id 
+      if (b.getCellAt(sX, sY).hasPiece() && b.getCellAt(sX, sY).getPiece()->getColour() == id && b.getCellAt(dX, dY).isPieceObserver(b.getCellAt(sX, sY).getPiece())
           /*&& b.getCellAt(dX, dY).isPieceObserver(b.getCellAt(sX, sY).getPiece())*/) {
         m.setMove(false, sX, sY, dX, dY);
         return;

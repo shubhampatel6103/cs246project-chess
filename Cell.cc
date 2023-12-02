@@ -34,8 +34,13 @@ bool Cell::hasPiece() { return (piece ? true : false); }
 
 bool Cell::isPieceObserver(Piece * p) {
     for (auto observer: observers) {
-        if (observer == p) return true;
+        cout << "P is " << p << endl;
+        if (observer == p) {
+            cout << "isPieceObserver is returning True" << endl;
+            return true;
+        }
     }
+    cout << "isPieceObserver is returning False" << endl;
     return false;
 }
 

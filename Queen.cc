@@ -8,6 +8,7 @@ Queen::Queen(char type, Colour colour): Piece{type, colour} {} // Constructs the
 int Queen::getPoints() { return points; }
 
 void Queen::notify(Cell &c, Board &b) {
+    this->detachFromCells(b);
     this->attachToCells(b);
 }
 

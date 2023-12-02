@@ -6,6 +6,7 @@ Rook::Rook(char type, Colour colour): Piece{type, colour} {}
 int Rook::getPoints() { return points; }
 
 void Rook::notify(Cell &c, Board &b) {
+    this->detachFromCells(b);
     this->attachToCells(b);
 }
 

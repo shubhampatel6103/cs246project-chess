@@ -14,7 +14,7 @@ Board::Board(int size): size{size} {
             board[i][j].setColour(colour);
             board[i][j].attach(td.get());
             // c.attach(gd);
-            board[i][j].notifyObservers(*this);
+            // board[i][j].notifyObservers(*this);
         }
     }
 }
@@ -49,7 +49,7 @@ void Board::setupAdd(int row, int col, char piece) {
     p->setCol(col); 
 
     getCellAt(row, col).addPiece(move(p));
-    getCellAt(row, col).notifyObservers(*this);
+    getCellAt(row, col).notifyObservers(*this); // We dont wanna call notify yet
 }
 
 void Board::setupRem(int row, int col) {
@@ -103,6 +103,7 @@ bool Board::validBoard() {
 
 void Board::makeMove(Cell& source, Cell& dest) {
     // Make move
+
     if (dest.getPiece()) { dest.getPiece()->detachFromCells(*this); } // Detach the piece at the destination from cells  
     dest.remPiece(); // Remove the piece from the destination cell
     source.getPiece()->detachFromCells(*this); // Detach from the cells the source piece is currently attached to 

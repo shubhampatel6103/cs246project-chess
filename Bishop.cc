@@ -6,6 +6,7 @@ Bishop::Bishop(char type, Colour colour): Piece{type, colour} {}
 int Bishop::getPoints() { return points; }
 
 void Bishop::notify(Cell &c, Board &b) {
+    this->detachFromCells(b);
     this->attachToCells(b);
 }
 
@@ -18,8 +19,10 @@ void Bishop::attachToCells(Board& b) {
             b.getCellAt(r,c).attach(this);
             r++; 
             c++; // Ensures that we are moving forward in the SouthEast Direction
-        } else { 
-            b.getCellAt(r,c).attach(this);
+        } else {
+            if (b.getCellAt(r,c).getPiece()->getColour() != this->getColour()) {
+                b.getCellAt(r,c).attach(this);
+            }
             break;
         } // Otherwise, we are being blocked so we break AFTER ATTACHING
     }
@@ -34,7 +37,9 @@ void Bishop::attachToCells(Board& b) {
             r--; 
             c--; // Ensures that we are moving forward in the NorthWest Direction
         } else { 
-            b.getCellAt(r,c).attach(this);
+            if (b.getCellAt(r,c).getPiece()->getColour() != this->getColour()) {
+                b.getCellAt(r,c).attach(this);
+            }
             break;
         } // Otherwise, we are being blocked so we break AFTER ATTACHING
     }
@@ -49,7 +54,9 @@ void Bishop::attachToCells(Board& b) {
             r++; 
             c--; // Ensures that we are moving forward in the SouthWest Direction
         } else { 
-            b.getCellAt(r,c).attach(this);
+            if (b.getCellAt(r,c).getPiece()->getColour() != this->getColour()) {
+                b.getCellAt(r,c).attach(this);
+            }
             break;
         } // Otherwise, we are being blocked so we break AFTER ATTACHING
     }
@@ -63,7 +70,9 @@ void Bishop::attachToCells(Board& b) {
             r--; 
             c++; // Ensures that we are moving forward in the NorthEast Direction
         } else { 
-            b.getCellAt(r,c).attach(this);
+            if (b.getCellAt(r,c).getPiece()->getColour() != this->getColour()) {
+                b.getCellAt(r,c).attach(this);
+            }
             break;
         } // Otherwise, we are being blocked so we break AFTER ATTACHING
     }
