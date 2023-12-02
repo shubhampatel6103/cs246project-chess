@@ -150,7 +150,7 @@ int main() {
         g.setPlayers(move(p1), move(p2));
         cout << "First player:\t" << whitePlayer << endl;
         cout << "Second player:\t" << blackPlayer << endl;
-        cout << b;clear
+        cout << b;
         
         while (true) {
             if (g.playMove(1, b)) {

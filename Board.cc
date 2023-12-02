@@ -70,8 +70,8 @@ bool Board::validBoard() {
     int row_count = 0, king_black = 0, king_white = 0;
     for (int i = 0; i < size; ++i) {
         for (int j = 0; j < size; ++j) {
-            unique_ptr<Piece> p = getCellAt(i, j).getActualPiece();
-            if (p.get()) {
+            Piece * p = getCellAt(i, j).getPiece();
+            if (p) {
                 if (row_count == 0 || row_count == 7) {
                     if (p->getType() == 'p' || p->getType() == 'P') {
                         return false;
@@ -107,6 +107,9 @@ void Board::makeMove(Cell& source, Cell& dest) {
     dest.getPiece()->setRow(dest.getRow()); // Change the position of the piece 
     dest.getPiece()->setCol(dest.getCol());
     dest.getPiece()->attachToCells(*this); // Reattach after changing the position of the piece
+
+    getCellAt(source.getRow(), source.getCol()).notifyObservers(*this);
+    getCellAt(dest.getRow(), dest.getCol()).notifyObservers(*this);
 
     // NOTE - We dont need to remove from the source cell since adding the piece to the destination will give ownership to the destination cell
     

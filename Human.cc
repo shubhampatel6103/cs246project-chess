@@ -11,39 +11,44 @@ Human::Human(Colour c): Player{c} {}
 
 void Human::move(Board &b) {
   string s;
-  while (cin >> s) {
+  while (true) {
+    if ((cin >> s)) {
+      if (! (s == "move" || s == "resign")) {
+        cout << "Invalid command: Try Again" << endl;
+        continue;
+      }
+    } else {
+      cout << "Invalid command: Try Again" << endl;
+      break;
+    }
+
     if (s == "resign") {
       m.setMove(true, -1, -1, -1, -1);
       return;
     }
-    if (s == "move") {
-      char sourceChar;
-      char destChar;
-      int sourceInt;
-      int destInt;
-      while (true) {
-        if (!(cin >> sourceChar) || !(cin >> sourceInt) || !(cin >> destChar) || !(cin >> destInt)) {
-          cout << "Invalid move command: Try Again" << endl;
-          break;
-        } else {
-          int sX = sourceChar - 'a';
-          int sY = 8 - sourceInt;
-          int dX = destChar - 'a';
-          int dY = 8 - destInt;
-          if (sX > 7 || sX < 0 || sY > 7 || sY < 0 || dX > 7 || dX < 0 || dY > 7 || dY < 0) {
-            continue;
-          }
-          //cout << b.getCellAt(sY, sX).hasPiece(); // Always prints 0 even though it has piece
-                                                    // Keep happening even in other parts of the code
-          if (b.getCellAt(sY, sX).hasPiece() && b.getCellAt(sY, sX).getPiece()->getColour() == id 
-              && b.getCellAt(dY, dX).isPieceObserver(b.getCellAt(sY, sX).getPiece())) {
-            m.setMove(false, sY, sX, dY, dX);
-            return;
-          } 
-        }
-      }
+
+    char sourceChar;
+    char destChar;
+    int sourceInt;
+    int destInt;
+    if (!(cin >> sourceChar) || !(cin >> sourceInt) || !(cin >> destChar) || !(cin >> destInt)) {
+      cout << "Failed to read move coordinates: Try Again" << endl;
+      continue;
     } else {
-      cout << "Invalid command: Try Again" << endl;
+      int sY = sourceChar - 'a';
+      int sX = 7 - (sourceInt - 1);
+      int dY = destChar - 'a';
+      int dX = 7 - (destInt - 1);
+      if (sX > 7 || sX < 0 || sY > 7 || sY < 0 || dX > 7 || dX < 0 || dY > 7 || dY < 0) {
+        cout << "Inavlid move coordinates: Try Again" << endl;
+        continue;
+      }
+
+      if (b.getCellAt(sX, sY).hasPiece() && b.getCellAt(sX, sY).getPiece()->getColour() == id 
+          /*&& b.getCellAt(dX, dY).isPieceObserver(b.getCellAt(sX, sY).getPiece())*/) {
+        m.setMove(false, sX, sY, dX, dY);
+        return;
+      }
     }
   }
 }
