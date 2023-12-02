@@ -7,6 +7,8 @@ Cell::Cell(int row, int col, Colour colour): row{row}, col{col}, cellColour{colo
 
 Cell::~Cell() {
     observers.clear();
+    unique_ptr<Piece> temp = move(piece);
+    piece = nullptr;
 }
 
 Cell::Cell(const Cell &c): row{c.row}, col{c.col}, cellColour{c.cellColour} {}
@@ -28,7 +30,7 @@ int Cell::getCol() { return col; }
 void Cell::setCol(int col) { this->col = col; }
 void Cell::setRow(int row) { this->row = row; }
 void Cell::setColour(Colour colour) { cellColour = colour; }
-bool Cell::hasPiece() { return (piece.get() ? true : false); }
+bool Cell::hasPiece() { return (piece ? true : false); }
 
 bool Cell::isPieceObserver(Piece * p) {
     for (auto observer: observers) {
