@@ -54,7 +54,9 @@ int main() {
                 row = 7 - (row - 1);
                 b.setupAdd(row, col, piece);
                 //cout << "here" << endl;
-                //cout << b.getCellAt(row, col).getPiece()->getType() << endl;
+                cout << b.getCellAt(row, col).getPiece()->getType() << endl;
+                
+                cout << b;
                 b.setupRem(row, col);
                 cout << b;
             } else if (subCommand == "=") {

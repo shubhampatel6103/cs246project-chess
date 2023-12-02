@@ -37,6 +37,7 @@ bool Cell::isPieceObserver(Piece * p) {
 
 void Cell::addPiece(std::unique_ptr<Piece> newPiece) { 
     piece = move(newPiece);
+    cout << piece << endl;
 }
 
 // void Cell::addPiece(shared_ptr<Piece> newPiece) { 
