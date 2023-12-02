@@ -20,9 +20,7 @@ void Bishop::attachToCells(Board& b) {
             r++; 
             c++; // Ensures that we are moving forward in the SouthEast Direction
         } else {
-            if (b.getCellAt(r,c).getPiece()->getColour() != this->getColour()) {
-                b.getCellAt(r,c).attach(this);
-            }
+            b.getCellAt(r,c).attach(this);
             break;
         } // Otherwise, we are being blocked so we break AFTER ATTACHING
     }
@@ -37,9 +35,7 @@ void Bishop::attachToCells(Board& b) {
             r--; 
             c--; // Ensures that we are moving forward in the NorthWest Direction
         } else { 
-            if (b.getCellAt(r,c).getPiece()->getColour() != this->getColour()) {
-                b.getCellAt(r,c).attach(this);
-            }
+            b.getCellAt(r,c).attach(this);
             break;
         } // Otherwise, we are being blocked so we break AFTER ATTACHING
     }
@@ -54,9 +50,7 @@ void Bishop::attachToCells(Board& b) {
             r++; 
             c--; // Ensures that we are moving forward in the SouthWest Direction
         } else { 
-            if (b.getCellAt(r,c).getPiece()->getColour() != this->getColour()) {
-                b.getCellAt(r,c).attach(this);
-            }
+            b.getCellAt(r,c).attach(this);
             break;
         } // Otherwise, we are being blocked so we break AFTER ATTACHING
     }
@@ -70,9 +64,7 @@ void Bishop::attachToCells(Board& b) {
             r--; 
             c++; // Ensures that we are moving forward in the NorthEast Direction
         } else { 
-            if (b.getCellAt(r,c).getPiece()->getColour() != this->getColour()) {
-                b.getCellAt(r,c).attach(this);
-            }
+            b.getCellAt(r,c).attach(this);
             break;
         } // Otherwise, we are being blocked so we break AFTER ATTACHING
     }
