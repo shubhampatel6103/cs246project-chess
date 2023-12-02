@@ -25,10 +25,10 @@ Board::Board(int size): size{size} {
 }
 
 Board::~Board() {
-    // for (auto row : board) {
-    //     row.clear();
-    // }
-    // board.clear();
+    for (auto row : board) {
+        row.clear();
+    }
+    board.clear();
 }
 
 Cell& Board::getCellAt(int row, int col) { return board[row][col]; }
@@ -76,29 +76,29 @@ void Board::changeTurn() {
 }
 
 bool Board::validBoard() {
-    // int row_count = 0, king_black = 0, king_white = 0;
-    // for (auto row : board) {
-    //     for (auto cell : row) {
-    //         Piece * p = cell.getPiece();
-    //         if (p) {
-    //             if (row_count == 0 || row_count == 7) {
-    //                 if (p->getType() == 'p' || p->getType() == 'P') {
-    //                     return false;
-    //                 }
-    //             }
-    //             if (p->getType() == 'K') ++king_white;
-    //             if (p->getType() == 'k') ++king_black;
-    //         }
-    //     }
-    //     ++row_count;
-    //     if (king_black > 1 || king_white > 1) return false;
-    // }
-    // for (auto row : board) {
-    //     for (auto cell : row) {
-    //         Piece * p = cell.getPiece();
-    //         if (p) p->notify(cell, *this);
-    //     }
-    // }
+    int row_count = 0, king_black = 0, king_white = 0;
+    for (auto row : board) {
+        for (auto cell : row) {
+            Piece * p = cell.getPiece();
+            if (p) {
+                if (row_count == 0 || row_count == 7) {
+                    if (p->getType() == 'p' || p->getType() == 'P') {
+                        return false;
+                    }
+                }
+                if (p->getType() == 'K') ++king_white;
+                if (p->getType() == 'k') ++king_black;
+            }
+        }
+        ++row_count;
+        if (king_black > 1 || king_white > 1) return false;
+    }
+    for (auto row : board) {
+        for (auto cell : row) {
+            Piece * p = cell.getPiece();
+            if (p) p->notify(cell, *this);
+        }
+    }
     return true;
 }
 
