@@ -3,13 +3,22 @@
 
 using namespace std;
 
-Cell::Cell(int row, int col, Colour colour, Piece * piece): row{row}, col{col}, cellColour{colour}, piece{piece} {}
+Cell::Cell(int row, int col, Colour colour): row{row}, col{col}, cellColour{colour} {}
 
 Cell::~Cell() {
     observers.clear();
 }
 
-Piece * Cell::getPiece() { return piece; }
+Cell::Cell(const Cell &c): row{0}, col{0}, cellColour{Colour::Black}, piece{nullptr} {}
+
+Cell::Cell(Cell &&c): row{c.getRow()}, col{c.getCol()}, cellColour{c.getColour()} {
+    piece = move(c.getActualPiece());
+}
+
+Piece * Cell::getPiece() { return piece.get(); }
+unique_ptr<Piece> Cell::getActualPiece() { 
+    return move(piece);
+}
 // shared_ptr<Piece> Cell::getPiece() { return piece; }
 Colour Cell::getColour() { return cellColour; }
 int Cell::getRow() { return row; }
@@ -26,8 +35,8 @@ bool Cell::isPieceObserver(Piece * p) {
     return false;
 }
 
-void Cell::addPiece(Piece * newPiece) { 
-    piece = newPiece;
+void Cell::addPiece(std::unique_ptr<Piece> newPiece) { 
+    piece = move(newPiece);
 }
 
 // void Cell::addPiece(shared_ptr<Piece> newPiece) { 

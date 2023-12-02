@@ -5,9 +5,11 @@ using namespace std;
 Board::Board(int size): size{size} {
     td = make_unique<TextDisplay> ();
     //gd = make_unique<GraphicsDisplay> (size);
-    board = vector<vector<Cell>>(size, vector<Cell>(size, Cell(0, 0, Colour::Black, nullptr)));
-    
+    board = vector<vector<Cell>>(size, vector<Cell>(size, Cell(0, 0, Colour::Black)));
+    //board.resize(size);
     for (int i = 0; i < size; ++i) {
+        //board[i].resize(size);
+        //board.emplace_back(vector<Cell>);
         for (int j = 0; j < size; ++j) {
             Colour colour = ((i + j) % 2 == 0 ? Colour::White : Colour::Black);
             board[i][j].setRow(i);
@@ -23,10 +25,10 @@ Board::Board(int size): size{size} {
 }
 
 Board::~Board() {
-    for (auto row : board) {
-        row.clear();
-    }
-    board.clear();
+    // for (auto row : board) {
+    //     row.clear();
+    // }
+    // board.clear();
 }
 
 Cell& Board::getCellAt(int row, int col) { return board[row][col]; }
@@ -54,8 +56,8 @@ void Board::setupAdd(int row, int col, char piece) {
     cout << "Row: " << getCellAt(row,col).getRow() << " Col: " << getCellAt(row,col).getCol() << endl; // THIS IS WORKING
 
     // board[row][col].addPiece(p.get());
-    getCellAt(row, col).addPiece(p.get());
-    p->attachToCells(*this); // We need this dont we?
+    getCellAt(row, col).addPiece(move(p));
+    //p->attachToCells(*this); // We need this dont we?
     cout << getCellAt(row, col).getPiece() << endl;
     td->notify(getCellAt(row, col), *this);
 }
@@ -77,41 +79,41 @@ void Board::changeTurn() {
 }
 
 bool Board::validBoard() {
-    int row_count = 0, king_black = 0, king_white = 0;
-    for (auto row : board) {
-        for (auto cell : row) {
-            Piece * p = cell.getPiece();
-            if (p) {
-                if (row_count == 0 || row_count == 7) {
-                    if (p->getType() == 'p' || p->getType() == 'P') {
-                        return false;
-                    }
-                }
-                if (p->getType() == 'K') ++king_white;
-                if (p->getType() == 'k') ++king_black;
-            }
-        }
-        ++row_count;
-        if (king_black > 1 || king_white > 1) return false;
-    }
-    for (auto row : board) {
-        for (auto cell : row) {
-            Piece * p = cell.getPiece();
-            if (p) p->notify(cell, *this);
-        }
-    }
+    // int row_count = 0, king_black = 0, king_white = 0;
+    // for (auto row : board) {
+    //     for (auto cell : row) {
+    //         Piece * p = cell.getPiece();
+    //         if (p) {
+    //             if (row_count == 0 || row_count == 7) {
+    //                 if (p->getType() == 'p' || p->getType() == 'P') {
+    //                     return false;
+    //                 }
+    //             }
+    //             if (p->getType() == 'K') ++king_white;
+    //             if (p->getType() == 'k') ++king_black;
+    //         }
+    //     }
+    //     ++row_count;
+    //     if (king_black > 1 || king_white > 1) return false;
+    // }
+    // for (auto row : board) {
+    //     for (auto cell : row) {
+    //         Piece * p = cell.getPiece();
+    //         if (p) p->notify(cell, *this);
+    //     }
+    // }
     return true;
 }
 
-void Board::makeMove(Cell source, Cell dest) {
+void Board::makeMove(Cell& source, Cell& dest) {
     // Make move
     if (dest.getPiece()) { dest.getPiece()->detachFromCells(*this); } // Detach the piece at the destination from cells  
     dest.remPiece(); // Remove the piece from the destination cell
     source.getPiece()->detachFromCells(*this); // Detach from the cells the source piece is currently attached to 
-    dest.addPiece(source.getPiece()); // Add the piece to the new cell
-    source.getPiece()->setRow(dest.getRow()); // Change the position of the piece 
-    source.getPiece()->setCol(dest.getCol());
-    source.getPiece()->attachToCells(*this); // Reattach after changing the position of the piece
+    dest.addPiece(source.getActualPiece()); // Add the piece to the new cell
+    dest.getPiece()->setRow(dest.getRow()); // Change the position of the piece 
+    dest.getPiece()->setCol(dest.getCol());
+    dest.getPiece()->attachToCells(*this); // Reattach after changing the position of the piece
 
     // NOTE - We dont need to remove from the source cell since adding the piece to the destination will give ownership to the destination cell
     
