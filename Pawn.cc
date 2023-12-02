@@ -12,6 +12,9 @@ void Pawn::notify(Cell &c, Board &b) {
     this->attachToCells(b);    
 }
 
+void Pawn::setDoubleMove(bool b) { doubleMoved = true; }
+bool Pawn::getDoubleMove() { return doubleMoved; }
+
 void Pawn::attachToCells(Board& b) {
     if (this->getColour() == Colour::Black && this->getRow() == 1) { // For black pieces we go down the grid so increase the row number
         if (b.getCellAt(getRow() + 1, getCol()).getPiece()) { // If there is a piece in front of us when moving for the first time

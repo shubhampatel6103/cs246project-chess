@@ -44,8 +44,25 @@ void Human::move(Board &b) {
         continue;
       }
 
-      if (b.getCellAt(sX, sY).hasPiece() && b.getCellAt(sX, sY).getPiece()->getColour() == id
-          && b.getCellAt(dX, dY).isPieceObserver(b.getCellAt(sX, sY).getPiece())) {
+      if (b.getCellAt(sX, sY).hasPiece() && (b.getCellAt(sX, sY).getPiece()->getType() == 'p' || b.getCellAt(sX, sY).getPiece()->getType() == 'P')) {
+        char type = b.getCellAt(sX, sY).getPiece()->getType();
+        if (type == 'p' && (dX == sX + 1) && b.getCellAt(dX, dY).hasPiece()) {
+          cout << "Invalid move: Try Again" << endl;
+          continue;
+        } else if (type == 'P' && (dX == sX - 1) && b.getCellAt(dX, dY).hasPiece()) {
+          cout << "Invalid move: Try Again" << endl;
+          continue;
+        } else if (type == 'P' && (dX == sX - 1) && (dY == sY + 1 || dY == sY - 1) && !b.getCellAt(dX, dY).hasPiece()) {
+          cout << "Invalid move: Try Again" << endl;
+          continue;
+        } else if (type == 'p' && (dX == sX + 1) && (dY == sY + 1 || dY == sY - 1) && !b.getCellAt(dX, dY).hasPiece()) {
+          cout << "Invalid move: Try Again" << endl;
+          continue;
+        }
+      }
+
+      if (b.getCellAt(sX, sY).hasPiece() && b.getCellAt(sX, sY).getPiece()->getColour() == id && b.getCellAt(dX, dY).isPieceObserver(b.getCellAt(sX, sY).getPiece()) && 
+         (!b.getCellAt(dX, dY).hasPiece() || b.getCellAt(dX, dY).getPiece()->getColour() != id)) {
         m.setMove(false, sX, sY, dX, dY);
         return;
       } else {
