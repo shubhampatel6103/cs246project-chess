@@ -14,10 +14,8 @@ Board::Board(int size): size{size} {
             board[i][j].setCol(j);
             board[i][j].setColour(colour);
             board[i][j].attach(td.get());
-            board[i][j].notifyObservers(*this);
             // c.attach(gd);
-            // string colourstr =  board[i][j].getColour() == Colour::White ? "White" : "Black" ;
-            // cout << "Row: " << board[i][j].getRow() << " Col: " << board[i][j].getCol() << " Colour: " << colourstr << endl;
+            board[i][j].notifyObservers(*this);
         }
     }
 }
@@ -33,7 +31,6 @@ Cell& Board::getCellAt(int row, int col) { return board[row][col]; }
 bool Board::getCurrentTurn() { return firstPlayerTurn; }
 
 void Board::setupAdd(int row, int col, char piece) {
-    // Piece* p = nullptr; 
     unique_ptr<Piece> p = nullptr;
     if (piece == 'K') p = make_unique<King>(piece, Colour::White);
     if (piece == 'Q') p = make_unique<Queen>(piece, Colour::White);
@@ -51,18 +48,13 @@ void Board::setupAdd(int row, int col, char piece) {
     
     p->setRow(row);
     p->setCol(col); 
-    cout << "Row: " << getCellAt(row,col).getRow() << " Col: " << getCellAt(row,col).getCol() << endl; // THIS IS WORKING
 
-    // board[row][col].addPiece(p.get());
     getCellAt(row, col).addPiece(p.get());
-    p->attachToCells(*this); // We need this dont we?
-    cout << getCellAt(row, col).getPiece() << endl;
     td->notify(getCellAt(row, col), *this);
 }
 
 void Board::setupRem(int row, int col) {
     getCellAt(row, col).remPiece();
-    // board[row][col].remPiece();
     td->notify(getCellAt(row, col), *this);
     
 }
