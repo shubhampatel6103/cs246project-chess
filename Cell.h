@@ -13,25 +13,24 @@ enum class Colour;
 class Cell {
     int row, col;
     Colour cellColour;
-    // Piece * piece;
     std::unique_ptr<Piece> piece = nullptr;
     std::vector<Observer *> observers{};
 
 public:
-    Cell(int row = 0, int col = 0, Colour colour = Colour::Black);
-    ~Cell();
-    Cell(const Cell& c);
-    Cell(Cell&& c);
+    Cell(int row = 0, int col = 0, Colour colour = Colour::Black); // Ctor
+    ~Cell(); // Dtor
+    Cell(const Cell& c); // Copy ctor
+    Cell(Cell&& c); // Move ctor
+
     Piece * getPiece();
     std::unique_ptr<Piece> getActualPiece();
-    // shared_ptr<Piece> getPiece();
     Colour getColour();
     int getRow();
     int getCol();
+    
     bool hasPiece();
     bool isPieceObserver(Piece * p);
     void addPiece(std::unique_ptr<Piece> newPiece);
-    //void addPiece(Piece * newPiece);
     void remPiece();
     void notifyObservers(Board& b);
     void attach(Observer * o);

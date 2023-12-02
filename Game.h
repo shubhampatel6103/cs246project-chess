@@ -5,17 +5,16 @@
 #include "Move.h"
 
 class Game {
-    Player* p1;
-    Player* p2;
-    Board& b;
+    std::unique_ptr<Player> p1 = nullptr;
+    std::unique_ptr<Player> p2 = nullptr;
 
     public:
-        Game(Player* p1, Player* p2, Board& b);
+        Game();
         ~Game();
 
-        void printBoard(); // prints the board to stdout
-        void makeMove(Move& m); // modifies the board state
-        bool playMove(int p); // plays the move on behalf of the player
+        void setPlayers(std::unique_ptr<Player> player1, std::unique_ptr<Player> player2);
+        void makeMove(Move& m, Board & b); // modifies the board state
+        bool playMove(int p, Board & b); // plays the move on behalf of the player
 };
 
 #endif

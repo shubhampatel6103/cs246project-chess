@@ -6,20 +6,15 @@ Board::Board(int size): size{size} {
     td = make_unique<TextDisplay> ();
     //gd = make_unique<GraphicsDisplay> (size);
     board = vector<vector<Cell>>(size, vector<Cell>(size, Cell(0, 0, Colour::Black)));
-    //board.resize(size);
     for (int i = 0; i < size; ++i) {
-        //board[i].resize(size);
-        //board.emplace_back(vector<Cell>);
         for (int j = 0; j < size; ++j) {
             Colour colour = ((i + j) % 2 == 0 ? Colour::White : Colour::Black);
             board[i][j].setRow(i);
             board[i][j].setCol(j);
             board[i][j].setColour(colour);
             board[i][j].attach(td.get());
-            board[i][j].notifyObservers(*this);
             // c.attach(gd);
-            // string colourstr =  board[i][j].getColour() == Colour::White ? "White" : "Black" ;
-            // cout << "Row: " << board[i][j].getRow() << " Col: " << board[i][j].getCol() << " Colour: " << colourstr << endl;
+            board[i][j].notifyObservers(*this);
         }
     }
 }
@@ -35,7 +30,6 @@ Cell& Board::getCellAt(int row, int col) { return board[row][col]; }
 bool Board::getCurrentTurn() { return firstPlayerTurn; }
 
 void Board::setupAdd(int row, int col, char piece) {
-    // Piece* p = nullptr; 
     unique_ptr<Piece> p = nullptr;
     if (piece == 'K') p = make_unique<King>(piece, Colour::White);
     if (piece == 'Q') p = make_unique<Queen>(piece, Colour::White);
@@ -53,17 +47,14 @@ void Board::setupAdd(int row, int col, char piece) {
     
     p->setRow(row);
     p->setCol(col); 
-    cout << "Row: " << getCellAt(row,col).getRow() << " Col: " << getCellAt(row,col).getCol() << endl; // THIS IS WORKING
 
     getCellAt(row, col).addPiece(move(p));
-    //p->attachToCells(*this); // We need this dont we?
-    td->notify(getCellAt(row, col), *this);
+    getCellAt(row, col).notifyObservers(*this);
 }
 
 void Board::setupRem(int row, int col) {
     getCellAt(row, col).remPiece();
-    td->notify(getCellAt(row, col), *this);
-    
+    getCellAt(row, col).notifyObservers(*this);
 }
 
 void Board::setupTurn(bool first) {
@@ -77,22 +68,27 @@ void Board::changeTurn() {
 
 bool Board::validBoard() {
     int row_count = 0, king_black = 0, king_white = 0;
-    for (auto row : board) {
-        for (auto cell : row) {
-            Piece * p = cell.getPiece();
-            if (p) {
+    for (int i = 0; i < size; ++i) {
+        for (int j = 0; j < size; ++j) {
+            unique_ptr<Piece> p = getCellAt(i, j).getActualPiece();
+            if (p.get()) {
                 if (row_count == 0 || row_count == 7) {
                     if (p->getType() == 'p' || p->getType() == 'P') {
                         return false;
                     }
                 }
-                if (p->getType() == 'K') ++king_white;
-                if (p->getType() == 'k') ++king_black;
+                if (p->getType() == 'K') {
+                    ++king_white;
+                }
+                if (p->getType() == 'k') {
+                    ++king_black;
+                }
+                if (king_black > 1 || king_white > 1) return false;
             }
         }
         ++row_count;
-        if (king_black > 1 || king_white > 1) return false;
     }
+
     for (auto row : board) {
         for (auto cell : row) {
             Piece * p = cell.getPiece();
@@ -119,7 +115,6 @@ void Board::makeMove(Cell& source, Cell& dest) {
 }
 
 ostream& operator<<(ostream &out, const Board& b) {
-    out << *(dynamic_cast<TextDisplay *> (b.td.get()));
-    // out << *(b.td.get());
+    out << *b.td;
     return out;
 }
