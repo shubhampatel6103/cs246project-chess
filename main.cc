@@ -53,6 +53,7 @@ int main() {
                 int col = inp_col - 'a';
                 row = 7 - (row - 1);
                 b.setupAdd(row, col, piece);
+                cout << b.getCellAt(row,col).getPiece()->getType() << endl;
                 cout << b;
             } else if (subCommand == "-") {
                 char inp_col;

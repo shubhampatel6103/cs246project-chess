@@ -15,7 +15,7 @@ class Cell {
     Colour cellColour;
     Piece * piece;
     // shared_ptr<Piece> piece;
-    std::vector<Observer *> observers{};
+    std::vector<Observer *> observers;
 
 public:
     Cell(int row, int col, Colour colour, Piece * piece);

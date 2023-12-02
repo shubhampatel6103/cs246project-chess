@@ -53,14 +53,15 @@ void Board::setupAdd(int row, int col, char piece) {
     p->setCol(col); 
     cout << "Row: " << getCellAt(row,col).getRow() << " Col: " << getCellAt(row,col).getCol() << endl; // THIS IS WORKING
 
-    // board[row][col].addPiece(p.get());
     getCellAt(row, col).addPiece(p.get());
-    p->attachToCells(*this); // We need this dont we?
+    // p->attachToCells(*this); // This is just for testing purposes
     cout << getCellAt(row, col).getPiece() << endl;
     td->notify(getCellAt(row, col), *this);
 }
 
 void Board::setupRem(int row, int col) {
+    // cout << getCellAt(row,col).getPiece() << endl;
+    // cout << getCellAt(row,col).getPiece()->getType() << endl;
     getCellAt(row, col).remPiece();
     // board[row][col].remPiece();
     td->notify(getCellAt(row, col), *this);
