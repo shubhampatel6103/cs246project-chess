@@ -4,7 +4,7 @@ using namespace std;
 
 Board::Board(int size): size{size} {
     td = make_unique<TextDisplay> ();
-    //gd = make_unique<GraphicsDisplay> (size);
+    gd = make_unique<GraphicsDisplay> (size);
     board = vector<vector<Cell>>(size, vector<Cell>(size, Cell(0, 0, Colour::Black)));
     for (int i = 0; i < size; ++i) {
         for (int j = 0; j < size; ++j) {
@@ -13,8 +13,8 @@ Board::Board(int size): size{size} {
             board[i][j].setCol(j);
             board[i][j].setColour(colour);
             board[i][j].attach(td.get());
-            // c.attach(gd);
-            // board[i][j].notifyObservers(*this);
+            board[i][j].attach(gd.get());
+            board[i][j].notifyObservers(*this);
         }
     }
 }

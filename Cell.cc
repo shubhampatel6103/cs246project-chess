@@ -26,6 +26,7 @@ unique_ptr<Piece> Cell::getActualPiece() {
 Colour Cell::getColour() { return cellColour; }
 int Cell::getRow() { return row; }
 int Cell::getCol() { return col; }
+vector<Observer *> & Cell::getObservers() { return observers;}
 
 void Cell::setCol(int col) { this->col = col; }
 void Cell::setRow(int row) { this->row = row; }

@@ -27,6 +27,7 @@ public:
     Colour getColour();
     int getRow();
     int getCol();
+    std::vector<Observer *> & getObservers();
     
     bool hasPiece();
     bool isPieceObserver(Piece * p);
