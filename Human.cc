@@ -47,14 +47,16 @@ void Human::move(Board &b) {
       // Pawn logic (Does not cover en passant yet)
       if (b.getCellAt(sX, sY).hasPiece() && (b.getCellAt(sX, sY).getPiece()->getType() == 'p' || b.getCellAt(sX, sY).getPiece()->getType() == 'P')) {
         char type = b.getCellAt(sX, sY).getPiece()->getType();
-        if (type == 'p' && (dX == sX + 1) && b.getCellAt(dX, dY).hasPiece()) {
+        if (type == 'p' && (dX == sX + 1) && (dY == sY) && b.getCellAt(dX, dY).hasPiece()) {
           cout << "Invalid move: Try Again" << endl;
           continue;
-        } else if (type == 'P' && (dX == sX - 1) && b.getCellAt(dX, dY).hasPiece()) {
+        } else if (type == 'P' && (dX == sX - 1) && (dY == sY) && b.getCellAt(dX, dY).hasPiece()) {
           cout << "Invalid move: Try Again" << endl;
+          cout << "Check 1 " << endl;
           continue;
         } else if (type == 'P' && (dX == sX - 1) && (dY == sY + 1 || dY == sY - 1) && !b.getCellAt(dX, dY).hasPiece()) {
           cout << "Invalid move: Try Again" << endl;
+          cout << "Check 2" << endl;
           continue;
         } else if (type == 'p' && (dX == sX + 1) && (dY == sY + 1 || dY == sY - 1) && !b.getCellAt(dX, dY).hasPiece()) {
           cout << "Invalid move: Try Again" << endl;
