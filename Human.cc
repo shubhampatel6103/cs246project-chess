@@ -44,6 +44,7 @@ void Human::move(Board &b) {
         continue;
       }
 
+      // Pawn logic (Does not cover en passant yet)
       if (b.getCellAt(sX, sY).hasPiece() && (b.getCellAt(sX, sY).getPiece()->getType() == 'p' || b.getCellAt(sX, sY).getPiece()->getType() == 'P')) {
         char type = b.getCellAt(sX, sY).getPiece()->getType();
         if (type == 'p' && (dX == sX + 1) && b.getCellAt(dX, dY).hasPiece()) {
@@ -60,6 +61,63 @@ void Human::move(Board &b) {
           continue;
         }
       }
+
+      // King logic
+      if (b.getCellAt(sX, sY).hasPiece() && (b.getCellAt(sX, sY).getPiece()->getType() == 'K' || b.getCellAt(sX, sY).getPiece()->getType() == 'k')) {
+        char type = b.getCellAt(sX, sY).getPiece()->getType();
+        // White king
+        if (type == 'K' && (sX == dX) && (dY == sY + 2) && !b.getCellAt(sX, sY + 1).getPiece() && !b.getCellAt(sX, sY + 2).getPiece() &&
+            b.getCellAt(sX, sY + 3).getPiece() && b.getCellAt(sX, sY + 3).getPiece()->getType() == 'R') {
+            m.setMove(false, sX, sY, dX, dY);
+            b.getCellAt(dX, sY + 1).remPiece(); // Remove the piece from the destination cell of rook
+            b.getCellAt(dX, sY + 3).getPiece()->detachFromCells(b); // Detach from the cells the source piece is currently attached to 
+            b.getCellAt(dX, sY + 1).addPiece(b.getCellAt(dX, sY + 3).getActualPiece()); // Add the piece to the new cell
+            b.getCellAt(dX, sY + 1).getPiece()->setRow(b.getCellAt(dX, sY + 1).getRow()); // Change the position of the piece 
+            b.getCellAt(dX, sY + 1).getPiece()->setCol(b.getCellAt(dX, sY + 1).getCol());
+            b.getCellAt(dX, sY + 1).getPiece()->attachToCells(b); // Reattach after changing the position of the piece
+            b.getCellAt(dX, sY + 3).notifyObservers(b);
+            b.getCellAt(dX, sY + 1).notifyObservers(b);
+            return;
+        } else if (type == 'K' && (sX == dX) && (dY == sY - 2) && !b.getCellAt(sX, sY - 1).getPiece() && !b.getCellAt(sX, sY - 2).getPiece() &&
+                   !b.getCellAt(sX, sY - 3).getPiece() && b.getCellAt(sX, sY - 4).getPiece() && b.getCellAt(sX, sY - 4).getPiece()->getType() == 'R') {
+            m.setMove(false, sX, sY, dX, dY);
+            b.getCellAt(dX, sY - 1).remPiece(); // Remove the piece from the destination cell of rook
+            b.getCellAt(dX, sY - 4).getPiece()->detachFromCells(b); // Detach from the cells the source piece is currently attached to 
+            b.getCellAt(dX, sY - 1).addPiece(b.getCellAt(dX, sY - 4).getActualPiece()); // Add the piece to the new cell
+            b.getCellAt(dX, sY - 1).getPiece()->setRow(b.getCellAt(dX, sY - 1).getRow()); // Change the position of the piece 
+            b.getCellAt(dX, sY - 1).getPiece()->setCol(b.getCellAt(dX, sY - 1).getCol());
+            b.getCellAt(dX, sY - 1).getPiece()->attachToCells(b); // Reattach after changing the position of the piece
+            b.getCellAt(dX, sY - 4).notifyObservers(b);
+            b.getCellAt(dX, sY - 1).notifyObservers(b);
+            return;
+        // Black king
+        } else if (type == 'k' && (sX == dX) && (dY == sY - 2) && !b.getCellAt(sX, sY - 1).getPiece() && !b.getCellAt(sX, sY - 2).getPiece() &&
+                   !b.getCellAt(sX, sY - 3).getPiece() && b.getCellAt(sX, sY - 4).getPiece() && b.getCellAt(sX, sY - 4).getPiece()->getType() == 'r') {
+            m.setMove(false, sX, sY, dX, dY);
+            b.getCellAt(dX, sY - 1).remPiece(); // Remove the piece from the destination cell of rook
+            b.getCellAt(dX, sY - 4).getPiece()->detachFromCells(b); // Detach from the cells the source piece is currently attached to 
+            b.getCellAt(dX, sY - 1).addPiece(b.getCellAt(dX, sY - 4).getActualPiece()); // Add the piece to the new cell
+            b.getCellAt(dX, sY - 1).getPiece()->setRow(b.getCellAt(dX, sY - 1).getRow()); // Change the position of the piece 
+            b.getCellAt(dX, sY - 1).getPiece()->setCol(b.getCellAt(dX, sY - 1).getCol());
+            b.getCellAt(dX, sY - 1).getPiece()->attachToCells(b); // Reattach after changing the position of the piece
+            b.getCellAt(dX, sY - 4).notifyObservers(b);
+            b.getCellAt(dX, sY - 1).notifyObservers(b);  
+            return;
+        } else if (type == 'k' && (sX == dX) && (dY == sY + 2) && !b.getCellAt(sX, sY + 1).getPiece() && !b.getCellAt(sX, sY + 2).getPiece() &&
+                   b.getCellAt(sX, sY + 3).getPiece() && b.getCellAt(sX, sY + 3).getPiece()->getType() == 'r') {
+            m.setMove(false, sX, sY, dX, dY);
+            b.getCellAt(dX, sY + 1).remPiece(); // Remove the piece from the destination cell of rook
+            b.getCellAt(dX, sY + 3).getPiece()->detachFromCells(b); // Detach from the cells the source piece is currently attached to 
+            b.getCellAt(dX, sY + 1).addPiece(b.getCellAt(dX, sY + 3).getActualPiece()); // Add the piece to the new cell
+            b.getCellAt(dX, sY + 1).getPiece()->setRow(b.getCellAt(dX, sY + 1).getRow()); // Change the position of the piece 
+            b.getCellAt(dX, sY + 1).getPiece()->setCol(b.getCellAt(dX, sY + 1).getCol());
+            b.getCellAt(dX, sY + 1).getPiece()->attachToCells(b); // Reattach after changing the position of the piece
+            b.getCellAt(dX, sY + 3).notifyObservers(b);
+            b.getCellAt(dX, sY + 1).notifyObservers(b);
+            return;
+        }
+      }
+
 
       if (b.getCellAt(sX, sY).hasPiece() && b.getCellAt(sX, sY).getPiece()->getColour() == id && b.getCellAt(dX, dY).isPieceObserver(b.getCellAt(sX, sY).getPiece()) && 
          (!b.getCellAt(dX, dY).hasPiece() || b.getCellAt(dX, dY).getPiece()->getColour() != id)) {
