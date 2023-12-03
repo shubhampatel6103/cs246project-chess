@@ -3,7 +3,7 @@
 #include "Cell.h"
 #include "Observer.h"
 #include "TextDisplay.h"
-//#include "GraphicsDisplay.h"
+#include "GraphicsDisplay.h"
 #include "Piece.h"
 #include "King.h"
 #include "Queen.h"
@@ -19,7 +19,7 @@ class Board {
     bool firstPlayerTurn;
     std::vector<std::vector<Cell>> board;
     std::unique_ptr<TextDisplay> td;
-    //GraphicsDisplay * gd;
+    std::unique_ptr<GraphicsDisplay> gd;
 
 public:
     Board(int size = 8);
