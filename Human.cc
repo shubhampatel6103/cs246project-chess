@@ -44,10 +44,50 @@ void Human::move(Board &b) {
         continue;
       }
 
-      if (b.getCellAt(sX, sY).hasPiece() && b.getCellAt(sX, sY).getPiece()->getColour() == id 
-          /*&& b.getCellAt(dX, dY).isPieceObserver(b.getCellAt(sX, sY).getPiece())*/) {
-        m.setMove(false, sX, sY, dX, dY);
+      if (b.getCellAt(sX, sY).hasPiece() && b.getCellAt(sX, sY).getPiece()->getColour() == id
+          && b.getCellAt(dX, dY).isPieceObserver(b.getCellAt(sX, sY).getPiece())) {
+        if ((b.getCellAt(dX, dY).hasPiece()) && (b.getCellAt(sX, sY).getPiece()->getColour() == b.getCellAt(dX, dY).getPiece()->getColour())) {
+          cout << "Invalid move: Try Again" << endl;
+          continue; // add enpassant check next
+        } else if ((b.getCellAt(sX, sY).getPiece()->getType() == 'p' || b.getCellAt(sX, sY).getPiece()->getType() == 'P')
+                  && sY != dY && b.getCellAt(dX, dY).hasPiece()) {
+          cout << "Invalid move: Try Again" << endl;
+          continue;
+        } else {
+          m.setMove(false, sX, sY, dX, dY);
+        }
+        bool t = false;
+        unique_ptr<Piece> temp = nullptr;
+        if (b.getCellAt(dX, dY).hasPiece()) {
+          temp = b.getCellAt(dX, dY).getActualPiece();
+          temp.get()->detachFromCells(b);
+          t = true;
+        }
+        b.makeMove(b.getCellAt(sX, sY), b.getCellAt(dX, dY));
+        bool check = false;
+        for (int i = 0; i < 8; ++i) {
+          for (int j = 0; j < 8; ++j) {
+            if ((b.getCellAt(i, j).getPiece()->getType() == 'K' || b.getCellAt(i, j).getPiece()->getType() == 'k')
+                && b.getCellAt(i, j).getPiece()->getColour() == id) {
+              int n = b.getCellAt(i, j).getObservers().size();
+              for (int i = 1; i < n; ++i) {
+                Piece* observerPiece = dynamic_cast<Piece*>(b.getCellAt(i, j).getObservers()[i]);
+                if (observerPiece->getColour() != id) {
+                  cout << "Invalid move: Try Again" << endl;
+                  check = true;
+                }
+              }
+            }
+          }
+        }
+        b.makeMove(b.getCellAt(dX, dY), b.getCellAt(sX, sY));
+        if (t) {
+          b.setupAdd(dX, dY, temp.get()->getType());
+        }
+        if (check) {continue;}
         return;
+      } else {
+        cout << "Invalid move: Try Again" << endl;
       }
     }
   }

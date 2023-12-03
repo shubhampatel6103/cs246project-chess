@@ -49,10 +49,15 @@ void Board::setupAdd(int row, int col, char piece) {
     p->setCol(col); 
 
     getCellAt(row, col).addPiece(move(p));
-    getCellAt(row, col).notifyObservers(*this);
+    getCellAt(row,col).getPiece()->attachToCells(*this);
+    getCellAt(row,col).notifyObservers(*this);
+    // getCellAt(row, col).getPiece()->attachToCells(*this); // We dont wanna call notify yet
 }
 
 void Board::setupRem(int row, int col) {
+    cout << "Row: " << getCellAt(row,col).getRow() << " Col: " << getCellAt(row,col).getCol() << endl;
+    cout << getCellAt(row, col).getPiece() << endl;
+    cout << "Piece type: " << getCellAt(row, col).getPiece()->getType() << endl;
     getCellAt(row, col).remPiece();
     getCellAt(row, col).notifyObservers(*this);
 }
@@ -100,6 +105,7 @@ bool Board::validBoard() {
 
 void Board::makeMove(Cell& source, Cell& dest) {
     // Make move
+
     if (dest.getPiece()) { dest.getPiece()->detachFromCells(*this); } // Detach the piece at the destination from cells  
     dest.remPiece(); // Remove the piece from the destination cell
     source.getPiece()->detachFromCells(*this); // Detach from the cells the source piece is currently attached to 

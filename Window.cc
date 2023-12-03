@@ -35,7 +35,7 @@ Xwindow::Xwindow(int width, int height) {
   // Set up colours.
   XColor xcolour;
   Colormap cmap;
-  char color_vals[5][10]={"white", "black", "red", "green", "blue"};
+  char color_vals[5][20]={"white", "black", "red", "dark olive green", "blue"};
 
   cmap=DefaultColormap(d,DefaultScreen(d));
   for(int i=0; i < 5; ++i) {
@@ -85,8 +85,6 @@ void Xwindow::drawImage(const char * filename, int x, int y) {
 
   image.format = PNG_FORMAT_RGBA;
 
-  //png_bytep buffer;
-  //buffer = (png_bytep)malloc(PNG_IMAGE_SIZE(image));
   vector<png_byte> buffer(PNG_IMAGE_SIZE(image));
 
   if (png_image_finish_read(&image, NULL, buffer.data(), 0, NULL) == 0) {

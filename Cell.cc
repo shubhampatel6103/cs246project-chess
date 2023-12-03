@@ -26,6 +26,7 @@ unique_ptr<Piece> Cell::getActualPiece() {
 Colour Cell::getColour() { return cellColour; }
 int Cell::getRow() { return row; }
 int Cell::getCol() { return col; }
+vector<Observer *> & Cell::getObservers() { return observers;}
 
 void Cell::setCol(int col) { this->col = col; }
 void Cell::setRow(int row) { this->row = row; }
@@ -33,9 +34,15 @@ void Cell::setColour(Colour colour) { cellColour = colour; }
 bool Cell::hasPiece() { return (piece ? true : false); }
 
 bool Cell::isPieceObserver(Piece * p) {
-    for (auto observer: observers) {
-        if (observer == p) return true;
+    int n = observers.size();
+    cout << n << " Observers of the cell" << endl;
+    for (int i = 0; i < n; ++i) {
+        if (observers[i] == p) {
+            cout << "returning true" << endl;
+            return true;
+        }
     }
+    cout << "returning false " << endl;
     return false;
 }
 
