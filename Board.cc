@@ -55,9 +55,6 @@ void Board::setupAdd(int row, int col, char piece) {
 }
 
 void Board::setupRem(int row, int col) {
-    cout << "Row: " << getCellAt(row,col).getRow() << " Col: " << getCellAt(row,col).getCol() << endl;
-    cout << getCellAt(row, col).getPiece() << endl;
-    cout << "Piece type: " << getCellAt(row, col).getPiece()->getType() << endl;
     getCellAt(row, col).remPiece();
     getCellAt(row, col).notifyObservers(*this);
 }
@@ -84,22 +81,25 @@ bool Board::validBoard() {
                 }
                 if (p->getType() == 'K') {
                     ++king_white;
+                    //Cell & white_king = getCellAt(i, j);
                 }
                 if (p->getType() == 'k') {
                     ++king_black;
+                    //Cell & black_king = getCellAt(i, j);
                 }
-                if (king_black > 1 || king_white > 1) return false;
             }
         }
         ++row_count;
     }
+    if (! (king_black == 1 && king_white == 1)) return false;
 
-    for (auto row : board) {
-        for (auto cell : row) {
-            Piece * p = cell.getPiece();
-            if (p) p->notify(cell, *this);
+    for (int i = 0; i < size; ++i) {
+        for (int j = 0; j < size; ++j) {
+            Piece * p = getCellAt(i, j).getPiece();
+            if (p) p->notify(getCellAt(i, j), *this);
         }
     }
+
     return true;
 }
 
@@ -121,6 +121,18 @@ void Board::makeMove(Cell& source, Cell& dest) {
     
 
     // Implement checks, checkmate
+}
+
+void Board::clearBoard() {
+    for (int i = 0; i < size; ++i) {
+        for (int j = 0; j < size; ++j) {
+            Piece * p = getCellAt(i, j).getPiece();
+            if (p) {
+                getCellAt(i, j).remPiece();
+                getCellAt(i, j).notifyObservers(*this);
+            }
+        }
+    }
 }
 
 ostream& operator<<(ostream &out, const Board& b) {

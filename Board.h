@@ -34,7 +34,8 @@ public:
     bool validBoard();
     void changeTurn();
     void makeMove(Cell& source, Cell& Dest);
-
+    
+    void clearBoard();
     friend std::ostream &operator<<(std::ostream &out, const Board& b);
 };
 

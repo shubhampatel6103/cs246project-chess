@@ -44,14 +44,6 @@ void defaultSetup(Board * b) {
     b->setupAdd(1, 6, 'p');
     b->setupAdd(1, 7, 'p');
 
-    // for (int row = 0; row < 8; row++) {
-    //     for (int col = 0; col < 8; col++) {
-    //         if (b->getCellAt(row,col).hasPiece()) {
-    //             b->getCellAt(row,col).getPiece()->attachToCells(*b);
-    //         } // Notify after setup)
-    //     }
-    // }
-
     b->setupTurn(true);
     b->validBoard();
 }
@@ -76,7 +68,7 @@ bool validateSetupInput(int row, char col, char piece, string colour) {
         (piece != 'B') && (piece != 'b') &&
         (piece != 'N') && (piece != 'n') &&
         (piece != 'P') && (piece != 'p')) {
-        cout << "Error: Col must be between 'a' and 'h'" << endl;
+        cout << "Error: Invalid piece initial" << endl;
         input_error = true;
     }
     return input_error;
@@ -119,6 +111,7 @@ int main() {
   bool custom_game = false; // Wouldn't work perfectly, but it's fine for now
   string cmd;
   Board b;
+  int white_score = 0, black_score = 0;
 
   while (cin >> cmd) {
     if (cmd == "game") {
@@ -164,14 +157,17 @@ int main() {
             if (g.playMove(1, b)) {
                 cout << b;
             } else {
+                ++black_score;
                 break;
             }
             if (g.playMove(0, b)) {
                 cout << b;
             } else {
+                ++white_score;
                 break;
             }
         }
+        //b.clearBoard();
 
     } else if (cmd == "setup") {
         cout << endl << "Entering SETUP mode" << endl;
@@ -219,4 +215,8 @@ int main() {
         invalidCommandMsg();
     }
   }
+
+  cout << "Final Score:" << endl;
+  cout << "White: " << white_score << endl;
+  cout << "Black: " << black_score << endl;
 }

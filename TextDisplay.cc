@@ -21,11 +21,13 @@ TextDisplay::~TextDisplay() {}
 
 
 ostream &operator<<(ostream &out, const TextDisplay &td) {
+  cout << endl << "====== Current Board ======" << endl;
   for (int i = 0; i < 10; ++i) {
     for (int j = 0; j < 10; ++j) {
       out << td.theDisplay[i][j];
     }
     out << endl;
   }
+  cout << "===========================" << endl << endl;
   return out;
 }
