@@ -123,14 +123,26 @@ void Board::makeMove(Cell& source, Cell& dest) {
     // Implement checks, checkmate
 }
 
+// void Board::clearBoard() {
+//     for (int i = 0; i < size; ++i) {
+//         for (int j = 0; j < size; ++j) {
+//             Piece * p = getCellAt(i, j).getPiece();
+//             if (p) {
+//                 getCellAt(i, j).remPiece();
+//                 getCellAt(i, j).notifyObservers(*this);
+//             }
+//         }
+//     }
+// }
+
 void Board::clearBoard() {
     for (int i = 0; i < size; ++i) {
-        for (int j = 0; j < size; ++j) {
-            Piece * p = getCellAt(i, j).getPiece();
-            if (p) {
-                getCellAt(i, j).remPiece();
-                getCellAt(i, j).notifyObservers(*this);
+        for (int j = 0; j < size; j++) {
+            if (getCellAt(i,j).getPiece()) {
+                getCellAt(i,j).getPiece()->detachFromCells(*this);
+                getCellAt(i,j).remPiece();
             }
+            getCellAt(i,j).notifyObservers(*this);
         }
     }
 }

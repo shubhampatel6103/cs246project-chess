@@ -111,9 +111,9 @@ int main() {
   bool custom_game = false; // Wouldn't work perfectly, but it's fine for now
   string cmd;
   Board b;
-  int white_score = 0, black_score = 0;
+  float white_score = 0, black_score = 0;
 
-  while (cin >> cmd) {
+  while (cin >> cmd && !cin.eof()) {
     if (cmd == "game") {
         if (!custom_game) {
             defaultSetup(&b);
@@ -158,12 +158,22 @@ int main() {
                 cout << b;
             } else {
                 ++black_score;
+                b.clearBoard();
+                cout << "\nBlack wins!" << endl;
+                cout << "Scores are: " << endl;
+                cout << "White: " << white_score << endl;
+                cout << "Black: " << black_score << '\n' << endl;
                 break;
             }
             if (g.playMove(0, b)) {
                 cout << b;
             } else {
                 ++white_score;
+                b.clearBoard();
+                cout << "\nWhite wins!" << endl;
+                cout << "Scores are: " << endl;
+                cout << "White: " << white_score << endl;
+                cout << "Black: " << black_score << '\n' << endl;
                 break;
             }
         }
