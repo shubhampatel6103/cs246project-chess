@@ -8,6 +8,8 @@ Queen::Queen(char type, Colour colour): Piece{type, colour} {} // Constructs the
 int Queen::getPoints() { return points; }
 
 void Queen::notify(Cell &c, Board &b) {
+    cout << c.getRow() << c.getCol() << endl;
+    cout << "notified" << endl;
     this->detachFromCells(b);
     this->attachToCells(b);
 }
@@ -109,6 +111,7 @@ void Queen::attachToCells(Board& b) {
     while (r >= 0 && c < 8) {
         if (!b.getCellAt(r, c).getPiece()) {
             b.getCellAt(r, c).attach(this);
+            cout << "Attached to " << r << c << endl;
             r--; 
             c++; // Ensures that we are moving forward in the NorthEast Direction
         } else { 
