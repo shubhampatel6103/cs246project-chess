@@ -46,11 +46,11 @@ void Pawn::attachToCells(Board& b) {
     int r = getRow();
     int c = getCol();
     if (this->getColour() == Colour::Black) {
-        if (0 <= r + 1 && r + 1 < 8 && 0 <= c + 1 && c + 1 < 8 /* &&  b.getCellAt(r + 1,c + 1).getPiece() && b.getCellAt(r + 1,c + 1).getPiece()->getColour() == Colour::White */) { b.getCellAt(r + 1,c + 1).attach(this); cout << "Looking at enemy white" << endl;}
-        if (0 <= r + 1 && r + 1 < 8 && 0 <= c - 1 && c - 1 < 8 /* && b.getCellAt(r + 1,c - 1).getPiece() && b.getCellAt(r + 1,c - 1).getPiece()->getColour() == Colour::White */) { b.getCellAt(r + 1,c - 1).attach(this); cout << "Looking at enemy white" << endl;}
+        if (0 <= r + 1 && r + 1 < 8 && 0 <= c + 1 && c + 1 < 8 /* &&  b.getCellAt(r + 1,c + 1).getPiece() && b.getCellAt(r + 1,c + 1).getPiece()->getColour() == Colour::White */) { b.getCellAt(r + 1,c + 1).attach(this); /* cout << "Looking at enemy white" << endl; */}
+        if (0 <= r + 1 && r + 1 < 8 && 0 <= c - 1 && c - 1 < 8 /* && b.getCellAt(r + 1,c - 1).getPiece() && b.getCellAt(r + 1,c - 1).getPiece()->getColour() == Colour::White */) { b.getCellAt(r + 1,c - 1).attach(this); /* cout << "Looking at enemy white" << endl; */}
     } else {
-        if (0 <= r - 1 && r - 1 < 8 && 0 <= c + 1 && c + 1 < 8 /* && b.getCellAt(r - 1,c + 1).getPiece() && b.getCellAt(r - 1,c + 1).getPiece()->getColour() == Colour::Black */) { b.getCellAt(r - 1,c + 1).attach(this); cout << "Looking at enemy black" << endl;}
-        if (0 <= r - 1 && r - 1 < 8 && 0 <= c - 1 && c - 1 < 8 /* && b.getCellAt(r - 1,c - 1).getPiece() && b.getCellAt(r - 1,c - 1).getPiece()->getColour() == Colour::Black */) { b.getCellAt(r - 1,c - 1).attach(this); cout << "Looking at enemy black" << endl;}
+        if (0 <= r - 1 && r - 1 < 8 && 0 <= c + 1 && c + 1 < 8 /* && b.getCellAt(r - 1,c + 1).getPiece() && b.getCellAt(r - 1,c + 1).getPiece()->getColour() == Colour::Black */) { b.getCellAt(r - 1,c + 1).attach(this); /*cout << "Looking at enemy black" << endl; */}
+        if (0 <= r - 1 && r - 1 < 8 && 0 <= c - 1 && c - 1 < 8 /* && b.getCellAt(r - 1,c - 1).getPiece() && b.getCellAt(r - 1,c - 1).getPiece()->getColour() == Colour::Black */) { b.getCellAt(r - 1,c - 1).attach(this); /*cout << "Looking at enemy black" << endl; */}
     }
 
 }

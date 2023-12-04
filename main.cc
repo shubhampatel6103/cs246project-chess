@@ -71,6 +71,10 @@ bool validateSetupInput(int row, char col, char piece, string colour) {
         cout << "Error: Invalid piece initial" << endl;
         input_error = true;
     }
+    if (input_error) {
+        cin.ignore();
+        cin.clear();
+    }
     return input_error;
 }
 
@@ -95,6 +99,13 @@ void setupCommands() {
 void invalidCommandMsg() {
     cout << "Invalid command" << endl;
     cout << "Enter 'help' to see valid commands" << endl;
+}
+
+void printScores(float white_score, float black_score) {
+    cout << "\nBlack wins!" << endl;
+    cout << "Scores are: " << endl;
+    cout << "White: " << white_score << endl;
+    cout << "Black: " << black_score << '\n' << endl;
 }
 
 
@@ -154,30 +165,38 @@ int main() {
         cout << b;
         
         while (true) {
-            if (g.playMove(1, b)) {
+            if (b.getCurrentTurn()) {
+                char white_move = g.playMove(1, b);
+                if (white_move == 'n') {
+                    cout << b;
+                } else if (white_move == 'r') {
+                    ++black_score;
+                    b.clearBoard();
+                    printScores(white_score, black_score);
+                    break;
+                } else if (white_move == 'd') {
+                    white_score += 0.5;
+                    black_score += 0.5;
+                    printScores(white_score, black_score);
+                    break;
+                }
+            } else b.setupTurn(true);
+
+            char black_move = g.playMove(0, b);
+            if (black_move == 'n') {
                 cout << b;
-            } else {
-                ++black_score;
-                b.clearBoard();
-                cout << "\nBlack wins!" << endl;
-                cout << "Scores are: " << endl;
-                cout << "White: " << white_score << endl;
-                cout << "Black: " << black_score << '\n' << endl;
-                break;
-            }
-            if (g.playMove(0, b)) {
-                cout << b;
-            } else {
+            } else if (black_move == 'r') {
                 ++white_score;
                 b.clearBoard();
-                cout << "\nWhite wins!" << endl;
-                cout << "Scores are: " << endl;
-                cout << "White: " << white_score << endl;
-                cout << "Black: " << black_score << '\n' << endl;
+                printScores(white_score, black_score);
+                break;
+            } else if (black_move == 'd') {
+                white_score += 0.5;
+                black_score += 0.5;
+                printScores(white_score, black_score);
                 break;
             }
         }
-        //b.clearBoard();
 
     } else if (cmd == "setup") {
         cout << endl << "Entering SETUP mode" << endl;
