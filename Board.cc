@@ -98,7 +98,10 @@ bool Board::validBoard() {
         }
         ++row_count;
     }
-    if (! (king_black == 1 && king_white == 1)) return false;
+    if (! (king_black == 1 && king_white == 1)) {
+        cout << "Invalid number of kings" << endl;   
+        return false;
+    }
 
     for (int i = 0; i < size; ++i) {
         for (int j = 0; j < size; ++j) {
