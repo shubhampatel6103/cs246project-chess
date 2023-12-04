@@ -17,10 +17,10 @@ void Game::makeMove(Move& m, Board& b) {
     b.makeMove(b.getCellAt(m.getCoords()[0], m.getCoords()[1]), b.getCellAt(m.getCoords()[2], m.getCoords()[3]));
 }
 
-bool Game::playMove(int p, Board& b) {
+char Game::playMove(int p, Board& b) {
   if (p == 1) { // play the move on behalf of p1 if p = 1
     p1.get()->move(b);
-    if (p1->getMove().getResigned()) { return false; }
+    if (p1->getMove().getResigned()) { return 'r'; }
     makeMove(p1->getMove(), b);
 
     bool check = false;
@@ -121,17 +121,18 @@ bool Game::playMove(int p, Board& b) {
     }
 
     if (check && stalemate) {
-      cout << "Checkmate" << endl; // handle White wins
+      // cout << "Checkmate" << endl; // handle White wins
+      return 'w';
     } else if (check) {
       cout << "Black is in check" <<  endl; 
     } else if (stalemate) {
-      cout << "Stalemate: This game is a draw" << endl; // handle draw
-    } else {
-      cout << "nothing" << endl;
-    }
+      // cout << "Stalemate: This game is a draw" << endl; // handle draw
+      return 'd';
+    } 
+
   } else { // else, play the move on behalf of p2
     p2.get()->move(b);
-    if (p2->getMove().getResigned()) { return false; }
+    if (p2->getMove().getResigned()) { return 'r'; }
     makeMove(p2->getMove(), b);
 
 
@@ -233,16 +234,16 @@ bool Game::playMove(int p, Board& b) {
     }
 
     if (check && stalemate) {
-      cout << "Checkmate" << endl; // handle Black wins
+      // cout << "Checkmate" << endl; // handle Black wins
+      return 'b';
     } else if (check) {
-      cout << "White is in check" <<  endl; 
+      cout << "White is in check" <<  endl;
     } else if (stalemate) {
-      cout << "Stalemate: This game is a draw" << endl; // handle draw
-    } else {
-      cout << "nothing" << endl;
+      // cout << "Stalemate: This game is a draw" << endl; // handle draw
+      return 'd';
     }
 
 
   } // Might need to add try excepts, ideally should be handled by player class
-  return true;
+  return 'n';
 }

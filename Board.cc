@@ -4,7 +4,7 @@ using namespace std;
 
 Board::Board(int size): size{size} {
     td = make_unique<TextDisplay> ();
-    //gd = make_unique<GraphicsDisplay> (size);
+    gd = make_unique<GraphicsDisplay> (size);
     board = vector<vector<Cell>>(size, vector<Cell>(size, Cell(0, 0, Colour::Black)));
     for (int i = 0; i < size; ++i) {
         for (int j = 0; j < size; ++j) {
@@ -13,8 +13,8 @@ Board::Board(int size): size{size} {
             board[i][j].setCol(j);
             board[i][j].setColour(colour);
             board[i][j].attach(td.get());
-            // c.attach(gd);
-            // board[i][j].notifyObservers(*this);
+            board[i][j].attach(gd.get());
+            board[i][j].notifyObservers(*this);
         }
     }
 }
@@ -55,9 +55,6 @@ void Board::setupAdd(int row, int col, char piece) {
 }
 
 void Board::setupRem(int row, int col) {
-    cout << "Row: " << getCellAt(row,col).getRow() << " Col: " << getCellAt(row,col).getCol() << endl;
-    cout << getCellAt(row, col).getPiece() << endl;
-    cout << "Piece type: " << getCellAt(row, col).getPiece()->getType() << endl;
     getCellAt(row, col).remPiece();
     getCellAt(row, col).notifyObservers(*this);
 }
@@ -73,33 +70,60 @@ void Board::changeTurn() {
 
 bool Board::validBoard() {
     int row_count = 0, king_black = 0, king_white = 0;
+    int king_white_x = 0;
+    int king_white_y = 0;
+    int king_black_x = 0;
+    int king_black_y = 0;
     for (int i = 0; i < size; ++i) {
         for (int j = 0; j < size; ++j) {
             Piece * p = getCellAt(i, j).getPiece();
             if (p) {
                 if (row_count == 0 || row_count == 7) {
                     if (p->getType() == 'p' || p->getType() == 'P') {
+                        cout << "Incorrect pawn placement (on last row)" << endl;
                         return false;
                     }
                 }
                 if (p->getType() == 'K') {
                     ++king_white;
+                    king_white_x = i;
+                    king_white_y = j;
                 }
                 if (p->getType() == 'k') {
                     ++king_black;
+                    king_black_x = i;
+                    king_black_y = j;
                 }
-                if (king_black > 1 || king_white > 1) return false;
             }
         }
         ++row_count;
     }
+    if (! (king_black == 1 && king_white == 1)) {
+        cout << "Invalid number of kings" << endl;   
+        return false;
+    }
 
-    for (auto row : board) {
-        for (auto cell : row) {
-            Piece * p = cell.getPiece();
-            if (p) p->notify(cell, *this);
+    for (int i = 0; i < size; ++i) {
+        for (int j = 0; j < size; ++j) {
+            Piece * p = getCellAt(i, j).getPiece();
+            if (p) p->notify(getCellAt(i, j), *this);
         }
     }
+
+    for (unsigned long int i = 2; i < getCellAt(king_white_x, king_white_y).getObservers().size(); i++) {
+        auto p = static_cast<Piece *>(getCellAt(king_white_x, king_white_y).getObservers()[i]);
+        if (p->getColour() == Colour::Black) {
+            if (! (p->getType() == 'p' && p->getRow() == king_white_x - 1 && p->getCol() == king_white_y)) return false;
+        }
+    }
+    
+    for (unsigned long int i = 2; i < getCellAt(king_black_x, king_black_y).getObservers().size(); i++) {
+        auto p = static_cast<Piece *>(getCellAt(king_black_x, king_black_y).getObservers()[i]);
+        if (p->getColour() == Colour::White) {
+            if (! (p->getType() == 'P' && p->getRow() == king_black_x + 1 && p->getCol() == king_black_y)) return false;
+        }
+    }
+
     return true;
 }
 
@@ -121,6 +145,18 @@ void Board::makeMove(Cell& source, Cell& dest) {
     
 
     // Implement checks, checkmate
+}
+
+void Board::clearBoard() {
+    for (int i = 0; i < size; ++i) {
+        for (int j = 0; j < size; j++) {
+            if (getCellAt(i,j).getPiece()) {
+                getCellAt(i,j).getPiece()->detachFromCells(*this);
+                getCellAt(i,j).remPiece();
+            }
+            getCellAt(i,j).notifyObservers(*this);
+        }
+    }
 }
 
 ostream& operator<<(ostream &out, const Board& b) {

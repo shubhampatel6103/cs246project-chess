@@ -14,7 +14,7 @@ class Game {
 
         void setPlayers(std::unique_ptr<Player> player1, std::unique_ptr<Player> player2);
         void makeMove(Move& m, Board & b); // modifies the board state
-        bool playMove(int p, Board & b); // plays the move on behalf of the player
+        char playMove(int p, Board & b); // plays the move on behalf of the player
 };
 
 #endif

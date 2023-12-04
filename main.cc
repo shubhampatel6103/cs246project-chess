@@ -44,14 +44,6 @@ void defaultSetup(Board * b) {
     b->setupAdd(1, 6, 'p');
     b->setupAdd(1, 7, 'p');
 
-    // for (int row = 0; row < 8; row++) {
-    //     for (int col = 0; col < 8; col++) {
-    //         if (b->getCellAt(row,col).hasPiece()) {
-    //             b->getCellAt(row,col).getPiece()->attachToCells(*b);
-    //         } // Notify after setup)
-    //     }
-    // }
-
     b->setupTurn(true);
     b->validBoard();
 }
@@ -76,8 +68,12 @@ bool validateSetupInput(int row, char col, char piece, string colour) {
         (piece != 'B') && (piece != 'b') &&
         (piece != 'N') && (piece != 'n') &&
         (piece != 'P') && (piece != 'p')) {
-        cout << "Error: Col must be between 'a' and 'h'" << endl;
+        cout << "Error: Invalid piece initial" << endl;
         input_error = true;
+    }
+    if (input_error) {
+        cin.ignore();
+        cin.clear();
     }
     return input_error;
 }
@@ -105,6 +101,13 @@ void invalidCommandMsg() {
     cout << "Enter 'help' to see valid commands" << endl;
 }
 
+void printScores(float white_score, float black_score) {
+    cout << "\nBlack wins!" << endl;
+    cout << "Scores are: " << endl;
+    cout << "White: " << white_score << endl;
+    cout << "Black: " << black_score << '\n' << endl;
+}
+
 
 
 
@@ -119,8 +122,9 @@ int main() {
   bool custom_game = false; // Wouldn't work perfectly, but it's fine for now
   string cmd;
   Board b;
+  float white_score = 0, black_score = 0;
 
-  while (cin >> cmd) {
+  while (cin >> cmd && !cin.eof()) {
     if (cmd == "game") {
         if (!custom_game) {
             defaultSetup(&b);
@@ -161,14 +165,35 @@ int main() {
         cout << b;
         
         while (true) {
-            if (g.playMove(1, b)) {
+            if (b.getCurrentTurn()) {
+                char white_move = g.playMove(1, b);
+                if (white_move == 'n') {
+                    cout << b;
+                } else if (white_move == 'r') {
+                    ++black_score;
+                    b.clearBoard();
+                    printScores(white_score, black_score);
+                    break;
+                } else if (white_move == 'd') {
+                    white_score += 0.5;
+                    black_score += 0.5;
+                    printScores(white_score, black_score);
+                    break;
+                }
+            } else b.setupTurn(true);
+
+            char black_move = g.playMove(0, b);
+            if (black_move == 'n') {
                 cout << b;
-            } else {
+            } else if (black_move == 'r') {
+                ++white_score;
+                b.clearBoard();
+                printScores(white_score, black_score);
                 break;
-            }
-            if (g.playMove(0, b)) {
-                cout << b;
-            } else {
+            } else if (black_move == 'd') {
+                white_score += 0.5;
+                black_score += 0.5;
+                printScores(white_score, black_score);
                 break;
             }
         }
@@ -219,4 +244,8 @@ int main() {
         invalidCommandMsg();
     }
   }
+
+  cout << "Final Score:" << endl;
+  cout << "White: " << white_score << endl;
+  cout << "Black: " << black_score << endl;
 }

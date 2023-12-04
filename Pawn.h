@@ -5,7 +5,7 @@ class Board;
 class Cell;
 
 class Pawn : public Piece {
-    bool firstMove = true;
+    bool doubleMoved = false;
     int points = 1;
 
     public:
@@ -13,6 +13,8 @@ class Pawn : public Piece {
         ~Pawn() = default;
         int getPoints();
         void notify(Cell &c, Board &b) override;
+        void setDoubleMove(bool b);
+        bool getDoubleMove();
         void attachToCells(Board& b) override; // Attaches self to the cells in the vertical and horizontal directions
         void detachFromCells(Board& b) override; // Detaches self from the cells in the vertical and horizontal directions
 };

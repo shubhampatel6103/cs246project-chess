@@ -11,6 +11,7 @@ class Piece : public Observer {
     char type;
     Colour colour;
     int row, col;
+    bool firstMove = true;
 
     public:
         Piece(char type, Colour colour); // Initializes the object
@@ -19,6 +20,8 @@ class Piece : public Observer {
         Colour getColour(); // Returns the colour of the piece (Black or White)
         int getRow(); // Returns the row at which the piece is located on the board
         int getCol(); // Return the column at which the piece is located on the board
+        bool getFirst();
+        void setFirst(bool first);
         void setRow(int r); // Sets the row to r
         void setCol(int c); // Sets the col to c
 

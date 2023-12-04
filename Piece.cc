@@ -15,3 +15,7 @@ int Piece::getCol() { return col; }
 void Piece::setRow(int r) { row = r; }
 
 void Piece::setCol(int c) { col = c; }
+
+bool Piece::getFirst() { return firstMove; }
+
+void Piece::setFirst(bool first) { firstMove = first; }
