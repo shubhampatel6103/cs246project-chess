@@ -9,7 +9,10 @@ class Player {
   protected:
     Colour id;
     Move m{false, -1, -1, -1, -1};
-    // bool whiteCastleLong(Board &b);
+    bool whiteCastleShort(Board &b, int sX, int sY, int dX, int dY);
+    bool blackCastleShort(Board &b, int sX, int sY, int dX, int dY);
+    bool whiteCastleLong(Board &b, int sX, int sY, int dX, int dY);
+    bool blackCastleLong(Board &b, int sX, int sY, int dX, int dY);
   public:
     Player(Colour c);
     virtual void move(Board &b) = 0;
