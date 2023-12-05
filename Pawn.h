@@ -7,6 +7,7 @@ class Cell;
 class Pawn : public Piece {
     bool doubleMoved = false;
     int points = 1;
+    
 
     public:
         Pawn(char type, Colour colour); // Constructs the Pawn piece with type = 'p' and points = 1

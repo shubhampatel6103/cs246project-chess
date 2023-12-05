@@ -26,6 +26,10 @@ Board::~Board() {
     board.clear();
 }
 
+Move& Board::getLastMove() { return lastMove; }
+
+void Board::setLastMove(Move& m) { lastMove.setMove(false, m.getCoords()[0], m.getCoords()[1], m.getCoords()[2], m.getCoords()[3]); }
+
 Cell& Board::getCellAt(int row, int col) { return board[row][col]; }
 bool Board::getCurrentTurn() { return firstPlayerTurn; }
 

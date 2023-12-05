@@ -3,7 +3,7 @@
 #include "Human.h"
 #include "Board.h"
 #include "Move.h"
-
+#include <memory>
 
 using namespace std;
 
@@ -44,7 +44,80 @@ void Human::move(Board &b) {
         continue;
       }
 
+      // En pessant white takes diagonal left
+      if (b.getCellAt(sX, sY).getPiece()->getType() == 'P') {
+        if (dY < sY && sX == dX + 1 && b.getCellAt(sX, dY).hasPiece() && b.getCellAt(sX, dY).getPiece()->getType() == 'p') {
+          cout << "passes 2" << endl;
+          if ((b.getLastMove().getCoords()[2] - b.getLastMove().getCoords()[0] == 2) &&
+              b.getLastMove().getCoords()[2] == sX && b.getLastMove().getCoords()[3] == dY) {
+            b.getCellAt(sX, dY).remPiece(); 
+            b.getCellAt(sX, dY).notifyObservers(b);
+            m.setMove(false, sX, sY, sX - 1, sY - 1);
+            return;
+          }
+        }
+
+        if (dY > sY && sX == dX + 1 && b.getCellAt(sX, dY).hasPiece() && b.getCellAt(sX, dY).getPiece()->getType() == 'p') {
+          cout << "passes 2" << endl;
+          if ((b.getLastMove().getCoords()[2] - b.getLastMove().getCoords()[0] == 2) &&
+              b.getLastMove().getCoords()[2] == sX && b.getLastMove().getCoords()[3] == dY) {
+            b.getCellAt(sX, dY).remPiece(); 
+            b.getCellAt(sX, dY).notifyObservers(b);
+            m.setMove(false, sX, sY, sX - 1, sY + 1);
+            return;
+          }
+        }
+      }
+
+      if (b.getCellAt(sX, sY).getPiece()->getType() == 'p') { // If we have a black pawn
+        if (dY < sY && sX == dX - 1 && b.getCellAt(sX, dY).hasPiece() && b.getCellAt(sX, dY).getPiece()->getType() == 'P') {
+          cout << "passes 2" << endl;
+          if ((b.getLastMove().getCoords()[2] - b.getLastMove().getCoords()[0] == -2) &&
+              b.getLastMove().getCoords()[2] == sX && b.getLastMove().getCoords()[3] == dY) {
+            b.getCellAt(sX, dY).remPiece(); 
+            b.getCellAt(sX, dY).notifyObservers(b);
+            m.setMove(false, sX, sY, dX, dY);
+            return;
+          }
+        }
+
+        if (dY > sY && sX == dX - 1 && b.getCellAt(sX, dY).hasPiece() && b.getCellAt(sX, dY).getPiece()->getType() == 'P') {
+          cout << "passes 2" << endl;
+          if ((b.getLastMove().getCoords()[2] - b.getLastMove().getCoords()[0] == -2) &&
+              b.getLastMove().getCoords()[2] == sX && b.getLastMove().getCoords()[3] == dY) {
+            b.getCellAt(sX, dY).remPiece(); 
+            b.getCellAt(sX, dY).notifyObservers(b);
+            m.setMove(false, sX, sY, dX, dY);
+            return;
+          }
+        }
+      }
+
+      // // En pessant white takes diagonal right
+      // if (b.getCellAt(sX, sY).getPiece()->getType() == 'P') {
+      //   if (dY > sY && b.getCellAt(sX, dY).getPiece()->getType() == 'p') {
+      //     if (b.getCellAt(sX, dY).getPiece()->getMoves() == 1) {
+      //       b.getCellAt(sX, dY).remPiece(); 
+      //       b.getCellAt(sX, dY).notifyObservers(b);
+      //       m.setMove(false, sX, sY, sX - 1, sY + 1);
+      //       return;
+      //     }
+      //   }
+      // }
+
+      // // Black double move, set num_moves to 1
+      // if (b.getCellAt(sX, sY).getPiece()->getType() == 'p' && dX == sX + 2 && b.getCellAt(sX, sY).getPiece()->getFirst()
+      //     && !b.getCellAt(sX + 1, sY).hasPiece() && !b.getCellAt(sX + 2, sY).hasPiece()) {
+      //       b.getCellAt(sX, sY).getPiece()->setFirst(false);
+      //       b.getCellAt(sX, sY).getPiece()->incrementMoves();
+      //       m.setMove(false, sX, sY, dX, dY);
+      //       return;
+      // }
+
+
+
       // Pawn logic (Does not cover en passant yet)
+      // If we have a piece, which is a pawn (type == 'p' or 'P')
       if (b.getCellAt(sX, sY).hasPiece() && (b.getCellAt(sX, sY).getPiece()->getType() == 'p' || b.getCellAt(sX, sY).getPiece()->getType() == 'P')) {
         char type = b.getCellAt(sX, sY).getPiece()->getType();
         if (type == 'p' && (dX == sX + 1) && (dY == sY) && b.getCellAt(dX, dY).hasPiece()) {
@@ -54,12 +127,12 @@ void Human::move(Board &b) {
           cout << "Invalid move: Try Again" << endl;
           cout << "Check 1 " << endl;
           continue;
+        } else if (type == 'p' && (dX == sX + 1) && (dY == sY + 1 || dY == sY - 1) && !b.getCellAt(dX, dY).hasPiece()) {
+          cout << "Invalid move: Try Again" << endl;
+          continue;
         } else if (type == 'P' && (dX == sX - 1) && (dY == sY + 1 || dY == sY - 1) && !b.getCellAt(dX, dY).hasPiece()) {
           cout << "Invalid move: Try Again" << endl;
           cout << "Check 2" << endl;
-          continue;
-        } else if (type == 'p' && (dX == sX + 1) && (dY == sY + 1 || dY == sY - 1) && !b.getCellAt(dX, dY).hasPiece()) {
-          cout << "Invalid move: Try Again" << endl;
           continue;
         }
       }

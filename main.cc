@@ -102,7 +102,6 @@ void invalidCommandMsg() {
 }
 
 void printScores(float white_score, float black_score) {
-    cout << "\nBlack wins!" << endl;
     cout << "Scores are: " << endl;
     cout << "White: " << white_score << endl;
     cout << "Black: " << black_score << '\n' << endl;
@@ -170,13 +169,22 @@ int main() {
                 if (white_move == 'n') {
                     cout << b;
                 } else if (white_move == 'r') {
+                    cout << "\nBlack Wins!" << endl;
                     ++black_score;
                     b.clearBoard();
                     printScores(white_score, black_score);
                     break;
                 } else if (white_move == 'd') {
+                    cout << "\nGame Drawn" << endl;
                     white_score += 0.5;
                     black_score += 0.5;
+                    b.clearBoard();
+                    printScores(white_score, black_score);
+                    break;
+                } else if (white_move == 'w') {
+                    cout << "\nWhite Wins!" << endl;
+                    white_score++;
+                    b.clearBoard();
                     printScores(white_score, black_score);
                     break;
                 }
@@ -186,13 +194,21 @@ int main() {
             if (black_move == 'n') {
                 cout << b;
             } else if (black_move == 'r') {
+                cout << "\nWhite Wins!" << endl;
                 ++white_score;
                 b.clearBoard();
                 printScores(white_score, black_score);
                 break;
             } else if (black_move == 'd') {
+                cout << "\nGame Drawn" << endl;
                 white_score += 0.5;
                 black_score += 0.5;
+                printScores(white_score, black_score);
+                break;
+            } else if (black_move == 'b') {
+                cout << "\nBlack Wins!" << endl;
+                black_score++;
+                b.clearBoard();
                 printScores(white_score, black_score);
                 break;
             }
