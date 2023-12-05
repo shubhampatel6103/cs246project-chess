@@ -55,6 +55,7 @@ void Board::setupAdd(int row, int col, char piece) {
 }
 
 void Board::setupRem(int row, int col) {
+    getCellAt(row, col).getPiece()->detachFromCells(*this);
     getCellAt(row, col).remPiece();
     getCellAt(row, col).notifyObservers(*this);
 }
@@ -147,14 +148,19 @@ void Board::makeMove(Cell& source, Cell& dest) {
     // Implement checks, checkmate
 }
 
+Move& Board::getLastMove() { return lastMove; }
+
+void Board::setLastMove(Move& m) { lastMove.setMove(false, m.getCoords()[0], m.getCoords()[1], m.getCoords()[2], m.getCoords()[3]); }
+
 void Board::clearBoard() {
     for (int i = 0; i < size; ++i) {
         for (int j = 0; j < size; j++) {
             if (getCellAt(i,j).getPiece()) {
                 getCellAt(i,j).getPiece()->detachFromCells(*this);
                 getCellAt(i,j).remPiece();
+                getCellAt(i,j).notifyObservers(*this);
             }
-            getCellAt(i,j).notifyObservers(*this);
+            // getCellAt(i,j).notifyObservers(*this);
         }
     }
 }

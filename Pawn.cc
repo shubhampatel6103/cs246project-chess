@@ -17,10 +17,16 @@ bool Pawn::getDoubleMove() { return doubleMoved; }
 
 void Pawn::attachToCells(Board& b) {
     if (this->getColour() == Colour::Black && this->getRow() == 1) { // For black pieces we go down the grid so increase the row number
+        if (this->getCol() == 0 && this->getRow() == 1) {
+            cout << "a pawn" << endl;
+        }
         if (b.getCellAt(getRow() + 1, getCol()).getPiece()) { // If there is a piece in front of us when moving for the first time
             b.getCellAt(getRow() + 1, getCol()).attach(this); // We are being blocked so we only observe the cell in front of us
         } else { // Not being blocked otherwise
-            b.getCellAt(getRow() + 1, getCol()).attach(this); 
+            b.getCellAt(getRow() + 1, getCol()).attach(this);
+            if (this->getCol() == 0 && this->getRow() == 1) {
+            cout << "a pawn inside else" << endl;
+        }
             b.getCellAt(getRow() + 2, getCol()).attach(this); 
         }
     } else if (this->getColour() == Colour::White && this->getRow() == 6) { // For white pieces we go down the grid so decrease the row number

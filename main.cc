@@ -128,7 +128,7 @@ int main() {
         if (!custom_game) {
             defaultSetup(&b);
         }
-
+        
         string whitePlayer, blackPlayer;
         cin >> whitePlayer >> blackPlayer;
         unique_ptr<Player> p1 = nullptr;
@@ -203,6 +203,7 @@ int main() {
                 cout << "\nGame Drawn" << endl;
                 white_score += 0.5;
                 black_score += 0.5;
+                b.clearBoard();
                 printScores(white_score, black_score);
                 break;
             } else if (black_move == 'b') {
@@ -213,6 +214,7 @@ int main() {
                 break;
             }
         }
+        custom_game = false;
 
     } else if (cmd == "setup") {
         cout << endl << "Entering SETUP mode" << endl;
@@ -225,6 +227,9 @@ int main() {
                 if (validateSetupInput(row, inp_col, piece, "white")) continue;
                 int col = inp_col - 'a';
                 row = BOARD_SIZE - row;
+                if (b.getCellAt(row, col).hasPiece()) {
+                    b.setupRem(row, col);
+                }
                 b.setupAdd(row, col, piece);
                 cout << b;
             } else if (subCommand == "-") {
@@ -234,7 +239,9 @@ int main() {
                 if (validateSetupInput(row, inp_col, 'K', "white")) continue;
                 int col = inp_col - 'a';
                 row = BOARD_SIZE - row;
-                b.setupRem(row, col);
+                if (b.getCellAt(row, col).hasPiece()) {
+                    b.setupRem(row, col);
+                }
                 cout << b;
             } else if (subCommand == "=") {
                 string colour;

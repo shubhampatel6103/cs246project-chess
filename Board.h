@@ -11,12 +11,14 @@
 #include "Rook.h"
 #include "Knight.h"
 #include "Pawn.h"
+#include "Move.h"
 #include <memory>
 #include <vector>
 
 class Board {
     int size;
-    bool firstPlayerTurn;
+    bool firstPlayerTurn = true;
+    Move lastMove{false, -1, -1, -1, -1};
     std::vector<std::vector<Cell>> board;
     std::unique_ptr<TextDisplay> td;
     std::unique_ptr<GraphicsDisplay> gd;
@@ -34,7 +36,9 @@ public:
     bool validBoard();
     void changeTurn();
     void makeMove(Cell& source, Cell& Dest);
-    
+    void setLastMove(Move& m);
+    Move& getLastMove();
+
     void clearBoard();
     friend std::ostream &operator<<(std::ostream &out, const Board& b);
 };
