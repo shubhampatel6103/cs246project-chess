@@ -162,7 +162,7 @@ void Human::move(Board &b) {
             temp.get()->detachFromCells(b);
             t = true;
           }
-          
+
           b.makeMove(b.getCellAt(sX, sY), b.getCellAt(dX, dY));
           bool check = false;
           for (int i = 0; i < 8 && (!check); ++i) {
@@ -234,7 +234,7 @@ void Human::move(Board &b) {
               }
             }
           }
-          
+          b.getCellAt(sX, sY).getPiece()->setFirst(false);
           return;
         } else {
           // if (!b.getCellAt(sX, sY).hasPiece()) {

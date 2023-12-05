@@ -93,6 +93,7 @@ char Game::playMove(int p, Board& b) {
               temp.get()->detachFromCells(b);
               t = true;
             }
+            cout << "row, col:" << observerPiece->getRow() << observerPiece->getCol() << endl;
             b.makeMove(b.getCellAt(observerPiece->getRow(), observerPiece->getCol()), b.getCellAt(i, j));
             bool isMoveInCheck = false;
             cout << "000" << endl;
@@ -111,7 +112,7 @@ char Game::playMove(int p, Board& b) {
                   for (int z = 2; z < observer_size && (!isMoveInCheck); ++z) { // change to 2
                     Piece* observerPiece = dynamic_cast<Piece*>(temp_observers[z]);
                     if (observerPiece->getColour() != Colour::Black) {
-                      if (observerPiece->getType() == 'P' && j == observerPiece->getCol()) {
+                      if (observerPiece->getType() == 'P' && h == observerPiece->getCol()) {
                         continue;
                       }
                       isMoveInCheck = true;

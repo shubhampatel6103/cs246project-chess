@@ -4,6 +4,7 @@
 #include "Board.h"
 #include "Player.h"
 #include "Human.h"
+#include "LevelOne.h"
 #include <memory>
 using namespace std;
 
@@ -136,7 +137,7 @@ int main() {
         if (whitePlayer == "human") {
             p1 = make_unique<Human>(Colour::White);
         } else if (whitePlayer == "computer1") {
-            //Player * p1 = make_unique<Noob>();
+            p1 = make_unique<LevelOne>(Colour::White);
         } else if (whitePlayer == "computer2") {
             //Player * p1 = make_unique<Pro>();
         } else if (whitePlayer == "computer3") {
@@ -148,7 +149,7 @@ int main() {
         if (blackPlayer == "human") {
             p2 = make_unique<Human>(Colour::Black);
         } else if (blackPlayer == "computer1") {
-            //Player * p2 = make_unique<Noob>();
+            p2 = make_unique<LevelOne>(Colour::Black);
         } else if (blackPlayer == "computer2") {
             //Player * p2 = make_unique<Pro>();
         } else if (blackPlayer == "computer3") {
