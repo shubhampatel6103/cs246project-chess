@@ -27,7 +27,7 @@ class Piece : public Observer {
 
         virtual void attachToCells(Board& b) = 0; // Attaches the piece to the cells required
         virtual void detachFromCells(Board& b) = 0; // Detaches the piece from the cells required
-        void notify(Cell &c, Board &b) = 0; // Abstract method
+        virtual void notify(Cell &c, Board &b) = 0; // Abstract method
 };
 
 #endif

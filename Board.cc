@@ -131,8 +131,11 @@ bool Board::validBoard() {
 void Board::makeMove(Cell& source, Cell& dest) {
     // Make move
 
-    if (dest.getPiece()) { dest.getPiece()->detachFromCells(*this); } // Detach the piece at the destination from cells  
-    dest.remPiece(); // Remove the piece from the destination cell
+    if (dest.getPiece()) { 
+        dest.getPiece()->detachFromCells(*this);
+        dest.remPiece();
+    } // Detach the piece at the destination from cells  
+    // dest.remPiece(); // Remove the piece from the destination cell
     source.getPiece()->detachFromCells(*this); // Detach from the cells the source piece is currently attached to 
     dest.addPiece(source.getActualPiece()); // Add the piece to the new cell
     dest.getPiece()->setRow(dest.getRow()); // Change the position of the piece 

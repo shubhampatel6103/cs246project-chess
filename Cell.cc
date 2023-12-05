@@ -20,7 +20,10 @@ Cell::Cell(Cell &&c): row{c.getRow()}, col{c.getCol()}, cellColour{c.getColour()
 Piece * Cell::getPiece() { return piece.get(); }
 
 unique_ptr<Piece> Cell::getActualPiece() { 
-    return move(piece);
+    unique_ptr<Piece> temp = move(piece);
+    piece = nullptr;
+    
+    return move(temp);
 }
 
 Colour Cell::getColour() { return cellColour; }
@@ -51,8 +54,18 @@ void Cell::addPiece(std::unique_ptr<Piece> newPiece) {
 void Cell::remPiece() { piece = nullptr; }
 
 void Cell::notifyObservers(Board& b) {
-    for (auto observer : observers) {
-        observer->notify(*this, b);
+    // for (auto observer : observers) {
+    //     observer->notify(*this, b);
+    // }
+
+    int observer_size = observers.size();
+    vector<Observer *> temp_observers(observer_size, nullptr);
+    for (int r = 0; r < observer_size; ++r) {
+        temp_observers[r] = observers[r];
+    }
+
+    for (int i = 0; i < observer_size; ++i) {
+        temp_observers[i]->notify(*this, b);
     }
 }
 
