@@ -1,9 +1,9 @@
 setup
-+ K c1
++ K c 1
 + k g 8
-+ R a8
++ R a 7
 + R c 3
 + p e 4
 done
 game human human
-move c3 c7
+move c3 c8

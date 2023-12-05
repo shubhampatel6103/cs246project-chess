@@ -200,7 +200,7 @@ char Game::playMove(int p, Board& b) {
                 if (!b.getCellAt(g, h).hasPiece()) {
                   continue;
                 }
-                if (b.getCellAt(g, h).getPiece()->getType() == 'k') {
+                if (b.getCellAt(g, h).getPiece()->getType() == 'K') {
                   int n = b.getCellAt(g, h).getObservers().size();
                   for (int z = 2; z < n; ++z) { // change to 2
                     //cout << b.getCellAt(g, h).getObservers()[1] << endl;
