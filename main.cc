@@ -240,8 +240,8 @@ int main() {
                 string colour;
                 cin >> colour;
                 if (validateSetupInput(1, 'a', 'K', colour)) continue;
-                if (colour == "White") b.setupTurn(true);
-                else if (colour == "Black") b.setupTurn(false);
+                if (colour == "white") b.setupTurn(true);
+                else if (colour == "black") b.setupTurn(false);
             } else if (subCommand == "done") {
                 if (b.validBoard()) break;
                 else cout << "Board setup is invalid" << endl;
