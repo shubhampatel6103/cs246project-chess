@@ -41,9 +41,46 @@ void Human::move(Board &b) {
         int dY = destChar - 'a';
         int dX = 7 - (destInt - 1);
         if (sX > 7 || sX < 0 || sY > 7 || sY < 0 || dX > 7 || dX < 0 || dY > 7 || dY < 0) {
-          cout << "Inavlid move coordinates: Try Again" << endl;
+          cout << "Invalid move coordinates: Try Again" << endl;
           continue;
         }
+
+        // King logic
+      if (b.getCellAt(sX, sY).hasPiece() && ((b.getCellAt(sX, sY).getPiece()->getType() == 'K' || b.getCellAt(sX, sY).getPiece()->getType() == 'k'))) {
+        char type = b.getCellAt(sX, sY).getPiece()->getType();
+        bool firstMove = b.getCellAt(sX, sY).getPiece()->getFirst();
+        // Short castle
+        if ((type == 'K' && firstMove && (sX == 7) && (dY == sY + 2) && b.getCellAt(sX, sY + 3).hasPiece() && b.getCellAt(sX, sY + 3).getPiece()->getType() == 'R' && canCastleShort(b, sX, sY, dX, dY, Colour::Black)) ||
+            (type == 'k' && firstMove && (sX == 0) && (dY == sY + 2) && b.getCellAt(sX, sY + 3).hasPiece() && b.getCellAt(sX, sY + 3).getPiece()->getType() == 'r' && canCastleShort(b, sX, sY, dX, dY, Colour::White))) {
+            m.setMove(false, sX, sY, dX, dY);
+            b.getCellAt(dX, sY + 3).getPiece()->setFirst(false);
+            b.getCellAt(dX, sY).getPiece()->setFirst(false);
+            b.getCellAt(dX, sY + 1).remPiece(); // Remove the piece from the destination cell of rook
+            b.getCellAt(dX, sY + 3).getPiece()->detachFromCells(b); // Detach from the cells the source piece is currently attached to 
+            b.getCellAt(dX, sY + 1).addPiece(b.getCellAt(dX, sY + 3).getActualPiece()); // Add the piece to the new cell
+            b.getCellAt(dX, sY + 1).getPiece()->setRow(b.getCellAt(dX, sY + 1).getRow()); // Change the position of the piece 
+            b.getCellAt(dX, sY + 1).getPiece()->setCol(b.getCellAt(dX, sY + 1).getCol());
+            b.getCellAt(dX, sY + 1).getPiece()->attachToCells(b); // Reattach after changing the position of the piece
+            b.getCellAt(dX, sY + 3).notifyObservers(b);
+            b.getCellAt(dX, sY + 1).notifyObservers(b);
+            return;
+        } // Long castle 
+        else if ((type == 'K' && firstMove && (sX == 7) && (dY == sY - 2) && b.getCellAt(sX, sY - 4).hasPiece() && b.getCellAt(sX, sY - 4).getPiece()->getType() == 'R' && canCastleLong(b, sX, sY, dX, dY, Colour::Black)) ||
+                 (type == 'k' && firstMove && (sX == 0) && (dY == sY - 2) && b.getCellAt(sX, sY - 4).hasPiece() && b.getCellAt(sX, sY - 4).getPiece()->getType() == 'r' && canCastleLong(b, sX, sY, dX, dY, Colour::White))) {
+            m.setMove(false, sX, sY, dX, dY);
+            b.getCellAt(dX, sY - 4).getPiece()->setFirst(false);
+            b.getCellAt(dX, sY).getPiece()->setFirst(false);
+            b.getCellAt(dX, sY - 1).remPiece(); // Remove the piece from the destination cell of rook
+            b.getCellAt(dX, sY - 4).getPiece()->detachFromCells(b); // Detach from the cells the source piece is currently attached to 
+            b.getCellAt(dX, sY - 1).addPiece(b.getCellAt(dX, sY - 4).getActualPiece()); // Add the piece to the new cell
+            b.getCellAt(dX, sY - 1).getPiece()->setRow(b.getCellAt(dX, sY - 1).getRow()); // Change the position of the piece 
+            b.getCellAt(dX, sY - 1).getPiece()->setCol(b.getCellAt(dX, sY - 1).getCol());
+            b.getCellAt(dX, sY - 1).getPiece()->attachToCells(b); // Reattach after changing the position of the piece
+            b.getCellAt(dX, sY - 4).notifyObservers(b);
+            b.getCellAt(dX, sY - 1).notifyObservers(b);
+            return;
+        }
+      }
 
         if (b.getCellAt(sX, sY).hasPiece() && b.getCellAt(sX, sY).getPiece()->getColour() == id
             && b.getCellAt(dX, dY).isPieceObserver(b.getCellAt(sX, sY).getPiece())) {
@@ -140,13 +177,13 @@ void Human::move(Board &b) {
           
           return;
         } else {
-          /*if (!b.getCellAt(sX, sY).hasPiece()) {
-            cout << 10 << endl;
-          } else if (! (b.getCellAt(sX, sY).getPiece()->getColour() == id)) {
-            cout << 20 << endl;
-          } else if (!b.getCellAt(dX, dY).isPieceObserver(b.getCellAt(sX, sY).getPiece())) {
-            cout << 30 << endl;
-          }*/
+          // if (!b.getCellAt(sX, sY).hasPiece()) {
+          //   cout << 10 << endl;
+          // } else if (! (b.getCellAt(sX, sY).getPiece()->getColour() == id)) {
+          //   cout << 20 << endl;
+          // } else if (!b.getCellAt(dX, dY).isPieceObserver(b.getCellAt(sX, sY).getPiece())) {
+          //   cout << 30 << endl;
+          // }
           cout << "Invalid move: Try Again" << endl;
         }
       }
