@@ -8,8 +8,8 @@ Queen::Queen(char type, Colour colour): Piece{type, colour} {} // Constructs the
 int Queen::getPoints() { return points; }
 
 void Queen::notify(Cell &c, Board &b) {
-    cout << c.getRow() << c.getCol() << endl;
-    cout << "notified" << endl;
+    //cout << c.getRow() << c.getCol() << endl;
+    //cout << "notified" << endl;
     this->detachFromCells(b);
     this->attachToCells(b);
 }

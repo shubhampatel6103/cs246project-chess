@@ -44,17 +44,9 @@ void Human::move(Board &b) {
         continue;
       }
 
-      // Pawn logic (Does not cover en passant yet)
-      if (b.getCellAt(sX, sY).hasPiece() && (b.getCellAt(sX, sY).getPiece()->getType() == 'p' || b.getCellAt(sX, sY).getPiece()->getType() == 'P')) {
-        char type = b.getCellAt(sX, sY).getPiece()->getType();
-        if (type == 'p' && (dX == sX + 1) && (dY == sY) && b.getCellAt(dX, dY).hasPiece()) {
-          cout << "Invalid move: Try Again" << endl;
-          continue;
-        } else if (type == 'P' && (dX == sX - 1) && (dY == sY) && b.getCellAt(dX, dY).hasPiece()) {
-          cout << "Invalid move: Try Again" << endl;
-          cout << "Check 1 " << endl;
-          continue;
-        } else if (type == 'P' && (dX == sX - 1) && (dY == sY + 1 || dY == sY - 1) && !b.getCellAt(dX, dY).hasPiece()) {
+      if (b.getCellAt(sX, sY).hasPiece() && b.getCellAt(sX, sY).getPiece()->getColour() == id
+          && b.getCellAt(dX, dY).isPieceObserver(b.getCellAt(sX, sY).getPiece())) {
+        if ((b.getCellAt(dX, dY).hasPiece()) && (b.getCellAt(sX, sY).getPiece()->getColour() == b.getCellAt(dX, dY).getPiece()->getColour())) {
           cout << "Invalid move: Try Again" << endl;
           continue; // add enpassant check next
         } else if ((b.getCellAt(sX, sY).getPiece()->getType() == 'p' || b.getCellAt(sX, sY).getPiece()->getType() == 'P')
@@ -85,7 +77,7 @@ void Human::move(Board &b) {
             if ((b.getCellAt(i, j).getPiece()->getType() == 'K' || b.getCellAt(i, j).getPiece()->getType() == 'k')
                 && b.getCellAt(i, j).getPiece()->getColour() == id) {
               int n = b.getCellAt(i, j).getObservers().size();
-              for (int k = 1; k < n; ++k) { // change to 2
+              for (int k = 2; k < n; ++k) { // change to 2
                 //cout << b.getCellAt(i, j).getObservers()[1] << endl;
                 Piece* observerPiece = dynamic_cast<Piece*>(b.getCellAt(i, j).getObservers()[k]);
                 if (observerPiece->getColour() != id) {

@@ -1,6 +1,6 @@
 #include "Game.h"
 #include "Piece.h"
-#
+
 
 using namespace std;
 
@@ -32,7 +32,7 @@ char Game::playMove(int p, Board& b) {
         }
         if (b.getCellAt(i, j).getPiece()->getType() == 'k') { // check this
           int n = b.getCellAt(i, j).getObservers().size();
-          for (int k = 1; k < n; ++k) { // change to 2
+          for (int k = 2; k < n; ++k) { // change to 2
             Piece* observerPiece = dynamic_cast<Piece*>(b.getCellAt(i, j).getObservers()[k]);
             
             
@@ -59,7 +59,7 @@ char Game::playMove(int p, Board& b) {
 
         int n = b.getCellAt(i, j).getObservers().size();
 
-        for (int k = 1; k < n; ++k) { // change to 2
+        for (int k = 2; k < n; ++k) { // change to 2
           
           Piece* observerPiece = dynamic_cast<Piece*>(b.getCellAt(i, j).getObservers()[k]);
 
@@ -89,7 +89,7 @@ char Game::playMove(int p, Board& b) {
                 }
                 if (b.getCellAt(g, h).getPiece()->getType() == 'k') {
                   int n = b.getCellAt(g, h).getObservers().size();
-                  for (int z = 1; z < n; ++z) { // change to 2
+                  for (int z = 2; z < n; ++z) { // change to 2
                     //cout << b.getCellAt(g, h).getObservers()[1] << endl;
                     Piece* observerPiece = dynamic_cast<Piece*>(b.getCellAt(g, h).getObservers()[z]);
                     if (observerPiece->getColour() != Colour::Black) {
@@ -145,7 +145,7 @@ char Game::playMove(int p, Board& b) {
         }
         if (b.getCellAt(i, j).getPiece()->getType() == 'K') { // check this
           int n = b.getCellAt(i, j).getObservers().size();
-          for (int k = 1; k < n; ++k) { // change to 2
+          for (int k = 2; k < n; ++k) { // change to 2
             Piece* observerPiece = dynamic_cast<Piece*>(b.getCellAt(i, j).getObservers()[k]);
             
             
@@ -172,7 +172,7 @@ char Game::playMove(int p, Board& b) {
 
         int n = b.getCellAt(i, j).getObservers().size();
 
-        for (int k = 1; k < n; ++k) { // change to 2
+        for (int k = 2; k < n; ++k) { // change to 2
           
           Piece* observerPiece = dynamic_cast<Piece*>(b.getCellAt(i, j).getObservers()[k]);
 
@@ -202,7 +202,7 @@ char Game::playMove(int p, Board& b) {
                 }
                 if (b.getCellAt(g, h).getPiece()->getType() == 'k') {
                   int n = b.getCellAt(g, h).getObservers().size();
-                  for (int z = 1; z < n; ++z) { // change to 2
+                  for (int z = 2; z < n; ++z) { // change to 2
                     //cout << b.getCellAt(g, h).getObservers()[1] << endl;
                     Piece* observerPiece = dynamic_cast<Piece*>(b.getCellAt(g, h).getObservers()[z]);
                     if (observerPiece->getColour() != Colour::White) {
@@ -223,8 +223,9 @@ char Game::playMove(int p, Board& b) {
             if (isMoveInCheck) {
               isMoveInCheck = false;
               t = false;
+              //cout << "move no check" << endl;
             } else {
-              //cout << i << j << sRow << sCol << endl;
+              cout << i << j << sRow << sCol << endl;
               stalemate = false;
             }
 
