@@ -9,10 +9,10 @@ class King : public Piece {
     public:
         King(char type, Colour colour); // Constructs the King piece with type = 'k' or 'K', colour and points = 10
         ~King() = default;
-        int getPoints();
+        int getPoints() override;
         void attachToCells(Board& b) override; // Attaches self to the cells in the vertical and horizontal directions
         void detachFromCells(Board& b) override; // Detaches self from the cells in the vertical and horizontal directions
-        void notify(Cell &c, Board &b) override;
+        void notify(Cell &c, Board &b, bool display) override;
 };
 
 #endif

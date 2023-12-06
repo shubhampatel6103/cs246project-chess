@@ -33,7 +33,7 @@ public:
     bool isPieceObserver(Piece * p);
     void addPiece(std::unique_ptr<Piece> newPiece);
     void remPiece();
-    void notifyObservers(Board& b);
+    void notifyObservers(Board& b, bool display);
     void attach(Observer * o);
     void detach(Observer * o);
     void setRow(int row);

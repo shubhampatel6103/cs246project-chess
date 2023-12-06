@@ -13,16 +13,16 @@ void Game::setPlayers(unique_ptr<Player> player1, unique_ptr<Player> player2) {
     p2 = move(player2);
 }
 
-void Game::makeMove(Move& m, Board& b) {
+void Game::makeMove(Move& m, Board& b, bool display) {
     b.setLastMove(m);
-    b.makeMove(b.getCellAt(m.getCoords()[0], m.getCoords()[1]), b.getCellAt(m.getCoords()[2], m.getCoords()[3]));
+    b.makeMove(b.getCellAt(m.getCoords()[0], m.getCoords()[1]), b.getCellAt(m.getCoords()[2], m.getCoords()[3]), display);
 }
 
 char Game::playMove(int p, Board& b) {
   if (p == 1) { // play the move on behalf of p1 if p = 1
     p1.get()->move(b);
     if (p1->getMove().getResigned()) { return 'r'; }
-    makeMove(p1->getMove(), b);
+    makeMove(p1->getMove(), b, true);
 
     bool check = false;
     bool stalemate = true;
@@ -73,7 +73,7 @@ char Game::playMove(int p, Board& b) {
           //cout << "k: " << k << endl;
           
           Piece* observerPiece = dynamic_cast<Piece *>(temp_observers[k]);
-          cout << observerPiece << endl; 
+          // cout << observerPiece << endl; 
           int sRow = observerPiece->getRow();
           int sCol = observerPiece->getCol();
           if (observerPiece->getColour() != Colour::White) {
@@ -93,10 +93,10 @@ char Game::playMove(int p, Board& b) {
               temp.get()->detachFromCells(b);
               t = true;
             }
-            cout << "row, col:" << observerPiece->getRow() << observerPiece->getCol() << endl;
-            b.makeMove(b.getCellAt(observerPiece->getRow(), observerPiece->getCol()), b.getCellAt(i, j));
+            // cout << "row, col:" << observerPiece->getRow() << observerPiece->getCol() << endl;
+            b.makeMove(b.getCellAt(observerPiece->getRow(), observerPiece->getCol()), b.getCellAt(i, j), false);
             bool isMoveInCheck = false;
-            cout << "000" << endl;
+            // cout << "000" << endl;
             for (int g = 0; g < 8 && (!isMoveInCheck); ++g) {
               for (int h = 0; h < 8 && (!isMoveInCheck); ++h) {
                 if (!b.getCellAt(g, h).hasPiece()) {
@@ -116,23 +116,23 @@ char Game::playMove(int p, Board& b) {
                         continue;
                       }
                       isMoveInCheck = true;
-                      cout << "7777" << endl;
+                      // cout << "7777" << endl;
                     }
                   }
                 }
               }
             }
-            cout << "111" << endl;
-            b.makeMove(b.getCellAt(i, j), b.getCellAt(sRow, sCol));
+            // cout << "111" << endl;
+            b.makeMove(b.getCellAt(i, j), b.getCellAt(sRow, sCol), false);
             if (t) {
-              b.setupAdd(i, j, temp.get()->getType());
+              b.setupAdd(i, j, temp.get()->getType(), false);
             }
             if (isMoveInCheck) {
               isMoveInCheck = false;  
               t = false;
             } else {
-              cout << "Look at me" << endl;
-              cout << i << j << sRow << sCol << endl;
+              // cout << "Look at me" << endl;
+              // cout << i << j << sRow << sCol << endl;
               stalemate = false;
             }
 
@@ -154,7 +154,7 @@ char Game::playMove(int p, Board& b) {
   } else { // else, play the move on behalf of p2
     p2.get()->move(b);
     if (p2->getMove().getResigned()) { return 'r'; }
-    makeMove(p2->getMove(), b);
+    makeMove(p2->getMove(), b, true);
 
 
     bool check = false;
@@ -223,7 +223,7 @@ char Game::playMove(int p, Board& b) {
               temp.get()->detachFromCells(b);
               t = true;
             }
-            b.makeMove(b.getCellAt(observerPiece->getRow(), observerPiece->getCol()), b.getCellAt(i, j));
+            b.makeMove(b.getCellAt(observerPiece->getRow(), observerPiece->getCol()), b.getCellAt(i, j), false);
             bool isMoveInCheck = false;
             for (int g = 0; g < 8 && (!isMoveInCheck); ++g) {
               for (int h = 0; h < 8 && (!isMoveInCheck); ++h) {
@@ -250,17 +250,17 @@ char Game::playMove(int p, Board& b) {
               }
             }
 
-            b.makeMove(b.getCellAt(i, j), b.getCellAt(sRow, sCol));
+            b.makeMove(b.getCellAt(i, j), b.getCellAt(sRow, sCol), false);
             if (t) {
-              b.setupAdd(i, j, temp.get()->getType());
+              b.setupAdd(i, j, temp.get()->getType(), false);
             }
             if (isMoveInCheck) {
               isMoveInCheck = false;
               t = false;
               //cout << "move no check" << endl;
             } else {
-              cout << "LOOK AT MEEEEEEEEEEEE!!!" << endl;
-              cout << i << j << sRow << sCol << endl;
+              // cout << "LOOK AT MEEEEEEEEEEEE!!!" << endl;
+              // cout << i << j << sRow << sCol << endl;
               stalemate = false;
             }
 

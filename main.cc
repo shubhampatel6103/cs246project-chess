@@ -5,45 +5,48 @@
 #include "Player.h"
 #include "Human.h"
 #include "LevelOne.h"
+#include "LevelTwo.h"
+//#include "LevelThree.h"
+#include "LevelFour.h"
 #include <memory>
 using namespace std;
 
 int BOARD_SIZE = 8;
 
 void defaultSetup(Board * b) {
-    b->setupAdd(7, 0, 'R');
-    b->setupAdd(7, 1, 'N');
-    b->setupAdd(7, 2, 'B');
-    b->setupAdd(7, 3, 'Q');
-    b->setupAdd(7, 4, 'K');
-    b->setupAdd(7, 5, 'B');
-    b->setupAdd(7, 6, 'N');
-    b->setupAdd(7, 7, 'R');
-    b->setupAdd(6, 0, 'P');
-    b->setupAdd(6, 1, 'P');
-    b->setupAdd(6, 2, 'P');
-    b->setupAdd(6, 3, 'P');
-    b->setupAdd(6, 4, 'P');
-    b->setupAdd(6, 5, 'P');
-    b->setupAdd(6, 6, 'P');
-    b->setupAdd(6, 7, 'P');
+    b->setupAdd(7, 0, 'R', true);
+    b->setupAdd(7, 1, 'N', true);
+    b->setupAdd(7, 2, 'B', true);
+    b->setupAdd(7, 3, 'Q', true);
+    b->setupAdd(7, 4, 'K', true);
+    b->setupAdd(7, 5, 'B', true);
+    b->setupAdd(7, 6, 'N', true);
+    b->setupAdd(7, 7, 'R', true);
+    b->setupAdd(6, 0, 'P', true);
+    b->setupAdd(6, 1, 'P', true);
+    b->setupAdd(6, 2, 'P', true);
+    b->setupAdd(6, 3, 'P', true);
+    b->setupAdd(6, 4, 'P', true);
+    b->setupAdd(6, 5, 'P', true);
+    b->setupAdd(6, 6, 'P', true);
+    b->setupAdd(6, 7, 'P', true);
 
-    b->setupAdd(0, 0, 'r');
-    b->setupAdd(0, 1, 'n');
-    b->setupAdd(0, 2, 'b');
-    b->setupAdd(0, 3, 'q');
-    b->setupAdd(0, 4, 'k');
-    b->setupAdd(0, 5, 'b');
-    b->setupAdd(0, 6, 'n');
-    b->setupAdd(0, 7, 'r');
-    b->setupAdd(1, 0, 'p');
-    b->setupAdd(1, 1, 'p');
-    b->setupAdd(1, 2, 'p');
-    b->setupAdd(1, 3, 'p');
-    b->setupAdd(1, 4, 'p');
-    b->setupAdd(1, 5, 'p');
-    b->setupAdd(1, 6, 'p');
-    b->setupAdd(1, 7, 'p');
+    b->setupAdd(0, 0, 'r', true);
+    b->setupAdd(0, 1, 'n', true);
+    b->setupAdd(0, 2, 'b', true);
+    b->setupAdd(0, 3, 'q', true);
+    b->setupAdd(0, 4, 'k', true);
+    b->setupAdd(0, 5, 'b', true);
+    b->setupAdd(0, 6, 'n', true);
+    b->setupAdd(0, 7, 'r', true);
+    b->setupAdd(1, 0, 'p', true);
+    b->setupAdd(1, 1, 'p', true);
+    b->setupAdd(1, 2, 'p', true);
+    b->setupAdd(1, 3, 'p', true);
+    b->setupAdd(1, 4, 'p', true);
+    b->setupAdd(1, 5, 'p', true);
+    b->setupAdd(1, 6, 'p', true);
+    b->setupAdd(1, 7, 'p', true);
 
     b->setupTurn(true);
     b->validBoard();
@@ -119,7 +122,7 @@ int main() {
   cout << "Welcome to Chess246!" << endl;
   cout << "Created by: Rushil Deep, Sharang Goel, Shubham Patel" << endl;
   mainCommands();
-  bool custom_game = false; // Wouldn't work perfectly, but it's fine for now
+  bool custom_game = false;
   string cmd;
   Board b;
   float white_score = 0, black_score = 0;
@@ -139,11 +142,11 @@ int main() {
         } else if (whitePlayer == "computer1") {
             p1 = make_unique<LevelOne>(Colour::White);
         } else if (whitePlayer == "computer2") {
-            //Player * p1 = make_unique<Pro>();
+            p1 = make_unique<LevelTwo>(Colour::White);
         } else if (whitePlayer == "computer3") {
             //Player * p1 = make_unique<Magnus>();
         } else if (whitePlayer == "computer4") {
-            //Player * p1 = make_unique<Stockfish>();
+            p1 = make_unique<LevelFour>(Colour::White);
         }
 
         if (blackPlayer == "human") {
@@ -151,11 +154,11 @@ int main() {
         } else if (blackPlayer == "computer1") {
             p2 = make_unique<LevelOne>(Colour::Black);
         } else if (blackPlayer == "computer2") {
-            //Player * p2 = make_unique<Pro>();
+            p2 = make_unique<LevelTwo>(Colour::Black);
         } else if (blackPlayer == "computer3") {
             //Player * p2 = make_unique<Magnus>();
         } else if (blackPlayer == "computer4") {
-            //Player * p2 = make_unique<Stockfish>();
+            p2 = make_unique<LevelFour>(Colour::Black);
         }
 
         Game g{};
@@ -215,6 +218,7 @@ int main() {
                 break;
             }
         }
+        cout << b;
         custom_game = false;
 
     } else if (cmd == "setup") {
@@ -229,9 +233,9 @@ int main() {
                 int col = inp_col - 'a';
                 row = BOARD_SIZE - row;
                 if (b.getCellAt(row, col).hasPiece()) {
-                    b.setupRem(row, col);
+                    b.setupRem(row, col, true);
                 }
-                b.setupAdd(row, col, piece);
+                b.setupAdd(row, col, piece, true);
                 cout << b;
             } else if (subCommand == "-") {
                 char inp_col;
@@ -241,7 +245,7 @@ int main() {
                 int col = inp_col - 'a';
                 row = BOARD_SIZE - row;
                 if (b.getCellAt(row, col).hasPiece()) {
-                    b.setupRem(row, col);
+                    b.setupRem(row, col, true);
                 }
                 cout << b;
             } else if (subCommand == "=") {

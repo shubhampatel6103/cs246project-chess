@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include "LevelOne.h"
+#include "LevelTwo.h"
 #include "Board.h"
 #include "Move.h"
 #include <stdlib.h>
@@ -8,9 +8,9 @@
 
 using namespace std;
 
-LevelOne::LevelOne(Colour c): Player{c} {} 
+LevelTwo::LevelTwo(Colour c): Player{c} {} 
 
-void LevelOne::move(Board &b) {
+void LevelTwo::move(Board &b) {
   cout << "moving computer" << endl;
   string s;
   while (true) {
@@ -71,6 +71,7 @@ void LevelOne::move(Board &b) {
               //cout << "row, col:" << observerPiece->getRow() << observerPiece->getCol() << endl;
               b.makeMove(b.getCellAt(observerPiece->getRow(), observerPiece->getCol()), b.getCellAt(i, j), false);
               bool isMoveInCheck = false;
+              bool oponentInCheck = false;
               // cout << "000" << endl;
               for (int g = 0; g < 8 && (!isMoveInCheck); ++g) {
                 for (int h = 0; h < 8 && (!isMoveInCheck); ++h) {
@@ -95,6 +96,23 @@ void LevelOne::move(Board &b) {
                       }
                     }
                   }
+                  if ((b.getCellAt(g, h).getPiece()->getType() == 'k' || b.getCellAt(g, h).getPiece()->getType() == 'K') && b.getCellAt(g, h).getPiece()->getColour() != id) {
+                    int observer_size = b.getCellAt(g, h).getObservers().size();
+                    vector<Observer *> temp_observers(observer_size, nullptr);
+                    for (int r = 0; r < observer_size; ++r) {
+                      temp_observers[r] = b.getCellAt(g, h).getObservers()[r];
+                    }
+                    for (int z = 2; z < observer_size && (!oponentInCheck); ++z) { // change to 2
+                      Piece* observerPiece = dynamic_cast<Piece*>(temp_observers[z]);
+                      if (observerPiece->getColour() == id) {
+                        if ((observerPiece->getType() == 'P' || observerPiece->getType() == 'p') && h == observerPiece->getCol()) {
+                          continue;
+                        }
+                        oponentInCheck = true;
+                        // cout << "7777" << endl;
+                      }
+                    }
+                  }
                 }
               }
               // cout << "111" << endl;
@@ -105,15 +123,18 @@ void LevelOne::move(Board &b) {
               if (isMoveInCheck) {
                 isMoveInCheck = false;  
                 t = false;
+                oponentInCheck = false;
               } else {
                 // cout << "Look at me" << endl;
                 //cout << i << j << sRow << sCol << endl;
                 m.setMove(false, sRow, sCol, i, j);
+                if (t || oponentInCheck) {
+                    return;
+                }
                 moves.emplace_back(sRow);
                 moves.emplace_back(sCol);
                 moves.emplace_back(i);
                 moves.emplace_back(j);
-                t = false;
               }
             }
           }
@@ -137,11 +158,5 @@ void LevelOne::move(Board &b) {
   }
 }
 
-
-  // for (int i = 0; i < 8; ++i) {
-  //     for (int j = 0; j < 8; ++j) {
-
-  //     }
-  // } 
 
   

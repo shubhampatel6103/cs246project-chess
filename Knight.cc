@@ -4,9 +4,9 @@
 
 Knight::Knight(char type, Colour colour): Piece{type, colour} {}
 
-int Knight::getPoints() { return points; }
+int Knight::getPoints() { return 100 * points; }
 
-void Knight::notify(Cell &c, Board &b) {
+void Knight::notify(Cell &c, Board &b, bool display) {
     this->detachFromCells(b);
     this->attachToCells(b);
 }

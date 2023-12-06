@@ -9,8 +9,8 @@ class Rook : public Piece {
     public:
         Rook(char type, Colour colour); // Constructs the rook piece with type = 'r' and points = 5
         ~Rook() = default;
-        int getPoints();
-        void notify(Cell &c, Board &b) override;
+        int getPoints() override;
+        void notify(Cell &c, Board &b, bool display) override;
         void attachToCells(Board& b) override; // Attaches self to the cells in the vertical and horizontal directions
         void detachFromCells(Board& b) override; // Detach self from the cells in the vertical and horizontal directions
 };

@@ -9,10 +9,10 @@ class Knight : public Piece {
     public:
         Knight(char type, Colour colour); // Constructs the knight piece with type = 'n' or 'N" and points = 3
         ~Knight() = default;
-        int getPoints();
+        int getPoints() override;
         void attachToCells(Board& b) override; // Attaches self to the cells in the diagonal directions
         void detachFromCells(Board& b) override;
-        void notify(Cell &c, Board &b) override;
+        void notify(Cell &c, Board &b, bool display) override;
 };
 
 #endif

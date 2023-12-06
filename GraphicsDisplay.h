@@ -14,7 +14,7 @@ class GraphicsDisplay: public Observer {
   GraphicsDisplay(int n = 8);
   ~GraphicsDisplay();
 
-  void notify(Cell &c, Board &b) override; // Cell c calls the notify function
+  void notify(Cell &c, Board &b, bool display); // Cell c calls the notify function
 };
 
 #endif

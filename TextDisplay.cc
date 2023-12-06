@@ -5,15 +5,17 @@ using namespace std;
 
 TextDisplay::TextDisplay() {}
 
-void TextDisplay::notify(Cell &c, Board &b) {
-  if (c.getPiece() == nullptr) {
-    if (((c.getRow() + c.getCol()) % 2) == 0) {
-      theDisplay[c.getRow()][c.getCol() + 2] = ' ';
+void TextDisplay::notify(Cell &c, Board &b, bool display) {
+  if (display) {
+    if (c.getPiece() == nullptr) {
+      if (((c.getRow() + c.getCol()) % 2) == 0) {
+        theDisplay[c.getRow()][c.getCol() + 2] = ' ';
+      } else {
+        theDisplay[c.getRow()][c.getCol() + 2] = '_';
+      }
     } else {
-      theDisplay[c.getRow()][c.getCol() + 2] = '_';
+      theDisplay[c.getRow()][c.getCol() + 2] = c.getPiece()->getType();
     }
-  } else {
-    theDisplay[c.getRow()][c.getCol() + 2] = c.getPiece()->getType();
   }
 }
 

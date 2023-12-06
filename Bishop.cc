@@ -3,9 +3,9 @@
 
 Bishop::Bishop(char type, Colour colour): Piece{type, colour} {}
 
-int Bishop::getPoints() { return points; }
+int Bishop::getPoints() { return 100 * points; }
 
-void Bishop::notify(Cell &c, Board &b) {
+void Bishop::notify(Cell &c, Board &b, bool display) {
     this->detachFromCells(b);
     this->attachToCells(b);
 }

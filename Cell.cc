@@ -53,7 +53,7 @@ void Cell::addPiece(std::unique_ptr<Piece> newPiece) {
 
 void Cell::remPiece() { piece = nullptr; }
 
-void Cell::notifyObservers(Board& b) {
+void Cell::notifyObservers(Board& b, bool display) {
     // for (auto observer : observers) {
     //     observer->notify(*this, b);
     // }
@@ -64,8 +64,15 @@ void Cell::notifyObservers(Board& b) {
         temp_observers[r] = observers[r];
     }
 
+    if (!(display)) {
+        for (int i = 2; i < observer_size; ++i) {
+            temp_observers[i]->notify(*this, b, display);
+        }
+        return;
+    }
+
     for (int i = 0; i < observer_size; ++i) {
-        temp_observers[i]->notify(*this, b);
+        temp_observers[i]->notify(*this, b, display);
     }
 }
 

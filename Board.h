@@ -30,12 +30,12 @@ public:
     Cell& getCellAt(int row, int col);
     bool getCurrentTurn();
 
-    void setupAdd(int row, int col, char piece);
-    void setupRem(int row, int col);
+    void setupAdd(int row, int col, char piece, bool display);
+    void setupRem(int row, int col, bool display);
     void setupTurn(bool first);
     bool validBoard();
     void changeTurn();
-    void makeMove(Cell& source, Cell& Dest);
+    void makeMove(Cell& source, Cell& Dest, bool display);
     void setLastMove(Move& m);
     Move& getLastMove();
 

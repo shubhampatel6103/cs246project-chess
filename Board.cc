@@ -5,6 +5,7 @@ using namespace std;
 Board::Board(int size): size{size} {
     td = make_unique<TextDisplay> ();
     gd = make_unique<GraphicsDisplay> (size);
+    // cout << "board constructor" << endl;
     board = vector<vector<Cell>>(size, vector<Cell>(size, Cell(0, 0, Colour::Black)));
     for (int i = 0; i < size; ++i) {
         for (int j = 0; j < size; ++j) {
@@ -14,7 +15,7 @@ Board::Board(int size): size{size} {
             board[i][j].setColour(colour);
             board[i][j].attach(td.get());
             board[i][j].attach(gd.get());
-            board[i][j].notifyObservers(*this);
+            board[i][j].notifyObservers(*this, true);
         }
     }
 }
@@ -29,7 +30,7 @@ Board::~Board() {
 Cell& Board::getCellAt(int row, int col) { return board[row][col]; }
 bool Board::getCurrentTurn() { return firstPlayerTurn; }
 
-void Board::setupAdd(int row, int col, char piece) {
+void Board::setupAdd(int row, int col, char piece, bool display) {
     unique_ptr<Piece> p = nullptr;
     if (piece == 'K') p = make_unique<King>(piece, Colour::White);
     if (piece == 'Q') p = make_unique<Queen>(piece, Colour::White);
@@ -50,14 +51,14 @@ void Board::setupAdd(int row, int col, char piece) {
 
     getCellAt(row, col).addPiece(move(p));
     getCellAt(row,col).getPiece()->attachToCells(*this);
-    getCellAt(row,col).notifyObservers(*this);
+    getCellAt(row,col).notifyObservers(*this, display);
     // getCellAt(row, col).getPiece()->attachToCells(*this); // We dont wanna call notify yet
 }
 
-void Board::setupRem(int row, int col) {
+void Board::setupRem(int row, int col, bool display) {
     getCellAt(row, col).getPiece()->detachFromCells(*this);
     getCellAt(row, col).remPiece();
-    getCellAt(row, col).notifyObservers(*this);
+    getCellAt(row, col).notifyObservers(*this, display);
 }
 
 void Board::setupTurn(bool first) {
@@ -107,7 +108,7 @@ bool Board::validBoard() {
     for (int i = 0; i < size; ++i) {
         for (int j = 0; j < size; ++j) {
             Piece * p = getCellAt(i, j).getPiece();
-            if (p) p->notify(getCellAt(i, j), *this);
+            if (p) p->notify(getCellAt(i, j), *this, true);
         }
     }
 
@@ -128,7 +129,7 @@ bool Board::validBoard() {
     return true;
 }
 
-void Board::makeMove(Cell& source, Cell& dest) {
+void Board::makeMove(Cell& source, Cell& dest, bool display) {
     // Make move
 
     if (dest.getPiece()) { 
@@ -142,8 +143,8 @@ void Board::makeMove(Cell& source, Cell& dest) {
     dest.getPiece()->setCol(dest.getCol());
     dest.getPiece()->attachToCells(*this); // Reattach after changing the position of the piece
 
-    getCellAt(source.getRow(), source.getCol()).notifyObservers(*this);
-    getCellAt(dest.getRow(), dest.getCol()).notifyObservers(*this);
+    getCellAt(source.getRow(), source.getCol()).notifyObservers(*this, display);
+    getCellAt(dest.getRow(), dest.getCol()).notifyObservers(*this, display);
 
     // NOTE - We dont need to remove from the source cell since adding the piece to the destination will give ownership to the destination cell
     
@@ -161,7 +162,7 @@ void Board::clearBoard() {
             if (getCellAt(i,j).getPiece()) {
                 getCellAt(i,j).getPiece()->detachFromCells(*this);
                 getCellAt(i,j).remPiece();
-                getCellAt(i,j).notifyObservers(*this);
+                getCellAt(i,j).notifyObservers(*this, true);
             }
             // getCellAt(i,j).notifyObservers(*this);
         }

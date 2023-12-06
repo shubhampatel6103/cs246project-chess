@@ -24,10 +24,11 @@ class Piece : public Observer {
         void setFirst(bool first);
         void setRow(int r); // Sets the row to r
         void setCol(int c); // Sets the col to c
+        virtual int getPoints() = 0;
 
         virtual void attachToCells(Board& b) = 0; // Attaches the piece to the cells required
         virtual void detachFromCells(Board& b) = 0; // Detaches the piece from the cells required
-        virtual void notify(Cell &c, Board &b) = 0; // Abstract method
+        virtual void notify(Cell &c, Board &b, bool display) = 0; // Abstract method
 };
 
 #endif

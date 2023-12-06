@@ -5,18 +5,18 @@ using namespace std;
 
 Queen::Queen(char type, Colour colour): Piece{type, colour} {} // Constructs the queen piece with type = 'q' or 'Q', colour, and points to 9
         
-int Queen::getPoints() { return points; }
+int Queen::getPoints() { return 100 * points; }
 
-void Queen::notify(Cell &c, Board &b) {
+void Queen::notify(Cell &c, Board &b, bool display) {
     //cout << c.getRow() << c.getCol() << endl;
-    cout << "notified" << endl;
+    // cout << "notified" << endl;
     this->detachFromCells(b);
     this->attachToCells(b);
 }
 
 void Queen::attachToCells(Board& b) {
 
-    cout << "atached queen" << endl;
+    // cout << "atached queen" << endl;
 
     // The following for loop takes care of vertical cells forward
     for (int r = getRow() + 1; r < 8; r++) { // start from where we are + 1 to the end of the getCellAt( in terms of rows (getRow() + 1 so we dont check for our own cell)
@@ -24,7 +24,7 @@ void Queen::attachToCells(Board& b) {
             
             b.getCellAt(r, getCol()).attach(this);
         } else { 
-            cout << "stopping at row:" << r << endl;
+            // cout << "stopping at row:" << r << endl;
             b.getCellAt(r, getCol()).attach(this);
             break;
         } // Otherwise, we are being blocked so we break AFTER ATTACHING
@@ -116,7 +116,7 @@ void Queen::attachToCells(Board& b) {
     while (r >= 0 && c < 8) {
         if (!b.getCellAt(r, c).hasPiece()) {
             b.getCellAt(r, c).attach(this);
-            cout << "Attached to " << r << c << endl;
+            // cout << "Attached to " << r << c << endl;
             r--; 
             c++; // Ensures that we are moving forward in the NorthEast Direction
         } else { 
@@ -130,7 +130,7 @@ void Queen::attachToCells(Board& b) {
 
 void Queen::detachFromCells(Board& b) {
 
-    cout << "detached queen" << endl;
+    // cout << "detached queen" << endl;
     // The following for loop takes care of vertical cells forward
     for (int r = getRow() + 1; r < 8; r++) { // start from where we are + 1 to the end of the getCellAt( in terms of rows (getRow() + 1 so we dont check for our own cell)
         b.getCellAt(r, getCol()).detach(this);

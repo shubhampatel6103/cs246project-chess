@@ -9,8 +9,8 @@ class Queen : public Piece {
         Queen(char type, Colour colour); // Constructs the queen piece with type = 'q' and points = 9
         ~Queen() = default;
         
-        int getPoints();
-        void notify(Cell &c, Board &b) override;
+        int getPoints() override;
+        void notify(Cell &c, Board &b, bool display) override;
         void attachToCells(Board& b) override; // Attaches self to the cells in the vertical, horizontal and diagonal directions
         void detachFromCells(Board& b) override; // Detaches self from the cells in the vertical, horizontal and diagonal directions
 };

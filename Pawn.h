@@ -11,8 +11,8 @@ class Pawn : public Piece {
     public:
         Pawn(char type, Colour colour); // Constructs the Pawn piece with type = 'p' and points = 1
         ~Pawn() = default;
-        int getPoints();
-        void notify(Cell &c, Board &b) override;
+        int getPoints() override;
+        void notify(Cell &c, Board &b, bool display) override;
         void setDoubleMove(bool b);
         bool getDoubleMove();
         void attachToCells(Board& b) override; // Attaches self to the cells in the vertical and horizontal directions

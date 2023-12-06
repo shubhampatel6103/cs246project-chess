@@ -61,8 +61,8 @@ void Human::move(Board &b) {
               b.getCellAt(dX, sY + 1).getPiece()->setRow(b.getCellAt(dX, sY + 1).getRow()); // Change the position of the piece 
               b.getCellAt(dX, sY + 1).getPiece()->setCol(b.getCellAt(dX, sY + 1).getCol());
               b.getCellAt(dX, sY + 1).getPiece()->attachToCells(b); // Reattach after changing the position of the piece
-              b.getCellAt(dX, sY + 3).notifyObservers(b);
-              b.getCellAt(dX, sY + 1).notifyObservers(b);
+              b.getCellAt(dX, sY + 3).notifyObservers(b, true);
+              b.getCellAt(dX, sY + 1).notifyObservers(b, true);
               return;
           } // Long castle 
           else if ((type == 'K' && firstMove && (sX == 7) && (dY == sY - 2) && b.getCellAt(sX, sY - 4).hasPiece() && b.getCellAt(sX, sY - 4).getPiece()->getType() == 'R' && canCastleLong(b, sX, sY, dX, dY, Colour::Black)) ||
@@ -76,8 +76,8 @@ void Human::move(Board &b) {
               b.getCellAt(dX, sY - 1).getPiece()->setRow(b.getCellAt(dX, sY - 1).getRow()); // Change the position of the piece 
               b.getCellAt(dX, sY - 1).getPiece()->setCol(b.getCellAt(dX, sY - 1).getCol());
               b.getCellAt(dX, sY - 1).getPiece()->attachToCells(b); // Reattach after changing the position of the piece
-              b.getCellAt(dX, sY - 4).notifyObservers(b);
-              b.getCellAt(dX, sY - 1).notifyObservers(b);
+              b.getCellAt(dX, sY - 4).notifyObservers(b, true);
+              b.getCellAt(dX, sY - 1).notifyObservers(b, true);
               return;
           }
         }
@@ -89,22 +89,22 @@ void Human::move(Board &b) {
           
           if (b.getCellAt(sX, sY).getPiece()->getType() == 'P') {
             if (dY < sY && sX == dX + 1 && b.getCellAt(sX, dY).hasPiece() && b.getCellAt(sX, dY).getPiece()->getType() == 'p') {
-              cout << "passes 2" << endl;
+              // cout << "passes 2" << endl;
               if ((b.getLastMove().getCoords()[2] - b.getLastMove().getCoords()[0] == 2) &&
                   b.getLastMove().getCoords()[2] == sX && b.getLastMove().getCoords()[3] == dY) {
                 b.getCellAt(sX, dY).remPiece(); 
-                b.getCellAt(sX, dY).notifyObservers(b);
+                b.getCellAt(sX, dY).notifyObservers(b, true);
                 m.setMove(false, sX, sY, sX - 1, sY - 1);
                 enpassant = true;
               }
             }
 
             if (dY > sY && sX == dX + 1 && b.getCellAt(sX, dY).hasPiece() && b.getCellAt(sX, dY).getPiece()->getType() == 'p') {
-              cout << "passes 2" << endl;
+              // cout << "passes 2" << endl;
               if ((b.getLastMove().getCoords()[2] - b.getLastMove().getCoords()[0] == 2) &&
                   b.getLastMove().getCoords()[2] == sX && b.getLastMove().getCoords()[3] == dY) {
                 b.getCellAt(sX, dY).remPiece(); 
-                b.getCellAt(sX, dY).notifyObservers(b);
+                b.getCellAt(sX, dY).notifyObservers(b, true);
                 m.setMove(false, sX, sY, sX - 1, sY + 1);
                 enpassant = true;
               }
@@ -113,22 +113,22 @@ void Human::move(Board &b) {
 
           if (b.getCellAt(sX, sY).getPiece()->getType() == 'p') { // If we have a black pawn
             if (dY < sY && sX == dX - 1 && b.getCellAt(sX, dY).hasPiece() && b.getCellAt(sX, dY).getPiece()->getType() == 'P') {
-              cout << "passes 2" << endl;
+              // cout << "passes 2" << endl;
               if ((b.getLastMove().getCoords()[2] - b.getLastMove().getCoords()[0] == -2) &&
                   b.getLastMove().getCoords()[2] == sX && b.getLastMove().getCoords()[3] == dY) {
                 b.getCellAt(sX, dY).remPiece(); 
-                b.getCellAt(sX, dY).notifyObservers(b);
+                b.getCellAt(sX, dY).notifyObservers(b, true);
                 m.setMove(false, sX, sY, dX, dY);
                 enpassant = true;
               }
             }
 
             if (dY > sY && sX == dX - 1 && b.getCellAt(sX, dY).hasPiece() && b.getCellAt(sX, dY).getPiece()->getType() == 'P') {
-              cout << "passes 2" << endl;
+              // cout << "passes 2" << endl;
               if ((b.getLastMove().getCoords()[2] - b.getLastMove().getCoords()[0] == -2) &&
                   b.getLastMove().getCoords()[2] == sX && b.getLastMove().getCoords()[3] == dY) {
                 b.getCellAt(sX, dY).remPiece(); 
-                b.getCellAt(sX, dY).notifyObservers(b);
+                b.getCellAt(sX, dY).notifyObservers(b, true);
                 m.setMove(false, sX, sY, dX, dY);
                 enpassant = true;
               }
@@ -138,17 +138,17 @@ void Human::move(Board &b) {
           if (!enpassant) {
             if ((b.getCellAt(dX, dY).hasPiece()) && (b.getCellAt(sX, sY).getPiece()->getColour() == b.getCellAt(dX, dY).getPiece()->getColour())) {
               
-              cout << "1" << endl;
+              // cout << "1" << endl;
               cout << "Invalid move: Try Again" << endl;
               continue; // add enpassant check next
             } else if ((b.getCellAt(sX, sY).getPiece()->getType() == 'p' || b.getCellAt(sX, sY).getPiece()->getType() == 'P')
                       && sY == dY && b.getCellAt(dX, dY).hasPiece()) {
-              cout << "2" << endl;
+              // cout << "2" << endl;
               cout << "Invalid move: Try Again" << endl;
               continue;
             } else if ((b.getCellAt(sX, sY).getPiece()->getType() == 'p' || b.getCellAt(sX, sY).getPiece()->getType() == 'P')
                       && sY != dY && !b.getCellAt(dX, dY).hasPiece()) {
-              cout << "3" << endl;
+              // cout << "3" << endl;
               cout << "Invalid move: Try Again" << endl;
               continue;
             } else {
@@ -163,7 +163,7 @@ void Human::move(Board &b) {
             t = true;
           }
 
-          b.makeMove(b.getCellAt(sX, sY), b.getCellAt(dX, dY));
+          b.makeMove(b.getCellAt(sX, sY), b.getCellAt(dX, dY), false);
           bool check = false;
           for (int i = 0; i < 8 && (!check); ++i) {
             for (int j = 0; j < 8 && (!check); ++j) {
@@ -186,7 +186,7 @@ void Human::move(Board &b) {
                     if ((observerPiece->getType() == 'P' || observerPiece->getType() == 'p') && j == observerPiece->getCol()) {
                       continue;
                     }
-                    cout << "4" << endl;
+                    // cout << "4" << endl;
                     cout << "Invalid move: Try Again" << endl;
                     check = true;
                     continue;
@@ -195,9 +195,9 @@ void Human::move(Board &b) {
               }
             }
           }
-          b.makeMove(b.getCellAt(dX, dY), b.getCellAt(sX, sY));
+          b.makeMove(b.getCellAt(dX, dY), b.getCellAt(sX, sY), false);
           if (t) {
-            b.setupAdd(dX, dY, temp.get()->getType());
+            b.setupAdd(dX, dY, temp.get()->getType(), false);
           }
           if (check) {
             check = false;
@@ -215,7 +215,7 @@ void Human::move(Board &b) {
                 if (c == 'Q' || c == 'R' || c == 'B' || c == 'N') {
                   b.getCellAt(sX, sY).getPiece()->detachFromCells(b);
                   b.getCellAt(sX, sY).getActualPiece();
-                  b.setupAdd(sX, sY, c);
+                  b.setupAdd(sX, sY, c, true);
                   break;
                 } else {
                   cout << "Invalid peice: Try Again" << endl;
@@ -225,7 +225,7 @@ void Human::move(Board &b) {
                 if (c == 'q' || c == 'r' || c == 'b' || c == 'n') {
                   b.getCellAt(sX, sY).getPiece()->detachFromCells(b);
                   b.getCellAt(sX, sY).getActualPiece();
-                  b.setupAdd(sX, sY, c);
+                  b.setupAdd(sX, sY, c, true);
                   break;
                 } else {
                   cout << "Invalid piece: Try Again" << endl;
@@ -248,7 +248,7 @@ void Human::move(Board &b) {
         }
       }
     } catch (...) {
-      cout << "Reached catch" << endl;
+      // cout << "Reached catch" << endl;
       cin.clear();
       cin.ignore();
     }
