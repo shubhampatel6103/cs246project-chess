@@ -5,9 +5,8 @@ using namespace std;
 Board::Board(int size): size{size} {
     td = make_unique<TextDisplay> ();
     gd = make_unique<GraphicsDisplay> (size);
-    // cout << "board constructor" << endl;
     board = vector<vector<Cell>>(size, vector<Cell>(size, Cell(0, 0, Colour::Black)));
-    for (int i = 0; i < size; ++i) {
+    for (int i = 0; i < size; ++i) { // Sets up cells on the board and outputs to display
         for (int j = 0; j < size; ++j) {
             Colour colour = ((i + j) % 2 == 0 ? Colour::White : Colour::Black);
             board[i][j].setRow(i);
@@ -31,7 +30,7 @@ Cell& Board::getCellAt(int row, int col) { return board[row][col]; }
 bool Board::getCurrentTurn() { return firstPlayerTurn; }
 
 void Board::setupAdd(int row, int col, char piece, bool display) {
-    unique_ptr<Piece> p = nullptr;
+    unique_ptr<Piece> p = nullptr; // Add the correct object depending on piece type
     if (piece == 'K') p = make_unique<King>(piece, Colour::White);
     if (piece == 'Q') p = make_unique<Queen>(piece, Colour::White);
     if (piece == 'R') p = make_unique<Rook>(piece, Colour::White);
@@ -52,10 +51,9 @@ void Board::setupAdd(int row, int col, char piece, bool display) {
     getCellAt(row, col).addPiece(move(p));
     getCellAt(row,col).getPiece()->attachToCells(*this);
     getCellAt(row,col).notifyObservers(*this, display);
-    // getCellAt(row, col).getPiece()->attachToCells(*this); // We dont wanna call notify yet
 }
 
-void Board::setupRem(int row, int col, bool display) {
+void Board::setupRem(int row, int col, bool display) { // Remove piece from the cell
     getCellAt(row, col).getPiece()->detachFromCells(*this);
     getCellAt(row, col).remPiece();
     getCellAt(row, col).notifyObservers(*this, display);
@@ -70,7 +68,7 @@ void Board::changeTurn() {
     else firstPlayerTurn = true;
 }
 
-bool Board::validBoard() {
+bool Board::validBoard() { // Checks if the custom setup of the board is valid and initiates observer pattern on pieces
     int row_count = 0, king_black = 0, king_white = 0;
     int king_white_x = 0;
     int king_white_y = 0;
@@ -147,16 +145,13 @@ void Board::makeMove(Cell& source, Cell& dest, bool display) {
     getCellAt(dest.getRow(), dest.getCol()).notifyObservers(*this, display);
 
     // NOTE - We dont need to remove from the source cell since adding the piece to the destination will give ownership to the destination cell
-    
-
-    // Implement checks, checkmate
 }
 
 Move& Board::getLastMove() { return lastMove; }
 
 void Board::setLastMove(Move& m) { lastMove.setMove(false, m.getCoords()[0], m.getCoords()[1], m.getCoords()[2], m.getCoords()[3]); }
 
-void Board::clearBoard() {
+void Board::clearBoard() { // Empties the board
     for (int i = 0; i < size; ++i) {
         for (int j = 0; j < size; j++) {
             if (getCellAt(i,j).getPiece()) {
@@ -164,12 +159,11 @@ void Board::clearBoard() {
                 getCellAt(i,j).remPiece();
                 getCellAt(i,j).notifyObservers(*this, true);
             }
-            // getCellAt(i,j).notifyObservers(*this);
         }
     }
 }
 
-ostream& operator<<(ostream &out, const Board& b) {
+ostream& operator<<(ostream &out, const Board& b) { // Prints the board
     out << *b.td;
     return out;
 }

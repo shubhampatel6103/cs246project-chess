@@ -11,7 +11,7 @@ using namespace std;
 LevelOne::LevelOne(Colour c): Player{c} {} 
 
 void LevelOne::move(Board &b) {
-  cout << "moving computer" << endl;
+  // cout << "moving computer" << endl;
   string s;
   while (true) {
     try {
@@ -138,10 +138,6 @@ void LevelOne::move(Board &b) {
 }
 
 
-  // for (int i = 0; i < 8; ++i) {
-  //     for (int j = 0; j < 8; ++j) {
 
-  //     }
-  // } 
 
-  
+

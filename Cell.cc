@@ -38,7 +38,6 @@ bool Cell::hasPiece() { return (piece ? true : false); }
 
 bool Cell::isPieceObserver(Piece * p) {
     int n = observers.size();
-    cout << n << endl;
     for (int i = 0; i < n; ++i) {
         if (observers[i] == p) {
             return true;
@@ -62,13 +61,6 @@ void Cell::notifyObservers(Board& b, bool display) {
     vector<Observer *> temp_observers(observer_size, nullptr);
     for (int r = 0; r < observer_size; ++r) {
         temp_observers[r] = observers[r];
-    }
-
-    if (!(display)) {
-        for (int i = 2; i < observer_size; ++i) {
-            temp_observers[i]->notify(*this, b, display);
-        }
-        return;
     }
 
     for (int i = 0; i < observer_size; ++i) {

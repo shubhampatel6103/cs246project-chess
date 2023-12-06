@@ -8,9 +8,11 @@ class Move {
   public:
     Move(bool r, int sX, int sY, int dX, int dY);
     ~Move() = default;
-    int* getCoords();
+    int* getCoords(); // Gets the array of integers storing the move coordinates
     bool getResigned();
-    void setMove(bool r, int sX, int sY, int dX, int dY);
+    void setMove(bool r, int sX, int sY, int dX, int dY); // Sets up a 
 };
 
 #endif
+
+

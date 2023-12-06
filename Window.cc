@@ -100,3 +100,5 @@ void Xwindow::drawImage(const char * filename, int x, int y) {
   
   png_image_free(&image);
 }
+
+

@@ -92,3 +92,6 @@ void Pawn::detachFromCells(Board& b) {
     }
 
 }
+
+
+

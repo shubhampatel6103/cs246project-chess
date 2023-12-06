@@ -75,3 +75,6 @@ void Rook::detachFromCells(Board& b) {
     }
     
 }
+
+
+

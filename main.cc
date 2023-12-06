@@ -6,14 +6,14 @@
 #include "Human.h"
 #include "LevelOne.h"
 #include "LevelTwo.h"
-//#include "LevelThree.h"
+#include "LevelThree.h"
 #include "LevelFour.h"
 #include <memory>
 using namespace std;
 
 int BOARD_SIZE = 8;
 
-void defaultSetup(Board * b) {
+void defaultSetup(Board * b) { // Sets up a default board to play
     b->setupAdd(7, 0, 'R', true);
     b->setupAdd(7, 1, 'N', true);
     b->setupAdd(7, 2, 'B', true);
@@ -52,7 +52,7 @@ void defaultSetup(Board * b) {
     b->validBoard();
 }
 
-bool validateSetupInput(int row, char col, char piece, string colour) {
+bool validateSetupInput(int row, char col, char piece, string colour) { // Validates custom board
     bool input_error = false;
     if (row <= 0 || row > 8) {
         cout << "Error: Row must be between 1 and 8" << endl;
@@ -82,6 +82,7 @@ bool validateSetupInput(int row, char col, char piece, string colour) {
     return input_error;
 }
 
+// Some commands for the users
 void mainCommands() {
     cout << endl << "------------------------------" << endl;
     cout << "help: \tlist commands" << endl;
@@ -112,12 +113,6 @@ void printScores(float white_score, float black_score) {
 }
 
 
-
-
-
-
-
-
 int main() {
   cout << "Welcome to Chess246!" << endl;
   cout << "Created by: Rushil Deep, Sharang Goel, Shubham Patel" << endl;
@@ -128,7 +123,7 @@ int main() {
   float white_score = 0, black_score = 0;
 
   while (cin >> cmd && !cin.eof()) {
-    if (cmd == "game") {
+    if (cmd == "game") { // If user wants to play a game, a game object is created
         if (!custom_game) {
             defaultSetup(&b);
         }
@@ -144,7 +139,7 @@ int main() {
         } else if (whitePlayer == "computer2") {
             p1 = make_unique<LevelTwo>(Colour::White);
         } else if (whitePlayer == "computer3") {
-            //Player * p1 = make_unique<Magnus>();
+            p1 = make_unique<LevelThree>(Colour::White);
         } else if (whitePlayer == "computer4") {
             p1 = make_unique<LevelFour>(Colour::White);
         }
@@ -156,7 +151,7 @@ int main() {
         } else if (blackPlayer == "computer2") {
             p2 = make_unique<LevelTwo>(Colour::Black);
         } else if (blackPlayer == "computer3") {
-            //Player * p2 = make_unique<Magnus>();
+            p2 = make_unique<LevelThree>(Colour::Black);
         } else if (blackPlayer == "computer4") {
             p2 = make_unique<LevelFour>(Colour::Black);
         }
@@ -221,7 +216,7 @@ int main() {
         cout << b;
         custom_game = false;
 
-    } else if (cmd == "setup") {
+    } else if (cmd == "setup") { // Setup the board
         cout << endl << "Entering SETUP mode" << endl;
         string subCommand;
         while (cin >> subCommand) {
@@ -266,14 +261,19 @@ int main() {
         }
         cout << endl << "Exiting SETUP mode" << endl;
         custom_game = true;
-    } else if (cmd == "help") {
+    } else if (cmd == "help") { // Show valid commands
         mainCommands();
-    } else {
+    } else { // In case of invalid commands, show error message
         invalidCommandMsg();
     }
   }
 
+  // Print final score before exiting program
   cout << "Final Score:" << endl;
   cout << "White: " << white_score << endl;
   cout << "Black: " << black_score << endl;
 }
+
+
+
+

@@ -42,3 +42,6 @@ bool Player::canCastleLong(Board &b, int sX, int sY, int dX, int dY, Colour atta
 
     return true;
 }
+
+
+

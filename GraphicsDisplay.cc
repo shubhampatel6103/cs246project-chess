@@ -7,12 +7,10 @@ GraphicsDisplay::GraphicsDisplay(int n): gridSize{n} {
 }
 
 void GraphicsDisplay::notify(Cell &c, Board &b, bool display) {
-  //cout << "Graphics notified" << endl;
-  //if (!(display)) return;
+  if (!(display)) return;
     int len = WIN_SIZE / gridSize;
     string image = "assets/";
     if (!c.hasPiece()) {
-      if (c.getColour() == Colour::White) w.fillRectangle(c.getCol() * len, c.getRow() * len, len, len, Xwindow::Black);
       if (c.getColour() == Colour::White) w.drawImage("assets/empty-white.png", c.getCol() * len, c.getRow() * len);
       else w.drawImage("assets/empty-green.png", c.getCol() * len, c.getRow() * len);
       return;

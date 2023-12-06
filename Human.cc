@@ -13,8 +13,9 @@ void Human::move(Board &b) {
   string s;
   while (true) {
     try {
+
       if ((cin >> s) && !cin.eof()) {
-        if (! (s == "move" || s == "resign")) {
+        if (! (s == "move" || s == "resign" || s == "draw")) {
           cout << "Invalid command: Try Again" << endl;
           throw "invalid string";
         }
@@ -26,6 +27,20 @@ void Human::move(Board &b) {
       if (s == "resign") {
         m.setMove(true, -1, -1, -1, -1);
         return;
+      }
+
+      if (s == "draw") {
+        cout << "Would you like to draw the game?" << endl;
+        cout << "Enter Y to draw, N to decline" << endl;
+        char ch;
+        cin >> ch;
+        if (ch == 'Y') {
+          m.setMove(false, 100,100,100,100); // 100 is the ascii value of d. d for draw so yea :3
+          return; // Dont continue
+        } else {
+          cout << "Draw request declined" << endl;
+          continue;
+        }
       }
 
       char sourceChar;

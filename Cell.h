@@ -22,18 +22,18 @@ public:
     Cell(const Cell& c); // Copy ctor
     Cell(Cell&& c); // Move ctor
 
-    Piece * getPiece();
-    std::unique_ptr<Piece> getActualPiece();
+    Piece * getPiece(); // Gets a pointer to the piece
+    std::unique_ptr<Piece> getActualPiece(); // Transfers the ownership of the piece
     Colour getColour();
     int getRow();
     int getCol();
     std::vector<Observer *> & getObservers();
     
-    bool hasPiece();
+    bool hasPiece(); // Returns if cell has piece
     bool isPieceObserver(Piece * p);
     void addPiece(std::unique_ptr<Piece> newPiece);
     void remPiece();
-    void notifyObservers(Board& b, bool display);
+    void notifyObservers(Board& b, bool display); // Notifies all observers about changes
     void attach(Observer * o);
     void detach(Observer * o);
     void setRow(int row);

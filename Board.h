@@ -30,16 +30,16 @@ public:
     Cell& getCellAt(int row, int col);
     bool getCurrentTurn();
 
-    void setupAdd(int row, int col, char piece, bool display);
-    void setupRem(int row, int col, bool display);
-    void setupTurn(bool first);
-    bool validBoard();
-    void changeTurn();
+    void setupAdd(int row, int col, char piece, bool display); // Adds pieces
+    void setupRem(int row, int col, bool display); // Removes piece from cell
+    void setupTurn(bool first); // Sets up first player turn
+    bool validBoard(); // Validates board for custom setup
+    void changeTurn(); // Toggles first player turn
     void makeMove(Cell& source, Cell& Dest, bool display);
     void setLastMove(Move& m);
-    Move& getLastMove();
+    Move& getLastMove(); // Returns the last move that was made
 
-    void clearBoard();
+    void clearBoard(); // Clears the board of all pieces
     friend std::ostream &operator<<(std::ostream &out, const Board& b);
 };
 

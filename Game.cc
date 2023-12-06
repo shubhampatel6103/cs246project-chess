@@ -22,6 +22,7 @@ char Game::playMove(int p, Board& b) {
   if (p == 1) { // play the move on behalf of p1 if p = 1
     p1.get()->move(b);
     if (p1->getMove().getResigned()) { return 'r'; }
+    if (p1->getMove().getCoords()[0] == 100) { return 'd'; }
     makeMove(p1->getMove(), b, true);
 
     bool check = false;
@@ -154,6 +155,7 @@ char Game::playMove(int p, Board& b) {
   } else { // else, play the move on behalf of p2
     p2.get()->move(b);
     if (p2->getMove().getResigned()) { return 'r'; }
+    if (p2->getMove().getCoords()[0] == 100) { return 'd'; }
     makeMove(p2->getMove(), b, true);
 
 

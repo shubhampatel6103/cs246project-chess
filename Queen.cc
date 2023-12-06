@@ -194,3 +194,6 @@ void Queen::detachFromCells(Board& b) {
 
     // Finally, we are done!
 }
+
+
+

@@ -16,3 +16,5 @@ void Move::setMove(bool r, int sX, int sY, int dX, int dY) {
   coords[2] = dX;
   coords[3] = dY;
 }
+
+

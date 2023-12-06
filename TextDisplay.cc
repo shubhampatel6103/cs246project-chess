@@ -33,3 +33,6 @@ ostream &operator<<(ostream &out, const TextDisplay &td) {
   cout << "===========================" << endl << endl;
   return out;
 }
+
+
+
