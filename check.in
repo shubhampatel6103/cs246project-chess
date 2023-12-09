@@ -1,0 +1,104 @@
+for (int iTwo = 0; (iTwo < 8); ++iTwo) {
+                    for (int jTwo = 0; (jTwo < 8); ++jTwo) {
+                      if (b.getCellAt(iTwo, jTwo).hasPiece() && b.getCellAt(iTwo, jTwo).getPiece()->getColour() == Colour::Black) {
+                        continue;
+                      }
+
+                      // int n = b.getCellAt(i, j).getObservers().size();
+                      int observer_sizeTwo = b.getCellAt(iTwo, jTwo).getObservers().size();
+                      vector<Observer *> temp_observersTwo(observer_sizeTwo, nullptr);
+                      for (int rTwo = 0; rTwo < observer_sizeTwo; ++rTwo) {
+                        temp_observersTwo[rTwo] = b.getCellAt(iTwo, jTwo).getObservers()[rTwo];
+                      }
+                      for (int kTwo = 2; kTwo < observer_sizeTwo; ++kTwo) { // change to 2
+                        //cout << "k: " << k << endl;
+                        
+                        Piece* observerPieceTwo = dynamic_cast<Piece *>(temp_observersTwo[kTwo]);
+                        // cout << observerPiece << endl; 
+                        int sRowTwo = observerPieceTwo->getRow();
+                        int sColTwo = observerPieceTwo->getCol();
+                        if (observerPieceTwo->getColour() != Colour::White) {
+                          //cout << "999" << endl;
+                          if (observerPieceTwo->getType() == 'p' && jTwo == observerPieceTwo->getCol() && b.getCellAt(iTwo, jTwo).hasPiece()) {
+                            continue;
+                          } else if (observerPieceTwo->getType() == 'p' && jTwo != observerPieceTwo->getCol() && !(b.getCellAt(iTwo, jTwo).hasPiece())) {
+                            continue;
+                          }
+                          
+                          bool tTwo = false;
+                          unique_ptr<Piece> tempTwo = nullptr;
+                          
+
+                          if (b.getCellAt(iTwo, jTwo).hasPiece()) {
+                            tempTwo = b.getCellAt(iTwo, jTwo).getActualPiece();
+                            tempTwo.get()->detachFromCells(b);
+                            tTwo = true;
+                          }
+                          // cout << "row, col:" << observerPiece->getRow() << observerPiece->getCol() << endl;
+                          b.makeMove(b.getCellAt(observerPieceTwo->getRow(), observerPieceTwo->getCol()), b.getCellAt(iTwo, jTwo), false);
+                          bool isMoveInCheckTwo = false;
+                          // cout << "000" << endl;
+                          for (int gTwo = 0; gTwo < 8 && (!isMoveInCheckTwo); ++gTwo) {
+                            for (int hTwo = 0; hTwo < 8 && (!isMoveInCheckTwo); ++hTwo) {
+                              if (!b.getCellAt(gTwo, hTwo).hasPiece()) {
+                                continue;
+                              }
+                              if (b.getCellAt(gTwo, hTwo).getPiece()->getType() == 'k') {
+                                // int n = b.getCellAt(g, h).getObservers().size();
+                                int observer_sizeTwoAlt = b.getCellAt(gTwo, hTwo).getObservers().size();
+                                vector<Observer *> temp_observersTwoAlt(observer_sizeTwoAlt, nullptr);
+                                for (int r = 0; r < observer_sizeTwoAlt; ++r) {
+                                  temp_observersTwoAlt[r] = b.getCellAt(gTwo, hTwo).getObservers()[r];
+                                }
+                                for (int z = 2; z < observer_sizeTwoAlt && (!isMoveInCheckTwo); ++z) { // change to 2
+                                  Piece* observerPieceTwoAlt = dynamic_cast<Piece*>(temp_observersTwoAlt[z]);
+                                  if (observerPieceTwoAlt->getColour() != Colour::Black) {
+                                    if (observerPieceTwoAlt->getType() == 'P' && hTwo == observerPieceTwoAlt->getCol()) {
+                                      continue;
+                                    }
+                                    isMoveInCheckTwo = true;
+                                    // cout << "7777" << endl;
+                                  }
+                                }
+                              }
+                            }
+                          }
+
+                          if (!isMoveInCheckTwo) {
+                            int maxTwo = -999999;
+                            //int bestMoveTwo[4] = {-1, -1, -1, -1};
+
+
+                            //
+
+
+
+                            //
+                            if (maxTwo < minOne) {
+                              minOne = maxTwo;
+                              bestMoveOne[0] = sRowOne;
+                              bestMoveOne[1] = sColOne;
+                              bestMoveOne[2] = iOne;
+                              bestMoveOne[3] = jOne;
+                            }
+
+
+                          }
+
+                          
+
+
+                          // cout << "111" << endl;
+                          b.makeMove(b.getCellAt(iTwo, jTwo), b.getCellAt(sRowTwo, sColTwo), false);
+                          if (tTwo) {
+                            b.setupAdd(iTwo, jTwo, tempTwo.get()->getType(), false);
+                          }
+
+                          isMoveInCheckTwo = false;
+                          tTwo = false;
+
+                        }
+                      }
+                    }
+                  }
+

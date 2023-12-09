@@ -1,0 +1,86 @@
+setup
++ K a1
++ B b8
++ P a7
++ k h1
++ Q g8
+done
+game human human
+move a7 a8
+B
+int mTwoMic = 10000;
+                  int mTwoMove[4] = {-1, -1, -1, -1};
+          //__________________________________________________
+                  for (int iTwo = 0; (iTwo < 8); ++iTwo) {
+                    for (int jTwo = 0; (jTwo < 8); ++jTwo) {
+                      
+                      if (b.getCellAt(iTwo, jTwo).hasPiece() && b.getCellAt(iTwo, jTwo).getPiece()->getColour() == id) {
+                        continue;
+                      }
+                      int observer_sizeTwo = b.getCellAt(iTwo, jTwo).getObservers().size();
+                      vector<Observer *> temp_observersTwo(observer_sizeTwo, nullptr);
+                      for (int rTwo = 0; rTwo < observer_sizeTwo; ++rTwo) {
+                        temp_observersTwo[rTwo] = b.getCellAt(iTwo, jTwo).getObservers()[rTwo];
+                      }
+                      for (int kTwo = 2; kTwo < observer_sizeTwo; ++kTwo) {
+                        Piece* observerPieceTwo = dynamic_cast<Piece *>(temp_observersTwo[kTwo]);
+                        int sRowTwo = observerPieceTwo->getRow();
+                        int sColTwo = observerPieceTwo->getCol();
+                        if (observerPieceTwo->getColour() == id) {
+                          if ((observerPieceTwo->getType() == 'p' || observerPieceTwo->getType() == 'P') && jTwo == observerPieceTwo->getCol() && b.getCellAt(iTwo, jTwo).hasPiece()) {
+                            continue;
+                          } else if ((observerPieceTwo->getType() == 'p' || observerPieceTwo->getType() == 'P') && jTwo != observerPieceTwo->getCol() && !(b.getCellAt(iTwo, jTwo).hasPiece())) {
+                            continue;
+                          }
+                          
+                          bool tTwo = false;
+                          unique_ptr<Piece> tempTwo = nullptr;
+                          
+
+                          if (b.getCellAt(iTwo, jTwo).hasPiece()) {
+                            tempTwo = b.getCellAt(iTwo, jTwo).getActualPiece();
+                            tempTwo.get()->detachFromCells(b);
+                            tTwo = true;
+                          }
+                          b.makeMove(b.getCellAt(observerPieceTwo->getRow(), observerPieceTwo->getCol()), b.getCellAt(iTwo, jTwo), false);
+                          bool isMoveInCheckTwo = false;
+                          for (int gTwo = 0; gTwo < 8 && (!isMoveInCheckTwo); ++gTwo) {
+                            for (int hTwo = 0; hTwo < 8 && (!isMoveInCheckTwo); ++hTwo) {
+                              if (!b.getCellAt(gTwo, hTwo).hasPiece()) {
+                                continue;
+                              }
+                              if ((b.getCellAt(gTwo, hTwo).getPiece()->getType() == 'k' || b.getCellAt(gTwo, hTwo).getPiece()->getType() == 'K') && b.getCellAt(gTwo, hTwo).getPiece()->getColour() == id) {
+                                int observer_sizeTwo = b.getCellAt(gTwo, hTwo).getObservers().size();
+                                vector<Observer *> temp_observersTwo(observer_sizeTwo, nullptr);
+                                for (int rTwo = 0; rTwo < observer_sizeTwo; ++rTwo) {
+                                  temp_observersTwo[rTwo] = b.getCellAt(gTwo, hTwo).getObservers()[rTwo];
+                                }
+                                for (int zTwo = 2; zTwo < observer_sizeTwo && (!isMoveInCheckTwo); ++zTwo) { // change to 2
+                                  Piece* observerPieceTwo = dynamic_cast<Piece*>(temp_observersTwo[zTwo]);
+                                  if (observerPieceTwo->getColour() != id) {
+                                    if ((observerPieceTwo->getType() == 'P' || observerPieceTwo->getType() == 'p') && hTwo == observerPieceTwo->getCol()) {
+                                      continue;
+                                    }
+                                    isMoveInCheckTwo = true;
+                                  }
+                                }
+                              }
+                            }
+                          }
+                          if (!isMoveInCheckTwo) {
+                            
+
+                            
+                          }
+                          b.makeMove(b.getCellAt(iTwo, jTwo), b.getCellAt(sRowTwo, sColTwo), false);
+                          if (tTwo) {
+                            b.setupAdd(iTwo, jTwo, tempTwo.get()->getType(), false);
+                          }
+                          tTwo = false;
+                          isMoveInCheckTwo = false;
+                            
+                          
+                        }
+                      }
+                    }
+                  }
